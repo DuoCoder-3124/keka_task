@@ -50,9 +50,9 @@ class _LoginViewState extends State<LoginView> {
                 keyboardType: TextInputType.text,
               ),
               const Gap(Spacing.normal),
-              CustomAppButton(
-                text: 'Continue',
+              CommonElevatedButton(
                 onPressed: () {},
+                child: Text('Continue'),
                 color: CommonColor.blueColor,
                 height: 50,
                 width: MediaQuery.of(context).size.width,
