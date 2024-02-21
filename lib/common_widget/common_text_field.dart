@@ -21,7 +21,7 @@ import 'package:keka_task/common_widget/common_padding.dart';
     @override
     Widget build(BuildContext context) {
       return CommonPadding(
-        edgeInsets: const EdgeInsetsDirectional.only(start: 16.0,end: 16.0),
+        edgeInsets: EdgeInsetsDirectional.only(start: 16.0,end: 16.0),
         child: TextFormField(
           maxLength: textLength,
           controller: textEditingController,
