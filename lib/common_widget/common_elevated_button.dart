@@ -24,17 +24,15 @@ class CommonElevatedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: height,
-      width: width,
-      child: ElevatedButton(
-        onPressed: onPressed ?? () {},
-        style: ElevatedButton.styleFrom(
-            backgroundColor: color,
-            padding: padding ?? const EdgeInsetsDirectional.symmetric(horizontal: Spacing.normal),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius??Spacing.large))),
-        child: child,
-      ),
+    return MaterialButton(
+      focusColor: Colors.red,
+      onPressed: onPressed ?? () {},
+      color: color ?? Colors.blue,
+      // style: ElevatedButton.styleFrom(
+      //     backgroundColor: color,
+      //     padding: padding ?? const EdgeInsetsDirectional.symmetric(horizontal: Spacing.normal),
+      //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius??Spacing.large))),
+      child: child,
     );
   }
 }

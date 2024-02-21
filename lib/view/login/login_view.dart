@@ -31,18 +31,20 @@ class _LoginViewState extends State<LoginView> {
     return Scaffold(
       // appBar: AppBar(title: ),
       body: Center(
-        child: Padding(
+        child: SingleChildScrollView(
           padding: PaddingValue.normal,
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Gap(MediaQuery.of(context).size.height * 0.1),
+              // Gap(MediaQuery.of(context).size.height * 0.1),
               const Text(
                 'Login to Keka',
                 style: TextStyle(fontSize: TextSize.appBarTitle),
               ),
               const Gap(Spacing.normal),
+
               CommonTextField(
                 hintText: 'Email or Mobile',
                 validator: (value) => 'Enter email or mobile',
@@ -50,6 +52,7 @@ class _LoginViewState extends State<LoginView> {
                 keyboardType: TextInputType.text,
               ),
               const Gap(Spacing.normal),
+
               CommonElevatedButton(
                 onPressed: () {},
                 child: Text('Continue'),
@@ -59,6 +62,7 @@ class _LoginViewState extends State<LoginView> {
                 borderRadius: Spacing.small,
               ),
               const Gap(Spacing.normal),
+
               const Row(
                 children: [
                   Expanded(child: Divider()),
@@ -70,17 +74,21 @@ class _LoginViewState extends State<LoginView> {
                 ],
               ),
               const Gap(Spacing.normal),
+
               Row(
                 children: [
                   Expanded(
                     child: Container(
                       height: 60,
-                      padding: const EdgeInsetsDirectional.symmetric(vertical: 16, horizontal: 4),
-                      decoration: BoxDecoration(border: Border.all(width: 0.6, color: Colors.grey)),
+                      padding: const EdgeInsetsDirectional.symmetric(
+                          vertical: 16, horizontal: 4),
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 0.6, color: Colors.grey)),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.asset(AppIcons.microsoft, height: 20, width: 20, fit: BoxFit.cover),
+                          Image.asset(AppIcons.microsoft,
+                              height: 20, width: 20, fit: BoxFit.cover),
                           const Text(' Microsoft'),
                         ],
                       ),
@@ -90,12 +98,15 @@ class _LoginViewState extends State<LoginView> {
                   Expanded(
                     child: Container(
                       height: 60,
-                      padding: const EdgeInsetsDirectional.symmetric(vertical: 16, horizontal: 4),
-                      decoration: BoxDecoration(border: Border.all(width: 0.6, color: Colors.grey)),
+                      padding: const EdgeInsetsDirectional.symmetric(
+                          vertical: 16, horizontal: 4),
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 0.6, color: Colors.grey)),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.asset(AppIcons.google, height: 30, width: 30, fit: BoxFit.cover),
+                          Image.asset(AppIcons.google,
+                              height: 30, width: 30, fit: BoxFit.cover),
                           const Text(' Google'),
                         ],
                       ),
@@ -109,12 +120,15 @@ class _LoginViewState extends State<LoginView> {
                   Expanded(
                     child: Container(
                       height: 60,
-                      padding: const EdgeInsetsDirectional.symmetric(vertical: 16, horizontal: 4),
-                      decoration: BoxDecoration(border: Border.all(width: 0.6, color: Colors.grey)),
+                      padding: const EdgeInsetsDirectional.symmetric(
+                          vertical: 16, horizontal: 4),
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 0.6, color: Colors.grey)),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.asset(AppIcons.keka, height: 30, width: 30, fit: BoxFit.cover),
+                          Image.asset(AppIcons.keka,
+                              height: 30, width: 30, fit: BoxFit.cover),
                           const Text(' keka username'),
                         ],
                       ),
@@ -125,12 +139,16 @@ class _LoginViewState extends State<LoginView> {
                 ],
               ),
               const Gap(Spacing.normal),
-              Gap(MediaQuery.of(context).size.height * 0.1),
+              Gap(Spacing.xxxLarge * 2),
               Row(
                 children: [
-                  Expanded(child: Image.asset(AppIcons.appstore, height: 50, width: 50, fit: BoxFit.cover)),
+                  Expanded(
+                      child: Image.asset(AppIcons.appstore,
+                          height: 50, width: 50, fit: BoxFit.cover)),
                   const Gap(Spacing.normal),
-                  Expanded(child: Image.asset(AppIcons.playStore, height: 50, width: 50, fit: BoxFit.cover)),
+                  Expanded(
+                      child: Image.asset(AppIcons.playStore,
+                          height: 50, width: 50, fit: BoxFit.cover)),
                 ],
               ),
               const Gap(Spacing.normal),
@@ -141,10 +159,22 @@ class _LoginViewState extends State<LoginView> {
                   Flexible(
                     child: CommonRichText(
                       listspan: [
-                        LinkTextSpan(text: 'By logging in,you agree to Keka ', linkStyle: TextStyle(color: Colors.grey)),
-                        LinkTextSpan(text: 'Terms of Use', linkStyle: TextStyle(color: Colors.grey,decoration: TextDecoration.underline)),
-                        LinkTextSpan(text: ' and ', linkStyle: TextStyle(color: Colors.grey)),
-                        LinkTextSpan(text: 'Privacy Policy', linkStyle: TextStyle(color: Colors.grey,decoration: TextDecoration.underline)),
+                        LinkTextSpan(
+                            text: 'By logging in,you agree to Keka ',
+                            linkStyle: TextStyle(color: Colors.grey)),
+                        LinkTextSpan(
+                            text: 'Terms of Use',
+                            linkStyle: TextStyle(
+                                color: Colors.grey,
+                                decoration: TextDecoration.underline)),
+                        LinkTextSpan(
+                            text: ' and ',
+                            linkStyle: TextStyle(color: Colors.grey)),
+                        LinkTextSpan(
+                            text: 'Privacy Policy',
+                            linkStyle: TextStyle(
+                                color: Colors.grey,
+                                decoration: TextDecoration.underline)),
                       ],
                     ),
                   ),
