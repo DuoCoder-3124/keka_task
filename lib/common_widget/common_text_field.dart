@@ -20,36 +20,33 @@ import 'package:keka_task/common_widget/common_padding.dart';
 
     @override
     Widget build(BuildContext context) {
-      return CommonPadding(
-        edgeInsets: const EdgeInsetsDirectional.only(start: 16.0,end: 16.0),
-        child: TextFormField(
-          maxLength: textLength,
-          controller: textEditingController,
-          validator: validator,
-          onChanged: onChanged,
-          keyboardType: inputType,
-          obscureText: isVisiblePassword!,
-          obscuringCharacter: '*',
-          cursorColor: const Color(0xff787878),
-          decoration: InputDecoration(
-            counterText: '',
-            focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(115),
-                borderSide: const BorderSide(color: Color(0xff787878), width: 1.0)
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Color(0xff787878), width: 1.0),
-              borderRadius: BorderRadius.circular(30),
-            ),
-            suffixIcon: child,
-            hintText: fieldTxt,
-            hoverColor: const Color(0xff787878),
-            hintStyle: const TextStyle(
-                fontFamily: 'Proxima Nova',
-                color: Color(0xff787878),
-                fontWeight: FontWeight.w400,
-                fontSize: 14.0),
+      return TextFormField(
+        maxLength: textLength,
+        controller: textEditingController,
+        validator: validator,
+        onChanged: onChanged,
+        keyboardType: inputType,
+        obscureText: isVisiblePassword!,
+        obscuringCharacter: '*',
+        cursorColor: const Color(0xff787878),
+        decoration: InputDecoration(
+          counterText: '',
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(115),
+              borderSide: const BorderSide(color: Color(0xff787878), width: 1.0)
           ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Color(0xff787878), width: 1.0),
+            borderRadius: BorderRadius.circular(30),
+          ),
+          suffixIcon: child,
+          hintText: fieldTxt,
+          hoverColor: const Color(0xff787878),
+          hintStyle: const TextStyle(
+              fontFamily: 'Proxima Nova',
+              color: Color(0xff787878),
+              fontWeight: FontWeight.w400,
+              fontSize: 14.0),
         ),
       );
     }

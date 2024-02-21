@@ -12,6 +12,6 @@ class CommonPadding extends StatelessWidget {
     return Padding(
       padding: edgeInsets!,
       child: child,
-    );
+    );;
   }
 }
