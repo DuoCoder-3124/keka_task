@@ -43,6 +43,7 @@ class CustomAppButton extends StatelessWidget {
   final double? width;
   final TextStyle? textStyle;
   final Color? color;
+  final double? borderRadius;
 
   const CustomAppButton({
     super.key,
@@ -53,6 +54,7 @@ class CustomAppButton extends StatelessWidget {
     this.width,
     this.textStyle,
     this.color,
+    this.borderRadius,
   });
 
   @override
@@ -65,7 +67,7 @@ class CustomAppButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
             backgroundColor: color,
             padding: padding ?? const EdgeInsetsDirectional.symmetric(horizontal: Spacing.normal),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Spacing.large))),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius??Spacing.large))),
         child: Text(
           text ?? "",
           style: textStyle ?? const TextStyle(color: Colors.white, fontSize: TextSize.label),
