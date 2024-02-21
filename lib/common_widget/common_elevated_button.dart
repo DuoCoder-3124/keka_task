@@ -35,42 +35,4 @@ class CommonElevatedButton extends StatelessWidget {
   }
 }
 
-class CustomAppButton extends StatelessWidget {
-  final String? text;
-  final VoidCallback? onPressed;
-  final EdgeInsetsGeometry? padding;
-  final double? height;
-  final double? width;
-  final TextStyle? textStyle;
-  final Color? color;
 
-  const CustomAppButton({
-    super.key,
-    required this.text,
-    required this.onPressed,
-    this.padding,
-    this.height,
-    this.width,
-    this.textStyle,
-    this.color,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: height,
-      width: width,
-      child: ElevatedButton(
-        onPressed: onPressed ?? () {},
-        style: ElevatedButton.styleFrom(
-            backgroundColor: color,
-            padding: padding ?? const EdgeInsetsDirectional.symmetric(horizontal: Spacing.normal),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Spacing.large))),
-        child: Text(
-          text ?? "",
-          style: textStyle ?? const TextStyle(color: Colors.white, fontSize: TextSize.label),
-        ),
-      ),
-    );
-  }
-}
