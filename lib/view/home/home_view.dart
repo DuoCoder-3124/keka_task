@@ -156,6 +156,7 @@ class _HomeViewState extends State<HomeView> {
                   const Gap(5),
                   Row(
                     children: [
+
                       Text(
                         '1h:55m',
                         style: TextStyle(
@@ -164,6 +165,7 @@ class _HomeViewState extends State<HomeView> {
                         ),
                       ),
                       const Gap(4),
+
                       Text(
                         'Since Last Login',
                         style: TextStyle(
@@ -174,9 +176,16 @@ class _HomeViewState extends State<HomeView> {
                     ],
                   ),
 
+                  //home
                   MouseRegion(
-                    cursor: SystemMouseCursors.click,
+                    cursor: SystemMouseCursors.alias,
+                    onHover: (event) => print('hover'),
+                    onEnter: (event) => print('enter'),
+                    onExit: (event) => print('exit'),
                     child: InkWell(
+                      onTap: (){
+                        print('home clicked');
+                      },
                       child: Text('home',style: TextStyle(color: Colors.blue),),
                     ),
                   )
@@ -203,33 +212,3 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 }
-
-/*BottomNavigationBar(
-          items: const [
-            BottomNavigationBarItem(
-              label: 'Home',
-              icon: Icon(Icons.home),
-            ),
-            BottomNavigationBarItem(
-              label: 'Leave',
-              icon: Icon(Icons.exit_to_app),
-            ),
-            BottomNavigationBarItem(
-              label: 'Inbox',
-              icon: Icon(Icons.inbox),
-            ),
-            BottomNavigationBarItem(
-              label: 'Profile',
-              icon: Icon(Icons.person),
-            ),
-          ],
-          type: BottomNavigationBarType.fixed,
-          elevation: 20,
-          selectedItemColor: Common_Colors.color1,
-          unselectedItemColor: Common_Colors.color2,
-          selectedFontSize: TextSize.subTitle,
-          unselectedFontSize: TextSize.subTitle,
-          selectedLabelStyle: const TextStyle(fontWeight: TextWeight.bold),
-          unselectedLabelStyle: const TextStyle(fontWeight: TextWeight.medium),
-          onTap: null,
-        ))*/

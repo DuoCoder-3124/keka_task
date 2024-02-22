@@ -28,6 +28,7 @@ class CommonElevatedButton extends StatelessWidget {
       focusColor: Colors.red,
       onPressed: onPressed ?? () {},
       color: color ?? Colors.blue,
+      padding: padding,
       // style: ElevatedButton.styleFrom(
       //     backgroundColor: color,
       //     padding: padding ?? const EdgeInsetsDirectional.symmetric(horizontal: Spacing.normal),
