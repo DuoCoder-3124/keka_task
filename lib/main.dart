@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:keka_task/view/forgot_password/forgot_password_view.dart';
 import 'package:keka_task/view/home/home_view.dart';
+import 'package:keka_task/view/login_password/login_password_view.dart';
 import 'package:keka_task/view/inbox/inbox_view.dart';
 import 'package:keka_task/view/leave/leave_view.dart';
 import 'package:keka_task/view/login/login_view.dart';
@@ -31,6 +33,8 @@ class MyApp extends StatelessWidget {
     MainView.routeName:MainView.builder,
 
     LoginView.routeName:LoginView.builder,
+    LoginPasswordView.routeName:LoginPasswordView.builder,
+    ForgotPasswordView.routeName:ForgotPasswordView.builder,
     HomeView.routeName:HomeView.builder,
     LeaveView.routeName:LeaveView.builder,
     InboxView.routeName:InboxView.builder,

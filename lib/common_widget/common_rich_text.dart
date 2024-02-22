@@ -4,16 +4,16 @@ import 'package:flutter/gestures.dart';
 
 class CommonRichText extends StatelessWidget {
 
-  final List<LinkTextSpan> listspan ;
+  final List<LinkTextSpan> listSpan ;
 
-  const CommonRichText({super.key, required this.listspan});
+  const CommonRichText({super.key, required this.listSpan});
 
   @override
   Widget build(BuildContext context) {
     return Text.rich(
       TextSpan(
         children: [
-          for(var span in listspan)
+          for(var span in listSpan)
             TextSpan(
               text: span.text,
               style: span.linkStyle,

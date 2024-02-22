@@ -8,6 +8,7 @@ import 'package:keka_task/common_widget/common_elevated_button.dart';
 import 'package:keka_task/common_widget/common_rich_text.dart';
 import 'package:keka_task/common_widget/common_text_field.dart';
 import 'package:keka_task/view/login/login_cubit.dart';
+import 'package:keka_task/view/login_password/login_password_view.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -38,13 +39,11 @@ class _LoginViewState extends State<LoginView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Gap(MediaQuery.of(context).size.height * 0.1),
               const Text(
                 'Login to Keka',
                 style: TextStyle(fontSize: TextSize.appBarTitle),
               ),
               const Gap(Spacing.normal),
-
               CommonTextField(
                 hintText: 'Email or Mobile',
                 validator: (value) => 'Enter email or mobile',
@@ -52,43 +51,37 @@ class _LoginViewState extends State<LoginView> {
                 keyboardType: TextInputType.text,
               ),
               const Gap(Spacing.normal),
-
               CommonElevatedButton(
-                onPressed: () {},
+                onPressed: () => Navigator.pushNamed(context, LoginPasswordView.routeName),
                 color: CommonColor.blueColor,
                 height: 50,
                 width: MediaQuery.of(context).size.width,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Spacing.normal)),
-                child: const Text('Continue',style: TextStyle(color: Colors.white),),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Spacing.small)),
+                child: const Text(
+                  'Continue',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
               const Gap(Spacing.normal),
-
               const Row(
                 children: [
                   Expanded(child: Divider()),
-                  Text(
-                    ' Login with ',
-                    style: TextStyle(color: Colors.grey),
-                  ),
+                  Text(' Login with ', style: TextStyle(color: Colors.grey)),
                   Expanded(child: Divider()),
                 ],
               ),
               const Gap(Spacing.normal),
-
               Row(
                 children: [
                   Expanded(
                     child: Container(
                       height: 60,
-                      padding: const EdgeInsetsDirectional.symmetric(
-                          vertical: 16, horizontal: 4),
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 0.6, color: Colors.grey)),
+                      padding: const EdgeInsetsDirectional.symmetric(vertical: 16, horizontal: 4),
+                      decoration: BoxDecoration(border: Border.all(width: 0.6, color: Colors.grey)),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.asset(AppIcons.microsoft,
-                              height: 20, width: 20, fit: BoxFit.cover),
+                          Image.asset(AppImages.microsoft, height: 20, width: 20, fit: BoxFit.cover),
                           const Text(' Microsoft'),
                         ],
                       ),
@@ -98,15 +91,12 @@ class _LoginViewState extends State<LoginView> {
                   Expanded(
                     child: Container(
                       height: 60,
-                      padding: const EdgeInsetsDirectional.symmetric(
-                          vertical: 16, horizontal: 4),
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 0.6, color: Colors.grey)),
+                      padding: const EdgeInsetsDirectional.symmetric(vertical: 16, horizontal: 4),
+                      decoration: BoxDecoration(border: Border.all(width: 0.6, color: Colors.grey)),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.asset(AppIcons.google,
-                              height: 30, width: 30, fit: BoxFit.cover),
+                          Image.asset(AppImages.google, height: 30, width: 30, fit: BoxFit.cover),
                           const Text(' Google'),
                         ],
                       ),
@@ -120,15 +110,12 @@ class _LoginViewState extends State<LoginView> {
                   Expanded(
                     child: Container(
                       height: 60,
-                      padding: const EdgeInsetsDirectional.symmetric(
-                          vertical: 16, horizontal: 4),
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 0.6, color: Colors.grey)),
+                      padding: const EdgeInsetsDirectional.symmetric(vertical: 16, horizontal: 4),
+                      decoration: BoxDecoration(border: Border.all(width: 0.6, color: Colors.grey)),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.asset(AppIcons.keka,
-                              height: 30, width: 30, fit: BoxFit.cover),
+                          Image.asset(AppImages.keka, height: 30, width: 30, fit: BoxFit.cover),
                           const Text(' keka username'),
                         ],
                       ),
@@ -138,43 +125,31 @@ class _LoginViewState extends State<LoginView> {
                   const Expanded(child: SizedBox()),
                 ],
               ),
-              const Gap(Spacing.normal),
-              Gap(Spacing.xxxLarge * 2),
+              const Gap(Spacing.xxxLarge * 2),
               Row(
                 children: [
-                  Expanded(
-                      child: Image.asset(AppIcons.appstore,
-                          height: 50, width: 50, fit: BoxFit.cover)),
+                  Expanded(child: Image.asset(AppImages.appstore, height: 50, width: 50, fit: BoxFit.cover)),
                   const Gap(Spacing.normal),
-                  Expanded(
-                      child: Image.asset(AppIcons.playStore,
-                          height: 50, width: 50, fit: BoxFit.cover)),
+                  Expanded(child: Image.asset(AppImages.playStore, height: 50, width: 50, fit: BoxFit.cover)),
                 ],
               ),
-              const Gap(Spacing.normal),
+              const Gap(Spacing.xxLarge),
               Row(
                 children: [
-                  Image.asset(AppIcons.kekaName, height: 30, fit: BoxFit.cover),
+                  Image.asset(AppImages.kekaName, height: 30, fit: BoxFit.cover),
                   const Gap(Spacing.normal),
-                  Flexible(
+                  const Flexible(
                     child: CommonRichText(
-                      listspan: [
+                      listSpan: [
                         LinkTextSpan(
-                            text: 'By logging in,you agree to Keka ',
-                            linkStyle: TextStyle(color: Colors.grey)),
+                            text: 'By logging in,you agree to Keka ', linkStyle: TextStyle(color: Colors.grey)),
                         LinkTextSpan(
                             text: 'Terms of Use',
-                            linkStyle: TextStyle(
-                                color: Colors.grey,
-                                decoration: TextDecoration.underline)),
-                        LinkTextSpan(
-                            text: ' and ',
-                            linkStyle: TextStyle(color: Colors.grey)),
+                            linkStyle: TextStyle(color: Colors.grey, decoration: TextDecoration.underline)),
+                        LinkTextSpan(text: ' and ', linkStyle: TextStyle(color: Colors.grey)),
                         LinkTextSpan(
                             text: 'Privacy Policy',
-                            linkStyle: TextStyle(
-                                color: Colors.grey,
-                                decoration: TextDecoration.underline)),
+                            linkStyle: TextStyle(color: Colors.grey, decoration: TextDecoration.underline)),
                       ],
                     ),
                   ),

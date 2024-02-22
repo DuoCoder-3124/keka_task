@@ -1,4 +1,4 @@
-class AppIcons{
+class AppImages{
 
   static const String _path = "assets/images/";
 
@@ -10,7 +10,6 @@ class AppIcons{
 
   static const String google="${_path}google.png";
 
-
   static const String microsoft="${_path}microsoft.png";
 
   static const String keka="${_path}keka.png";
@@ -20,6 +19,8 @@ class AppIcons{
   static const String appstore="${_path}appstore.png";
 
   static const String playStore="${_path}playstore.png";
+
+  static const String elaunch="${_path}elaunch.png";
 
 
 }

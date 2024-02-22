@@ -34,11 +34,11 @@
           counterText: '',
           focusedBorder: OutlineInputBorder(
               borderRadius: focusedBorderRadius??BorderRadius.circular(10),
-              borderSide: const BorderSide(color: Color(0xff787878), width: 1.0)
+              borderSide: const BorderSide(color: Colors.grey, width: 1.0)
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Color(0xff787878), width: 1.0),
             borderRadius: enabledBorderRadius??BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.grey, width: 1.0),
           ),
           suffixIcon: suffixIcon,
           hintText: hintText,
