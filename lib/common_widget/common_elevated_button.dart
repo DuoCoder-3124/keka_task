@@ -6,10 +6,10 @@ class CommonElevatedButton extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final double? height;
   final double? width;
-  final TextStyle? textStyle;
   final Color? color;
-  final double? borderRadius;
   final Widget? child;
+  final ShapeBorder? shape;
+  final double? elevation;
 
   const CommonElevatedButton({
     super.key,
@@ -17,24 +17,24 @@ class CommonElevatedButton extends StatelessWidget {
     this.padding,
     this.height,
     this.width,
-    this.textStyle,
     this.color,
-    this.borderRadius, this.child,
+    this.child,
+    this.shape,
+    this.elevation,
   });
 
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
+      height: height,
+      minWidth: width,
       focusColor: Colors.red,
+      padding: padding,
       onPressed: onPressed ?? () {},
       color: color ?? Colors.blue,
-      padding: padding,
-      // style: ElevatedButton.styleFrom(
-      //     backgroundColor: color,
-      //     padding: padding ?? const EdgeInsetsDirectional.symmetric(horizontal: Spacing.normal),
-      //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius??Spacing.large))),
+      shape: shape,
+      elevation: elevation,
       child: child,
     );
   }
 }
-
