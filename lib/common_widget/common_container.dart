@@ -7,11 +7,11 @@ class CommonContainer extends StatelessWidget {
   final double? height;
   final Widget? child;
   final Color? borderColor;
-
+  final double? borderWidth;
   final EdgeInsetsDirectional? padding;
 
   const CommonContainer(
-      {super.key, this.width, this.height, this.child, this.borderColor, this.padding, });
+      {super.key, this.width, this.height, this.child, this.borderColor, this.padding, this.borderWidth, });
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +19,11 @@ class CommonContainer extends StatelessWidget {
       width: width,
       height: height,
       padding: padding,
-      margin: const EdgeInsetsDirectional.all(10),
       decoration: BoxDecoration(
         color: CommonColor.color1,
         border: Border.all(
           color: borderColor ?? Colors.white,
-          width: 0.6,
+          width: borderWidth ?? 0,
         ),
       ),
       child: child,
