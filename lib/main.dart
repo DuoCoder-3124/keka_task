@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:keka_task/view/bottom_nav_bar/bottom_nav_bar_view.dart';
 import 'package:keka_task/view/forgot_password/forgot_password_view.dart';
 import 'package:keka_task/view/home/home_view.dart';
-import 'package:keka_task/view/login_password/login_password_view.dart';
 import 'package:keka_task/view/inbox/inbox_view.dart';
 import 'package:keka_task/view/leave/leave_view.dart';
 import 'package:keka_task/view/login/login_view.dart';
-import 'package:keka_task/view/main_view/main_view.dart';
+import 'package:keka_task/view/login_password/login_password_view.dart';
 import 'package:keka_task/view/profile/profle_view.dart';
 
 void main() {
@@ -24,14 +24,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      initialRoute: MainView.routeName,
+      initialRoute: BottomNavBarView.routeName,
       routes: route,
     );
   }
 
   Map<String, WidgetBuilder> get route => <String, WidgetBuilder>{
-    MainView.routeName:MainView.builder,
-
+    BottomNavBarView.routeName:BottomNavBarView.builder,
     LoginView.routeName:LoginView.builder,
     LoginPasswordView.routeName:LoginPasswordView.builder,
     ForgotPasswordView.routeName:ForgotPasswordView.builder,

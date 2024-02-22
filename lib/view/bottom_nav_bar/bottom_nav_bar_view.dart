@@ -1,60 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
-import 'package:keka_task/common_attribute/common_colors.dart';
-import 'package:keka_task/common_attribute/common_value.dart';
 import 'package:keka_task/common_widget/bottom_navigation.dart';
-import 'package:keka_task/common_widget/common_container.dart';
-import 'package:keka_task/common_widget/common_elevated_button.dart';
-import 'package:keka_task/common_widget/common_text.dart';
 import 'package:keka_task/common_widget/enum.dart';
+import 'package:keka_task/view/bottom_nav_bar/bottom_nav_bar_cubit.dart';
+import 'package:keka_task/view/bottom_nav_bar/bottom_nav_bar_state.dart';
 import 'package:keka_task/view/home/home_view.dart';
 import 'package:keka_task/view/inbox/inbox_view.dart';
 import 'package:keka_task/view/leave/leave_view.dart';
-import 'package:keka_task/view/login/login_view.dart';
-import 'package:keka_task/view/main_view/main_cubit.dart';
-import 'package:keka_task/view/main_view/main_state.dart';
 import 'package:keka_task/view/profile/profle_view.dart';
 
-class MainViewArgument {
-  final String? userCode;
+class BottomNavBarViewArgument {
+  // final String? userCode;
   final BottomNavigationOption bottomNavigationOption;
 
-  const MainViewArgument({
-    required this.userCode,
+  const BottomNavBarViewArgument({
+    // required this.userCode,
     required this.bottomNavigationOption,
   });
 }
 
-class MainView extends StatefulWidget {
-  const MainView({super.key});
+class BottomNavBarView extends StatefulWidget {
+  const BottomNavBarView({super.key});
 
   static const String routeName = '/main_view';
 
   static Widget builder(BuildContext context) {
     final args = ModalRoute.of(context)?.settings.arguments;
     return BlocProvider(
-      create: (context) => MainCubit(MainState(
-        navigationOption: args is MainViewArgument
+      create: (context) => BottomNavBarCubit(BottomNavBarState(
+        navigationOption: args is BottomNavBarViewArgument
             ? args.bottomNavigationOption
             : BottomNavigationOption.home,
       )),
-      child: const MainView(),
+      child: const BottomNavBarView(),
     );
   }
 
   @override
-  State<MainView> createState() => _MainViewState();
+  State<BottomNavBarView> createState() => _BottomNavBarViewState();
 }
 
-class _MainViewState extends State<MainView> {
-  MainCubit get cubit => BlocProvider.of<MainCubit>(context);
+class _BottomNavBarViewState extends State<BottomNavBarView> {
+  BottomNavBarCubit get cubit => BlocProvider.of<BottomNavBarCubit>(context);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar:
-          BlocSelector<MainCubit, MainState, BottomNavigationOption>(
+          BlocSelector<BottomNavBarCubit, BottomNavBarState, BottomNavigationOption>(
         selector: (state) => state.navigationOption,
         builder: (context, selectTab) {
           return BottomNavBar(
@@ -63,7 +56,7 @@ class _MainViewState extends State<MainView> {
           );
         },
       ),
-      body: BlocBuilder<MainCubit, MainState>(
+      body: BlocBuilder<BottomNavBarCubit, BottomNavBarState>(
         builder: (context, state) {
           final child = switch (state.navigationOption) {
             BottomNavigationOption.leave => LeaveView.builder(context),

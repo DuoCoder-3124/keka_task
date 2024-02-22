@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:keka_task/common_attribute/common_colors.dart';
 import 'package:keka_task/common_widget/enum.dart';
 
-class MainState extends Equatable {
+class BottomNavBarState extends Equatable {
   final Color color;
 
   ///for drop down
@@ -11,7 +11,7 @@ class MainState extends Equatable {
   final String dropDownItemValue;
   final BottomNavigationOption navigationOption;
 
-  const MainState({
+  const BottomNavBarState({
     this.color = CommonColor.blueColor,
     this.lastSeen = const ['Last Week', 'Last Month', 'Custom Range'],
     this.dropDownItemValue = 'Last Week',
@@ -22,13 +22,13 @@ class MainState extends Equatable {
   List<Object?> get props =>
       [color, lastSeen, dropDownItemValue, navigationOption];
 
-  MainState copyWith({
+  BottomNavBarState copyWith({
     Color? color,
     List<String>? lastSeen,
     String? dropDownItem,
     BottomNavigationOption? navigationOption,
   }) {
-    return MainState(
+    return BottomNavBarState(
       color: color ?? this.color,
       lastSeen: lastSeen ?? this.lastSeen,
       dropDownItemValue: dropDownItem ?? this.dropDownItemValue,

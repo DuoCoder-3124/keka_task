@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LeaveView extends StatefulWidget {
   const LeaveView({super.key});
@@ -7,7 +6,7 @@ class LeaveView extends StatefulWidget {
   static const String routeName = '/leave_view';
 
   static Widget builder(BuildContext context) {
-    final args = ModalRoute.of(context)?.settings.arguments;
+   // final args = ModalRoute.of(context)?.settings.arguments;
     return LeaveView();
   }
 

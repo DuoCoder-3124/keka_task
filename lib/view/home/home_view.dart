@@ -34,7 +34,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Keka'),
+        title: CommonText(text: 'Home', fontWeight: FontWeight.bold),
       ),
       body: BlocBuilder<HomeCubit, HomeState>(
         builder: (context, state) {

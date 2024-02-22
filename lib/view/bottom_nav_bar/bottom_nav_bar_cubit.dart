@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keka_task/common_widget/enum.dart';
-import 'package:keka_task/view/main_view/main_state.dart';
+import 'package:keka_task/view/bottom_nav_bar/bottom_nav_bar_state.dart';
 
-class MainCubit extends Cubit<MainState>{
-  MainCubit(super.initialState);
+class BottomNavBarCubit extends Cubit<BottomNavBarState>{
+  BottomNavBarCubit(super.initialState);
 
   ///when i tap on home widget than change it's color, below web clock-out
   colorChange({Color? color}){

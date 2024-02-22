@@ -9,9 +9,6 @@ import 'package:keka_task/common_widget/common_rich_text.dart';
 import 'package:keka_task/common_widget/common_text_field.dart';
 import 'package:keka_task/view/forgot_password/forgot_password_view.dart';
 import 'package:keka_task/view/home/home_view.dart';
-import 'package:keka_task/view/login/login_cubit.dart';
-import 'package:uuid/uuid.dart';
-import 'package:uuid/uuid_value.dart';
 
 import 'login_password_cubit.dart';
 
@@ -32,8 +29,8 @@ class LoginPasswordView extends StatefulWidget {
 }
 
 class _LoginPasswordViewState extends State<LoginPasswordView> {
-  final uuid = const Uuid();
-  final captcha = const Uuid().v4().substring(1, 5).toUpperCase();
+  // final uuid = const Uuid();
+  // final captcha = const Uuid().v4().substring(1, 5).toUpperCase();
 
   @override
   Widget build(BuildContext context) {
