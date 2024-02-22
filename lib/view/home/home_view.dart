@@ -21,7 +21,7 @@ class HomeView extends StatefulWidget {
     final args = ModalRoute.of(context)?.settings.arguments;
     return BlocProvider(
       create: (context) => HomeCubit(const HomeState()),
-      child: HomeView(),
+      child: const HomeView(),
     );
   }
 

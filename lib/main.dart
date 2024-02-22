@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:keka_task/common_attribute/common_colors.dart';
 import 'package:keka_task/view/bottom_nav_bar/bottom_nav_bar_view.dart';
 import 'package:keka_task/view/forgot_password/forgot_password_view.dart';
 import 'package:keka_task/view/home/home_view.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: CommonColor.blueColor),
         useMaterial3: true,
       ),
       initialRoute: BottomNavBarView.routeName,
@@ -30,10 +31,10 @@ class MyApp extends StatelessWidget {
   }
 
   Map<String, WidgetBuilder> get route => <String, WidgetBuilder>{
-    BottomNavBarView.routeName:BottomNavBarView.builder,
     LoginView.routeName:LoginView.builder,
     LoginPasswordView.routeName:LoginPasswordView.builder,
     ForgotPasswordView.routeName:ForgotPasswordView.builder,
+    BottomNavBarView.routeName:BottomNavBarView.builder,
     HomeView.routeName:HomeView.builder,
     LeaveView.routeName:LeaveView.builder,
     InboxView.routeName:InboxView.builder,
