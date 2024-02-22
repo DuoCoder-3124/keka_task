@@ -11,11 +11,13 @@
     final FormFieldValidator<String>? validator;
     final ValueChanged? onChanged;
     final int? maxLength;
+    final BorderRadius? focusedBorderRadius;
+    final BorderRadius? enabledBorderRadius;
 
 
     const CommonTextField({
       super.key, this.suffixIcon, this.keyboardType, this.isVisiblePassword,
-      this.hintText, this.controller, this.validator, this.maxLength,this.onChanged});
+      this.hintText, this.controller, this.validator, this.maxLength,this.onChanged,this.focusedBorderRadius,this.enabledBorderRadius});
 
     @override
     Widget build(BuildContext context) {
@@ -31,12 +33,12 @@
         decoration: InputDecoration(
           counterText: '',
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: focusedBorderRadius??BorderRadius.circular(10),
               borderSide: const BorderSide(color: Color(0xff787878), width: 1.0)
           ),
           enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Color(0xff787878), width: 1.0),
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: enabledBorderRadius??BorderRadius.circular(10),
           ),
           suffixIcon: suffixIcon,
           hintText: hintText,
