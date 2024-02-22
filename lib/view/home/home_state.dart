@@ -7,25 +7,46 @@ class HomeState extends Equatable {
   final List<String> lastSeen;
   final String dropDownItemValue;
 
-  const HomeState({
-    this.color = CommonColor.blueColor,
-    this.lastSeen = const ['Last Week', 'Last Month', 'Custom Range'],
-    this.dropDownItemValue = 'Last Week',
-  });
+  final String currentDate;
+  final String currentTime;
+
+  final bool hourFormatOnOff;
+
+  const HomeState(
+      {this.color = CommonColor.blueColor,
+      this.lastSeen = const ['Last Week', 'Last Month', 'Custom Range'],
+      this.dropDownItemValue = 'Last Week',
+      this.currentDate = "",
+      this.currentTime = "",
+      this.hourFormatOnOff = false
+      });
 
   @override
-  List<Object?> get props =>
-      [color, lastSeen, dropDownItemValue, ];
+  List<Object?> get props => [
+        color,
+        lastSeen,
+        dropDownItemValue,
+        currentDate,
+        currentTime,
+        hourFormatOnOff
+      ];
 
-  HomeState copyWith({
-    Color? color,
-    List<String>? lastSeen,
-    String? dropDownItem,
-  }) {
+  HomeState copyWith(
+      {Color? color,
+      List<String>? lastSeen,
+      String? dropDownMenuItem,
+      String? currentDate,
+      String? currentTime,
+      bool? onOff,
+      bool? hourFormatOnOff
+      }) {
     return HomeState(
-      color: color ?? this.color,
-      lastSeen: lastSeen ?? this.lastSeen,
-      dropDownItemValue: dropDownItem ?? this.dropDownItemValue,
+        color: color ?? this.color,
+        lastSeen: lastSeen ?? this.lastSeen,
+        dropDownItemValue: dropDownMenuItem ?? dropDownItemValue,
+        currentDate: currentDate ?? this.currentDate,
+        currentTime: currentTime ?? this.currentTime,
+        hourFormatOnOff: hourFormatOnOff ?? this.hourFormatOnOff
     );
   }
 }

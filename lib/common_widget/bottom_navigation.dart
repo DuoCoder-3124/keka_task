@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:keka_task/common_attribute/common_colors.dart';
 import 'package:keka_task/common_attribute/common_value.dart';
 import 'package:keka_task/common_widget/enum.dart';
 
@@ -32,7 +33,7 @@ class BottomNavBar extends StatelessWidget {
             BottomNavIcon(
               activeIcon: Icons.home,
               inactiveIcon: Icons.home,
-              label: "home",
+              label: "Home",
               isSelected: selectedTab == BottomNavigationOption.home,
               value: BottomNavigationOption.home,
               onTabChanged: onTabChanged,
@@ -48,7 +49,7 @@ class BottomNavBar extends StatelessWidget {
             BottomNavIcon(
               activeIcon: Icons.inbox,
               inactiveIcon: Icons.inbox,
-              label: "inbox",
+              label: "Inbox",
               isSelected: selectedTab == BottomNavigationOption.inbox,
               value: BottomNavigationOption.inbox,
               onTabChanged: onTabChanged,
@@ -94,14 +95,16 @@ class BottomNavIcon extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
 
-          Icon(isSelected ? activeIcon : inactiveIcon),
+          Icon(isSelected ? activeIcon : inactiveIcon,
+            color: isSelected ? CommonColor.indigo : CommonColor.grey,),
 
           // SvgImageFromAsset(isSelected ? activeIcon : inactiveIcon),
           const Gap(6),
           CommonText(
             text: label,
-            color: isSelected ? Colors.green : Colors.black,
+            color: isSelected ? CommonColor.indigo : CommonColor.grey,
             fontSize: 12,
+            fontWeight: FontWeight.w500,
             // letterSpacing: 0.8,
           )
         ],
