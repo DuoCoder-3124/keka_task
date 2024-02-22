@@ -55,11 +55,11 @@ class _LoginViewState extends State<LoginView> {
 
               CommonElevatedButton(
                 onPressed: () {},
-                child: Text('Continue'),
                 color: CommonColor.blueColor,
                 height: 50,
                 width: MediaQuery.of(context).size.width,
-                borderRadius: Spacing.small,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Spacing.normal)),
+                child: const Text('Continue',style: TextStyle(color: Colors.white),),
               ),
               const Gap(Spacing.normal),
 
