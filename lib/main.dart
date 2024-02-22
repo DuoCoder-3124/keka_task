@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:keka_task/view/home/home_view.dart';
 import 'package:keka_task/view/login/login_view.dart';
+import 'package:keka_task/view/main_view/main_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,13 +18,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      initialRoute: HomeView.routeName,
+      initialRoute: MainView.routeName,
       routes: route,
     );
   }
 
   Map<String, WidgetBuilder> get route => <String, WidgetBuilder>{
-    HomeView.routeName:HomeView.builder,
+    MainView.routeName:MainView.builder,
     LoginView.routeName:LoginView.builder,
   };
 }

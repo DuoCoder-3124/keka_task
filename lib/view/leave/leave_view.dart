@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HomeView extends StatefulWidget {
-  const HomeView({super.key});
+class LeaveView extends StatefulWidget {
+  const LeaveView({super.key});
 
-  static const String routeName = '/home_view';
+  static const String routeName = '/leave_view';
 
   static Widget builder(BuildContext context) {
     final args = ModalRoute.of(context)?.settings.arguments;
-    return HomeView();
+    return LeaveView();
   }
 
   @override
-  State<HomeView> createState() => _HomeViewState();
+  State<LeaveView> createState() => _LeaveViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _LeaveViewState extends State<LeaveView> {
   @override
   Widget build(BuildContext context) {
     return const Placeholder();
