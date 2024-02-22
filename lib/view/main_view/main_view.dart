@@ -29,7 +29,7 @@ class MainViewArgument {
 class MainView extends StatefulWidget {
   const MainView({super.key});
 
-  static const String routeName = '/home_view';
+  static const String routeName = '/main_view';
 
   static Widget builder(BuildContext context) {
     final args = ModalRoute.of(context)?.settings.arguments;
