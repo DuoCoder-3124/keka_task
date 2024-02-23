@@ -95,6 +95,7 @@ class _LoginPasswordViewState extends State<LoginPasswordView> {
                         child: Icon(Icons.refresh, color: CommonColor.blueColor),
                       ),
                       Expanded(
+                        //
                           // flex: 4,
                           child: CommonTextField(
                         hintText: 'Captcha',
