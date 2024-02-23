@@ -20,7 +20,7 @@ class LoginPasswordView extends StatefulWidget {
 
   static Widget builder(BuildContext context) {
     return BlocProvider(
-      create: (context) => LoginPasswordCubit(const LoginPasswordState()),
+      create: (context) => LoginPasswordCubit(LoginPasswordState(passwordController: TextEditingController(), captchaController: TextEditingController(),formKey: GlobalKey<FormState>())),
       child: const LoginPasswordView(),
     );
   }

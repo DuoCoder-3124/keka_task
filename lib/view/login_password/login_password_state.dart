@@ -1,17 +1,33 @@
-
 part of 'login_password_cubit.dart';
 
-class LoginPasswordState extends Equatable{
+class LoginPasswordState extends Equatable {
+  bool isVisible;
 
-  final bool isVisible;
+  TextEditingController passwordController;
+  TextEditingController captchaController;
 
-  const LoginPasswordState({this.isVisible=false});
+  GlobalKey<FormState> formKey;
+
+  LoginPasswordState(
+      {this.isVisible = false,
+      required this.passwordController,
+      required this.formKey,
+      required this.captchaController});
 
   @override
-  List<Object?> get props => [isVisible];
+  List<Object?> get props => [isVisible, formKey, passwordController,captchaController];
 
-  LoginPasswordState copyWith({bool? isVisible}){
-    return LoginPasswordState(isVisible: isVisible ?? this.isVisible);
+  LoginPasswordState copyWith({
+    bool? isVisible,
+    TextEditingController? passwordController,
+    TextEditingController? captchaController,
+    GlobalKey<FormState>? formKey,
+  }) {
+    return LoginPasswordState(
+      isVisible: isVisible ?? this.isVisible,
+      passwordController: passwordController ?? this.passwordController,
+      formKey: formKey ?? this.formKey,
+      captchaController: captchaController ?? this.captchaController,
+    );
   }
-
 }

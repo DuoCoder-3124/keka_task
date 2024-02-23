@@ -21,7 +21,7 @@
 
     @override
     Widget build(BuildContext context) {
-      return TextFormField(
+      return TextFormField(autovalidateMode: AutovalidateMode.onUserInteraction,
         maxLength: maxLength,
         controller: controller,
         validator: validator,
