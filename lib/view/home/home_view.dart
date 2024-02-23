@@ -453,17 +453,59 @@ class _HomeViewState extends State<HomeView> {
                   ///5. last 30 days
                   const Gap(10),
                   CommonContainer(
-                    padding: const EdgeInsetsDirectional.all(7.0),
+                    padding: const EdgeInsetsDirectional.all(9.0),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+
+                        ///last 30 days
                         CommonText(
                           text: 'Last 30 Days',
                           color: CommonColor.white,
                           fontWeight: TextWeight.bold,
+                        ),
+
+                        /// 3o days, jan, dec, nov...
+                        const Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            CommonContainer(
+                              padding: EdgeInsetsDirectional.all(4.0),
+                              child: CommonText(
+                                text: '30 Days',
+                                color: Colors.white,
+                              ),
+                            ),
+                            CommonContainer(
+                              padding: EdgeInsetsDirectional.all(4.0),
+                              child: CommonText(
+                                text: 'JAN',
+                                color: Colors.white,
+                              ),
+                            ),
+                            CommonContainer(
+                              padding: EdgeInsetsDirectional.all(4.0),
+                              child: CommonText(
+                                text: 'DEC',
+                                color: Colors.white,
+                              ),
+                            ),
+                            CommonContainer(
+                              padding: EdgeInsetsDirectional.all(4.0),
+                              child: CommonText(
+                                text: 'NOV',
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
                         )
                       ],
                     ),
                   ),
+
+
+                  ///6. show date, effective hours, gross hours
+
                 ],
               ),
             );

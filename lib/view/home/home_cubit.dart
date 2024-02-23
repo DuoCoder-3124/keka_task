@@ -25,8 +25,9 @@ class HomeCubit extends Cubit<HomeState> {
   ///retrive current time
   getCurrentTime(){
     Timer.periodic(const Duration(seconds: 1), (timer) {
-      // String time = DateFormat('hh:MM:ss a').format(DateTime.now());
+      //String time = DateFormat('hh:MM:ss a').format(DateTime.now());
       emit(state.copyWith(currentTime: DateFormat('hh:MM:ss a').format(DateTime.now())));
+      //print('current time ----> $time');
     });
   }
 
