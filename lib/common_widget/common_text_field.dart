@@ -40,6 +40,10 @@
             borderRadius: enabledBorderRadius??BorderRadius.circular(10),
             borderSide: const BorderSide(color: Colors.grey, width: 1.0),
           ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.grey, width: 1.0),
+          ),
           suffixIcon: suffixIcon,
           hintText: hintText,
           hoverColor: const Color(0xff787878),

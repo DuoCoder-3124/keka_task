@@ -22,5 +22,6 @@ class AppImages{
 
   static const String elaunch="${_path}elaunch.png";
 
+  static const String inboxBackground="${_path}inbox_background.PNG";
 
 }

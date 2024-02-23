@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:keka_task/common_attribute/common_images.dart';
 import 'package:keka_task/common_attribute/common_value.dart';
 import 'package:keka_task/common_widget/common_inbox_card.dart';
 
@@ -27,22 +28,17 @@ class _InboxViewState extends State<InboxView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Padding(
-          padding: PaddingValue.normal,
-          child: Column(
-             children: [
-               InboxCard(),
-               Gap(Spacing.normal),
-               InboxCard(),
-               Gap(Spacing.normal),
-               InboxCard(),
-               Gap(Spacing.normal),
-               InboxCard(),
-               Gap(Spacing.normal),
-               InboxCard(),
-               Gap(Spacing.normal),
-             ],
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+           children: [
+             // Expanded(child: Image.asset(AppImages.inboxBackground,fit: BoxFit.fill)),
+             Container(
+               height: MediaQuery.of(context).size.height-86,
+               width: MediaQuery.of(context).size.width,
+               decoration: const BoxDecoration(image: DecorationImage(image: AssetImage(AppImages.inboxBackground),fit: BoxFit.fill)),
+               child: const Center(child: Text('No Pending Requests',style: TextStyle(color: Colors.grey,fontSize: TextSize.appBarTitle),)),
+             )
+           ],
         ),
       ),
     );

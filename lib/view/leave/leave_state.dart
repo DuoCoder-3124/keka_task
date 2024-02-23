@@ -6,16 +6,28 @@ class LeaveState extends Equatable {
 
   TextEditingController selectToDate = TextEditingController();
 
+  TextEditingController leaveTypeController;
+
+  TextEditingController noteController;
+
+  TextEditingController notifyController;
+
   int? dateDifference;
 
   List<String> leaveType;
 
   String leaveTypeItem;
 
+  GlobalKey<FormState> formKey;
+
   LeaveState({
     required this.selectFromDate,
     required this.selectToDate,
+    required this.leaveTypeController,
+    required this.noteController,
+    required this.notifyController,
     required this.dateDifference,
+    required this.formKey,
     this.leaveType = const [
       'Comp Offs',
       'Floater Leave',
@@ -26,7 +38,17 @@ class LeaveState extends Equatable {
   });
 
   @override
-  List<Object?> get props => [selectFromDate, selectToDate, dateDifference, leaveType, leaveTypeItem];
+  List<Object?> get props => [
+        selectFromDate,
+        selectToDate,
+        dateDifference,
+        leaveType,
+        leaveTypeItem,
+        noteController,
+        notifyController,
+        leaveTypeController,
+        formKey,
+      ];
 
   LeaveState copyWith({
     TextEditingController? selectFromDate,
@@ -34,6 +56,10 @@ class LeaveState extends Equatable {
     int? dateDifference,
     List<String>? leaveType,
     String? leaveTypeItem,
+    TextEditingController? leaveTypeController,
+    TextEditingController? noteController,
+    TextEditingController? notifyController,
+    GlobalKey<FormState>? formKey,
   }) {
     return LeaveState(
       selectFromDate: selectFromDate ?? this.selectFromDate,
@@ -41,6 +67,10 @@ class LeaveState extends Equatable {
       dateDifference: dateDifference ?? this.dateDifference,
       leaveType: leaveType ?? this.leaveType,
       leaveTypeItem: leaveTypeItem ?? this.leaveTypeItem,
+      leaveTypeController: leaveTypeController ?? this.leaveTypeController,
+      noteController: noteController ?? this.noteController,
+      notifyController: notifyController ?? this.notifyController,
+      formKey: formKey ?? this.formKey,
     );
   }
 }
