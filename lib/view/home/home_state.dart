@@ -11,10 +11,12 @@ class HomeState extends Equatable {
   final String currentTime;
 
   final bool hourFormatOnOff;
+  final bool timeStartStop;
 
   final List logsNRequest;
   final int logNRequestClickIndex;
 
+  final List attendaceRequestList;
 
   const HomeState(
       {this.color = CommonColor.blueColor,
@@ -24,7 +26,9 @@ class HomeState extends Equatable {
       this.currentTime = "",
       this.hourFormatOnOff = false,
       this.logsNRequest = const ['Attendance Log', 'Shift Schedule', 'Attendance Request'],
-      this.logNRequestClickIndex = 0
+      this.logNRequestClickIndex = 0,
+      this.timeStartStop = false,
+      this.attendaceRequestList = const ['Last 7 days', 'Last 14 days', 'Last 30 days','Custom Range']
       });
 
   @override
@@ -36,7 +40,9 @@ class HomeState extends Equatable {
         currentTime,
         hourFormatOnOff,
         logsNRequest,
-        logNRequestClickIndex
+        logNRequestClickIndex,
+        timeStartStop,
+        attendaceRequestList
       ];
 
   HomeState copyWith(
@@ -48,7 +54,9 @@ class HomeState extends Equatable {
       bool? onOff,
       bool? hourFormatOnOff,
       List? logsNRequest,
-      int? logNRequestClickIndex
+      int? logNRequestClickIndex,
+      bool? timeStartStop,
+      List? attendaceRequestList
       }) {
     return HomeState(
         color: color ?? this.color,
@@ -58,7 +66,9 @@ class HomeState extends Equatable {
         currentTime: currentTime ?? this.currentTime,
         hourFormatOnOff: hourFormatOnOff ?? this.hourFormatOnOff,
         logsNRequest: logsNRequest ?? this.logsNRequest,
-        logNRequestClickIndex: logNRequestClickIndex ?? this.logNRequestClickIndex
+        logNRequestClickIndex: logNRequestClickIndex ?? this.logNRequestClickIndex,
+        timeStartStop: timeStartStop ?? this.timeStartStop,
+        attendaceRequestList: attendaceRequestList ?? this.attendaceRequestList
     );
   }
 }

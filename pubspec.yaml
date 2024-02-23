@@ -44,6 +44,7 @@ dependencies:
   flutter_switch: ^0.3.2
   auto_size_text: ^3.0.0
   table_calendar: ^3.1.0
+  aligned_tooltip: ^0.0.1
 
 dev_dependencies:
   flutter_test:

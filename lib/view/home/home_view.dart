@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:aligned_tooltip/aligned_tooltip.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:keka_task/common_attribute/common_colors.dart';
 import 'package:keka_task/common_attribute/common_value.dart';
+import 'package:keka_task/common_widget/attendance_request.dart';
 import 'package:keka_task/common_widget/common_container.dart';
 import 'package:keka_task/common_widget/common_elevated_button.dart';
 import 'package:keka_task/common_widget/common_text.dart';
@@ -110,6 +112,7 @@ class _HomeViewState extends State<HomeView> {
                                       color: CommonColor.white,
                                       fontSize: TextSize.heading,
                                       fontWeight: TextWeight.medium,
+                                      textAlign: TextAlign.center,
                                     ),
                                   ),
                                 ),
@@ -133,20 +136,32 @@ class _HomeViewState extends State<HomeView> {
                                       fontSize: TextSize.body,
                                     ),
                                     const Gap(5),
-                                    GestureDetector(
-                                        onTap: () {
-                                          // Tooltip(
-                                          //   child: RichText(
-                                          //     // text: ,
-                                          //   ),
-                                          // );
-                                          print('click');
-                                        },
-                                        child: Icon(
-                                          Icons.info_outline,
-                                          size: 15.0,
-                                          color: CommonColor.grey,
-                                        ))
+
+                                    AlignedTooltip(
+                                      margin: const EdgeInsetsDirectional.symmetric(horizontal: 15.0),
+                                      showDuration: const Duration(seconds: 9),
+                                      backgroundColor: Colors.black,
+                                      content: Padding(
+                                        padding: const EdgeInsetsDirectional.all(8.0),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+
+                                            Padding(
+                                              padding: const EdgeInsetsDirectional.symmetric(horizontal: 0),
+                                              child: CommonText(text: 'These hours are calculated w.r.t Web and forgot id clock-ins/outs for the current day only. Bio-metric clock-ins are not considered', color: CommonColor.white),
+                                            ),
+
+                                          ],
+                                        ),
+                                      ),
+                                      child: Icon(
+                                        Icons.info_outline,
+                                        size: 15.0,
+                                        color: CommonColor.grey,
+                                      ),
+                                    )
                                   ],
                                 ),
 
@@ -177,7 +192,9 @@ class _HomeViewState extends State<HomeView> {
                                   const EdgeInsetsDirectional.symmetric(
                                       horizontal: 20.0, vertical: 12.0),
                                   onPressed: () {
-                                    cubit.getCurrentTime();
+                                    // (!state.timeStartStop);
+                                    print('state bool valu = ${state.timeStartStop}');
+                                    cubit.getCurrentTime(timeStartStop: !(state.timeStartStop));
                                   },
                                   child: CommonText(
                                     text: 'Web Clock-out',
@@ -294,19 +311,29 @@ class _HomeViewState extends State<HomeView> {
 
 
                                 /// info icon button
-                                Tooltip(
-                                  message: 'Nehal',
-                                  waitDuration: const Duration(
-                                      milliseconds: 500),
-                                  showDuration: const Duration(seconds: 2),
-                                  child: IconButton(
-                                    onPressed: () {
+                                AlignedTooltip(
+                                  showDuration: const Duration(seconds: 9),
+                                  backgroundColor: Colors.black,
+                                  content: Padding(
+                                    padding: const EdgeInsetsDirectional.all(8.0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
 
-                                    },
-                                    icon: Icon(
-                                      Icons.info_outline,
-                                      color: CommonColor.grey,
+                                        CommonText(text: 'From Feb 12, 2024 to Feb 18, 2024', color: CommonColor.white),
+                                        CommonText(text: 'Total effective Hours: 41:04', color: CommonColor.white),
+                                        CommonText(text: 'Working Days: 5', color: CommonColor.white),
+                                        CommonText(text: 'Average Effective Hours: 8h 13m', color: CommonColor.white),
+                                        CommonText(text: "'My Team' refers to all employees reporting to\nyou, as well as those employee reporting\n(along with you) to your reporting manager.", color: CommonColor.white),
+
+                                      ],
                                     ),
+                                  ),
+                                  child: Icon(
+                                    Icons.info_outline,
+                                    //size: 15.0,
+                                    color: CommonColor.grey,
                                   ),
                                 )
                               ],
@@ -314,65 +341,71 @@ class _HomeViewState extends State<HomeView> {
 
                             ///me, avg hrs/day, on time arriver
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                CommonText(
-                                  text: "AVG HRS / DAY",
-                                  color: CommonColor.grey,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: TextSize.content,
+
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsetsDirectional.only(top: 9),
+                                          child: CircleAvatar(
+                                            backgroundColor: Colors.yellow.shade700,
+                                            child: Icon(
+                                              Icons.person_2_outlined,
+                                              color: CommonColor.white,
+                                            ),
+                                          ),
+                                        ),
+                                        const Gap(15),
+                                        CommonText(
+                                          text: "Me",
+                                          color: CommonColor.white,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ],
+                                    )
+                                  ],
                                 ),
-                                const Gap(17),
-                                CommonText(
-                                  text: "ON TIME ARRIVAL",
-                                  color: CommonColor.grey,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: TextSize.content,
-                                )
+
+                                Column(
+                                  children: [
+                                    CommonText(
+                                      text: "AVG HRS / DAY",
+                                      color: CommonColor.grey,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: TextSize.content,
+                                    ),
+                                    CommonText(
+                                      text: "8h 13m",
+                                      color: CommonColor.white,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ],
+                                ),
+
+                                Column(
+                                  children: [
+                                    CommonText(
+                                      text: "ON TIME ARRIVAL",
+                                      color: CommonColor.grey,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: TextSize.content,
+                                    ),
+                                    CommonText(
+                                      text: "100%",
+                                      color: CommonColor.white,
+                                      fontWeight: FontWeight.w500,
+                                    )
+
+                                  ],
+                                ),
                               ],
                             ),
 
-                            Padding(
-                              padding:
-                              const EdgeInsetsDirectional.only(end: 25),
-                              child: Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceAround,
-                                children: [
-
-                                  ///for icon and me
-                                  Row(
-                                    children: [
-                                      CircleAvatar(
-                                        backgroundColor: Colors.yellow.shade700,
-                                        child: Icon(
-                                          Icons.person_2_outlined,
-                                          color: CommonColor.white,
-                                        ),
-                                      ),
-                                      const Gap(15),
-                                      CommonText(
-                                        text: "Me",
-                                        color: CommonColor.white,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ],
-                                  ),
-
-                                  CommonText(
-                                    text: "8h 13m",
-                                    color: CommonColor.white,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-
-                                  CommonText(
-                                    text: "100%",
-                                    color: CommonColor.white,
-                                    fontWeight: FontWeight.w500,
-                                  )
-                                ],
-                              ),
-                            )
                           ],
                         ),
                       ),
@@ -427,7 +460,8 @@ class _HomeViewState extends State<HomeView> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Flexible(
-                          child: TextButton(
+                          child: MaterialButton(
+                            color: state.logNRequestClickIndex == 0 ?  const Color(0xff3f4b65) : Colors.transparent,
                             onPressed: () => cubit.getIndex(index: 0),
                             child: AutoSizeText(
                               'Attendance Log',
@@ -440,7 +474,8 @@ class _HomeViewState extends State<HomeView> {
                           ),
                         ),
                         Flexible(
-                          child: TextButton(
+                          child: MaterialButton(
+                            color: state.logNRequestClickIndex == 1 ?  const Color(0xff3f4b65) : Colors.transparent,
                             onPressed: () => cubit.getIndex(index: 1),
                             child: AutoSizeText(
                               'Shift Schedule',
@@ -451,7 +486,8 @@ class _HomeViewState extends State<HomeView> {
                           ),
                         ),
                         Flexible(
-                          child: TextButton(
+                          child: MaterialButton(
+                            color: state.logNRequestClickIndex == 2 ?  const Color(0xff3f4b65) : Colors.transparent,
                             onPressed: () => cubit.getIndex(index: 2),
                             child: AutoSizeText(
                               'Attendance Request',
@@ -543,16 +579,16 @@ class _HomeViewState extends State<HomeView> {
 
   ///when user click on Attendance Log
   Widget attendanceLog(){
-    return CommonContainer(
-      color: const Color(0xff3f4b65),
+    return const CommonContainer(
+      color: Color(0xff3f4b65),
       child: Padding(
-        padding: const EdgeInsetsDirectional.all(20),
+        padding: EdgeInsetsDirectional.all(20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
-            const Column(
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CommonText(text: 'DATE : Feb 23, Fri', color: Colors.white),
@@ -567,11 +603,64 @@ class _HomeViewState extends State<HomeView> {
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const CommonText(text: 'ARRIVAL : On Time', color: Colors.white),
+                CommonText(text: 'ARRIVAL : On Time', color: Colors.white),
+                Gap(15),
                 Row(
                   children: [
-                    const CommonText(text: 'Log : ', color: Colors.white,),
-                    IconButton(onPressed: (){}, icon: const Icon(Icons.info_outline, color: Colors.green,)),
+                    CommonText(text: 'Log : ', color: Colors.white,),
+                    AlignedTooltip(
+                      margin: EdgeInsetsDirectional.symmetric(horizontal: 15.0),
+                      showDuration: Duration(seconds: 20),
+                      backgroundColor: Color(0xff3f4b65),
+                      content: Padding(
+                        padding: EdgeInsetsDirectional.all(8.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+
+                            CommonText(text: 'General Shift(Feb 23)',color: Colors.white, fontWeight: TextWeight.bold),
+                            CommonText(text: '9:00 AM - 6:00 PM',color: Colors.white, fontWeight: TextWeight.bold),
+
+                            Gap(15),
+
+                            Row(
+                              children: [
+                                Icon(Icons.edit, color: Colors.blue,),
+                                CommonText(text: 'Apply Partial Day',color: Colors.blue)
+                              ],
+                            ),
+
+                            Gap(5),
+                            CommonText(text: 'Web Clock In',color: Colors.white, fontWeight: TextWeight.bold),
+
+                            Row(
+                              children: [
+                                Icon(Icons.circle, color: Colors.green,size: 15),
+                                CommonText(text: '8:33:07 AM',color: Colors.white,),
+                                Gap(15),
+                                Icon(Icons.circle,color: Colors.red, size: 15),
+                                CommonText(text: '8:33:07 AM',color: Colors.white),
+                              ],
+                            ),
+
+                            Gap(5),
+
+                            Row(
+                              children: [
+                                Icon(Icons.circle, color: Colors.green, size:15),
+                                CommonText(text: '1:52:14 PM',color: Colors.white,),
+                                Gap(15),
+                                Icon(Icons.circle,color: Colors.red, size: 15),
+                                CommonText(text: 'MISSING',color: Colors.white),
+                              ],
+                            )
+
+                          ],
+                        ),
+                      ),
+                      child: Icon(Icons.info_outline, color: Colors.green,),
+                    )
                   ],
                 )
               ],
@@ -670,17 +759,59 @@ class _HomeViewState extends State<HomeView> {
 
   ///when user click on Attendance Request
   Widget attendanceRequest(){
-    return const Card(
-      color: Colors.blue,
-      child: Column(
-        children: [
-          CommonText(text: 'DATE :'),
-          CommonText(text: 'EFFECTIVE HOUR :'),
-          CommonText(text: 'GROSS HOURS:'),
-        ],
-      ),
+    return const Column(
+      children: [
+
+        AttendanceRequest(
+          text: 'Work From Home / On Duty Request',
+          date: '24 Jan 2024 - 08 Mar 2024',
+          subText: 'No Work From Home / On Duty Request Available',
+        ),
+
+        const Gap(5),
+        AttendanceRequest(
+          text: 'Regularization Requests',
+          date: '24 Jan 2024 - 08 Mar 2024',
+          subText: 'No Regularization Requests Available.',
+        ),
+
+        const Gap(5),
+        AttendanceRequest(
+          text: 'Remote Clock in Requests',
+          date: '24 Jan 2024 - 08 Mar 2024',
+          subText: 'No Remote clock in Requests Available.',
+        ),
+
+        const Gap(5),
+        AttendanceRequest(
+          text: 'Partial Day Requests',
+          date: '24 Jan 2024 - 08 Mar 2024',
+          subText: 'No Partial Day Requests Available',
+        ),
+
+      ],
     );
   }
 
-
 }
+
+// CommonContainer(
+// padding: PaddingValue.small,
+// width: double.infinity,
+// color: const Color(0xff3f4b65),
+// child: Column(
+// mainAxisAlignment: MainAxisAlignment.start,
+// crossAxisAlignment: CrossAxisAlignment.start,
+// children: [
+// CommonText(text: 'Work From Home / On Duty Request', color: CommonColor.white,),
+// CommonText(text: '24 Jan 2024 - 08 Mar 2024',color: CommonColor.white),
+// Divider(thickness: 1,color: CommonColor.grey,),
+// CommonContainer(
+// width: double.infinity,
+// padding: PaddingValue.small,
+// borderColor: Colors.blue,
+// child: CommonText(text: 'No Work From Home / On Duty Request Available',color: Colors.blue),
+// )
+// ],
+// ),
+// );

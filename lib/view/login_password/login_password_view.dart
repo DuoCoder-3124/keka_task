@@ -20,7 +20,7 @@ class LoginPasswordView extends StatefulWidget {
 
   static Widget builder(BuildContext context) {
     return BlocProvider(
-      create: (context) => LoginPasswordCubit(LoginPasswordState()),
+      create: (context) => LoginPasswordCubit(const LoginPasswordState()),
       child: const LoginPasswordView(),
     );
   }

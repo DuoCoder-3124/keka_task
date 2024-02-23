@@ -6,8 +6,9 @@ class CommonText extends StatelessWidget {
   final Color? color;
   final double? fontSize;
   final FontWeight? fontWeight;
+  final TextAlign? textAlign;
 
-  const CommonText({super.key, this.text, this.color, this.fontSize, this.fontWeight});
+  const CommonText({super.key, this.text, this.color, this.fontSize, this.fontWeight, this.textAlign});
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +19,7 @@ class CommonText extends StatelessWidget {
           fontSize: fontSize,
           fontWeight: fontWeight,
       ),
+      textAlign: textAlign,
     );
   }
 }
