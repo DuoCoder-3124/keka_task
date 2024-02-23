@@ -17,7 +17,8 @@ class LoginView extends StatefulWidget {
 
   static Widget builder(BuildContext context) {
     return BlocProvider(
-      create: (context) => LoginCubit(LoginState()),
+      create: (context) =>
+          LoginCubit(LoginState(emailController: TextEditingController(), formKey: GlobalKey<FormState>())),
       child: const LoginView(),
     );
   }
@@ -30,134 +31,135 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(title: ),
-      body: Center(
-        child: SingleChildScrollView(
-          padding: PaddingValue.normal,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'Login to Keka',
-                style: TextStyle(fontSize: TextSize.appBarTitle),
-              ),
-              const Gap(Spacing.normal),
-              CommonTextField(
-                hintText: 'Email or Mobile',
-                validator: (value) => 'Enter email or mobile',
-                isVisiblePassword: false,
-                keyboardType: TextInputType.text,
-              ),
-              const Gap(Spacing.normal),
-              CommonElevatedButton(
-                onPressed: () => Navigator.pushNamed(context, LoginPasswordView.routeName),
-                color: CommonColor.blueColor,
-                height: 50,
-                width: MediaQuery.of(context).size.width,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Spacing.small)),
-                child: const Text(
-                  'Continue',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-              const Gap(Spacing.normal),
-              const Row(
-                children: [
-                  Expanded(child: Divider()),
-                  Text(' Login with ', style: TextStyle(color: Colors.grey)),
-                  Expanded(child: Divider()),
-                ],
-              ),
-              const Gap(Spacing.normal),
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      height: 60,
-                      padding: const EdgeInsetsDirectional.symmetric(vertical: 16, horizontal: 4),
-                      decoration: BoxDecoration(border: Border.all(width: 0.6, color: Colors.grey)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(AppImages.microsoft, height: 20, width: 20, fit: BoxFit.cover),
-                          const Text(' Microsoft'),
-                        ],
-                      ),
+      body: BlocBuilder<LoginCubit, LoginState>(
+        builder: (context, state) {
+          return Center(
+            child: Form(
+              key: state.formKey,
+              child: SingleChildScrollView(
+                padding: PaddingValue.normal,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Login to Keka', style: TextStyle(fontSize: TextSize.appBarTitle)),
+                    const Gap(Spacing.normal),
+                    CommonTextField(
+                      controller: state.emailController,
+                      hintText: 'Email or Mobile',
+                      validator: (value) => 'Enter email or mobile',
+                      isVisiblePassword: false,
+                      keyboardType: TextInputType.text,
                     ),
-                  ),
-                  const Gap(Spacing.normal),
-                  Expanded(
-                    child: Container(
-                      height: 60,
-                      padding: const EdgeInsetsDirectional.symmetric(vertical: 16, horizontal: 4),
-                      decoration: BoxDecoration(border: Border.all(width: 0.6, color: Colors.grey)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(AppImages.google, height: 30, width: 30, fit: BoxFit.cover),
-                          const Text(' Google'),
-                        ],
-                      ),
+                    const Gap(Spacing.normal),
+                    CommonElevatedButton(
+                      onPressed: () => context.read<LoginCubit>().loginPressed(context),
+                      color: CommonColor.blueColor,
+                      height: 50,
+                      width: MediaQuery.of(context).size.width,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Spacing.small)),
+                      child: const Text('Continue', style: TextStyle(color: Colors.white)),
                     ),
-                  ),
-                ],
-              ),
-              const Gap(Spacing.normal),
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      height: 60,
-                      padding: const EdgeInsetsDirectional.symmetric(vertical: 16, horizontal: 4),
-                      decoration: BoxDecoration(border: Border.all(width: 0.6, color: Colors.grey)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(AppImages.keka, height: 30, width: 30, fit: BoxFit.cover),
-                          const Text(' keka username'),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const Gap(Spacing.normal),
-                  const Expanded(child: SizedBox()),
-                ],
-              ),
-              const Gap(Spacing.xxxLarge * 2),
-              Row(
-                children: [
-                  Expanded(child: Image.asset(AppImages.appstore, height: 50, width: 50, fit: BoxFit.cover)),
-                  const Gap(Spacing.normal),
-                  Expanded(child: Image.asset(AppImages.playStore, height: 50, width: 50, fit: BoxFit.cover)),
-                ],
-              ),
-              const Gap(Spacing.xxLarge),
-              Row(
-                children: [
-                  Image.asset(AppImages.kekaName, height: 30, fit: BoxFit.cover),
-                  const Gap(Spacing.normal),
-                  const Flexible(
-                    child: CommonRichText(
-                      listSpan: [
-                        LinkTextSpan(
-                            text: 'By logging in,you agree to Keka ', linkStyle: TextStyle(color: Colors.grey)),
-                        LinkTextSpan(
-                            text: 'Terms of Use',
-                            linkStyle: TextStyle(color: Colors.grey, decoration: TextDecoration.underline)),
-                        LinkTextSpan(text: ' and ', linkStyle: TextStyle(color: Colors.grey)),
-                        LinkTextSpan(
-                            text: 'Privacy Policy',
-                            linkStyle: TextStyle(color: Colors.grey, decoration: TextDecoration.underline)),
+                    const Gap(Spacing.normal),
+                    const Row(
+                      children: [
+                        Expanded(child: Divider()),
+                        Text(' Login with ', style: TextStyle(color: Colors.grey)),
+                        Expanded(child: Divider()),
                       ],
                     ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
+                    const Gap(Spacing.normal),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            height: 60,
+                            padding: const EdgeInsetsDirectional.symmetric(vertical: 16, horizontal: 4),
+                            decoration: BoxDecoration(border: Border.all(width: 0.6, color: Colors.grey)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(AppImages.microsoft, height: 20, width: 20, fit: BoxFit.cover),
+                                const Text(' Microsoft'),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const Gap(Spacing.normal),
+                        Expanded(
+                          child: Container(
+                            height: 60,
+                            padding: const EdgeInsetsDirectional.symmetric(vertical: 16, horizontal: 4),
+                            decoration: BoxDecoration(border: Border.all(width: 0.6, color: Colors.grey)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(AppImages.google, height: 30, width: 30, fit: BoxFit.cover),
+                                const Text(' Google'),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Gap(Spacing.normal),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            height: 60,
+                            padding: const EdgeInsetsDirectional.symmetric(vertical: 16, horizontal: 4),
+                            decoration: BoxDecoration(border: Border.all(width: 0.6, color: Colors.grey)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(AppImages.keka, height: 30, width: 30, fit: BoxFit.cover),
+                                const Text(' keka username'),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const Gap(Spacing.normal),
+                        const Expanded(child: SizedBox()),
+                      ],
+                    ),
+                    const Gap(Spacing.xxxLarge * 2),
+                    Row(
+                      children: [
+                        Expanded(child: Image.asset(AppImages.appstore, height: 50, width: 50, fit: BoxFit.cover)),
+                        const Gap(Spacing.normal),
+                        Expanded(child: Image.asset(AppImages.playStore, height: 50, width: 50, fit: BoxFit.cover)),
+                      ],
+                    ),
+                    const Gap(Spacing.xxLarge),
+                    Row(
+                      children: [
+                        Image.asset(AppImages.kekaName, height: 30, fit: BoxFit.cover),
+                        const Gap(Spacing.normal),
+                        const Flexible(
+                          child: CommonRichText(
+                            listSpan: [
+                              LinkTextSpan(
+                                  text: 'By logging in,you agree to Keka ', linkStyle: TextStyle(color: Colors.grey)),
+                              LinkTextSpan(
+                                  text: 'Terms of Use',
+                                  linkStyle: TextStyle(color: Colors.grey, decoration: TextDecoration.underline)),
+                              LinkTextSpan(text: ' and ', linkStyle: TextStyle(color: Colors.grey)),
+                              LinkTextSpan(
+                                  text: 'Privacy Policy',
+                                  linkStyle: TextStyle(color: Colors.grey, decoration: TextDecoration.underline)),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

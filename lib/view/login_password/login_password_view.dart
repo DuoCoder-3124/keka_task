@@ -7,6 +7,7 @@ import 'package:keka_task/common_attribute/common_value.dart';
 import 'package:keka_task/common_widget/common_elevated_button.dart';
 import 'package:keka_task/common_widget/common_rich_text.dart';
 import 'package:keka_task/common_widget/common_text_field.dart';
+import 'package:keka_task/view/bottom_nav_bar/bottom_nav_bar_view.dart';
 import 'package:keka_task/view/forgot_password/forgot_password_view.dart';
 import 'package:keka_task/view/home/home_view.dart';
 
@@ -102,7 +103,7 @@ class _LoginPasswordViewState extends State<LoginPasswordView> {
                   ),
                   const Gap(Spacing.normal),
                   CommonElevatedButton(
-                    onPressed: () =>Navigator.pushNamed(context, HomeView.routeName),
+                    onPressed: () =>Navigator.pushNamed(context, BottomNavBarView.routeName),
                     color: CommonColor.blueColor,
                     height: 50,
                     width: MediaQuery.of(context).size.width,

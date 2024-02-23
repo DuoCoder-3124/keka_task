@@ -26,7 +26,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: CommonColor.blueColor),
         useMaterial3: true,
       ),
-      initialRoute: BottomNavBarView.routeName,
+      // initialRoute: BottomNavBarView.routeName,
+      initialRoute: LoginView.routeName,
       routes: route,
     //  home: Temp(),
     );
