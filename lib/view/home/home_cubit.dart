@@ -23,7 +23,7 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   ///retrive current time
-  getCurrentTime(){
+  void getCurrentTime(){
     Timer.periodic(const Duration(seconds: 1), (timer) {
       //String time = DateFormat('hh:MM:ss a').format(DateTime.now());
       emit(state.copyWith(currentTime: DateFormat('hh:MM:ss a').format(DateTime.now())));
@@ -31,9 +31,15 @@ class HomeCubit extends Cubit<HomeState> {
     });
   }
 
-
-  hourFormatOnOff({isHourFormatOn}){
+  ///24 hour format on off
+  void hourFormatOnOff({isHourFormatOn}){
     emit(state.copyWith(hourFormatOnOff: isHourFormatOn));
+  }
+
+  ///get index when i click attendance log, shift schedule and attendance request
+  void getIndex({index}){
+    emit(state.copyWith(logNRequestClickIndex: index));
+    print(index);
   }
 
 }

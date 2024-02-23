@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:keka_task/common_attribute/common_colors.dart';
+import 'package:keka_task/temp.dart';
 import 'package:keka_task/view/bottom_nav_bar/bottom_nav_bar_view.dart';
 import 'package:keka_task/view/forgot_password/forgot_password_view.dart';
 import 'package:keka_task/view/home/home_view.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: BottomNavBarView.routeName,
       routes: route,
+    //  home: Temp(),
     );
   }
 

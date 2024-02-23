@@ -12,6 +12,7 @@ import 'package:keka_task/common_attribute/common_value.dart';
 import 'package:keka_task/common_widget/common_container.dart';
 import 'package:keka_task/common_widget/common_elevated_button.dart';
 import 'package:keka_task/common_widget/common_text.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 part 'home_cubit.dart';
 
@@ -23,7 +24,10 @@ class HomeView extends StatefulWidget {
   static const String routeName = '/home_view';
 
   static Widget builder(BuildContext context) {
-    final args = ModalRoute.of(context)?.settings.arguments;
+    final args = ModalRoute
+        .of(context)
+        ?.settings
+        .arguments;
     return BlocProvider(
       create: (context) => HomeCubit(const HomeState()),
       child: const HomeView(),
@@ -40,7 +44,6 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: CommonText(
@@ -59,6 +62,7 @@ class _HomeViewState extends State<HomeView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+
                   /// ***************** Attendance stats ***********************
                   const Gap(10),
                   const Padding(
@@ -76,25 +80,28 @@ class _HomeViewState extends State<HomeView> {
                   Card(
                     elevation: 20,
                     child: CommonContainer(
+                      color: CommonColor.color1,
                       borderRadius: 5,
                       borderWidth: 0.6,
                       borderColor: CommonColor.color1,
                       child: Padding(
                         padding:
-                            const EdgeInsetsDirectional.symmetric(vertical: 15),
+                        const EdgeInsetsDirectional.symmetric(vertical: 15),
 
                         ///1st card
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
+
                             /// timer
                             Column(
                               children: [
+
                                 ///count-up timer
                                 CommonContainer(
+                                  color: CommonColor.color1,
                                   width: MediaQuery.of(context).size.width / 3,
-                                  height:
-                                      MediaQuery.of(context).size.height / 19,
+                                  height:MediaQuery.of(context).size.height / 19,
                                   borderWidth: 0.6,
                                   borderColor: Colors.grey,
                                   child: Center(
@@ -128,11 +135,11 @@ class _HomeViewState extends State<HomeView> {
                                     const Gap(5),
                                     GestureDetector(
                                         onTap: () {
-                                          Tooltip(
-                                            child: const CommonText(
-                                              text: 'nehal',
-                                            ),
-                                          );
+                                          // Tooltip(
+                                          //   child: RichText(
+                                          //     // text: ,
+                                          //   ),
+                                          // );
                                           print('click');
                                         },
                                         child: Icon(
@@ -167,8 +174,8 @@ class _HomeViewState extends State<HomeView> {
                                 CommonElevatedButton(
                                   color: CommonColor.red,
                                   padding:
-                                      const EdgeInsetsDirectional.symmetric(
-                                          horizontal: 20.0, vertical: 12.0),
+                                  const EdgeInsetsDirectional.symmetric(
+                                      horizontal: 20.0, vertical: 12.0),
                                   onPressed: () {
                                     cubit.getCurrentTime();
                                   },
@@ -246,25 +253,28 @@ class _HomeViewState extends State<HomeView> {
                     child: CommonContainer(
                       borderRadius: 5,
                       borderWidth: 0.6,
+                      color: CommonColor.color1,
                       borderColor: CommonColor.color1,
                       child: Padding(
                         padding: const EdgeInsetsDirectional.only(
                             top: 10, bottom: 15, end: 20),
                         child: Column(
                           children: [
+
                             /// last seen and info button
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
+
                                 ///drop down button
                                 DropdownButton<String>(
                                     items: List.from(state.lastSeen
                                         .map<DropdownMenuItem<String>>(
                                             (String val) {
-                                      return DropdownMenuItem<String>(
-                                          value: val,
-                                          child: CommonText(text: val));
-                                    })),
+                                          return DropdownMenuItem<String>(
+                                              value: val,
+                                              child: CommonText(text: val));
+                                        })),
                                     dropdownColor: CommonColor.color2,
                                     borderRadius: BorderRadius.circular(0),
                                     isDense: true,
@@ -277,7 +287,8 @@ class _HomeViewState extends State<HomeView> {
                                       color: CommonColor.white,
                                     ),
                                     onChanged: (val) {
-                                      cubit.dropDownItemUpdate(dropDownItem: val);
+                                      cubit.dropDownItemUpdate(
+                                          dropDownItem: val);
                                       print('in valu ----> $val');
                                     }),
 
@@ -285,7 +296,8 @@ class _HomeViewState extends State<HomeView> {
                                 /// info icon button
                                 Tooltip(
                                   message: 'Nehal',
-                                  waitDuration: const Duration(milliseconds: 500),
+                                  waitDuration: const Duration(
+                                      milliseconds: 500),
                                   showDuration: const Duration(seconds: 2),
                                   child: IconButton(
                                     onPressed: () {
@@ -322,11 +334,12 @@ class _HomeViewState extends State<HomeView> {
 
                             Padding(
                               padding:
-                                  const EdgeInsetsDirectional.only(end: 25),
+                              const EdgeInsetsDirectional.only(end: 25),
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                MainAxisAlignment.spaceAround,
                                 children: [
+
                                   ///for icon and me
                                   Row(
                                     children: [
@@ -372,10 +385,11 @@ class _HomeViewState extends State<HomeView> {
                   ///3.logs & request
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.symmetric(horizontal: 5),
+                    const EdgeInsetsDirectional.symmetric(horizontal: 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+
                         ///Logs and request
                         const CommonText(
                           text: 'Logs & Request',
@@ -396,7 +410,7 @@ class _HomeViewState extends State<HomeView> {
                                 cubit.hourFormatOnOff(isHourFormatOn: value);
                               },
                             ),
-                            CommonText(
+                            const CommonText(
                               text: '24 hour format',
                             )
                           ],
@@ -408,12 +422,13 @@ class _HomeViewState extends State<HomeView> {
                   ///4. attendance log , shift schedule & attendance request
                   const Gap(10),
                   CommonContainer(
+                    color: CommonColor.color1,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Flexible(
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () => cubit.getIndex(index: 0),
                             child: AutoSizeText(
                               'Attendance Log',
                               maxLines: 2,
@@ -426,7 +441,7 @@ class _HomeViewState extends State<HomeView> {
                         ),
                         Flexible(
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () => cubit.getIndex(index: 1),
                             child: AutoSizeText(
                               'Shift Schedule',
                               maxLines: 2,
@@ -437,7 +452,7 @@ class _HomeViewState extends State<HomeView> {
                         ),
                         Flexible(
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () => cubit.getIndex(index: 2),
                             child: AutoSizeText(
                               'Attendance Request',
                               maxLines: 2,
@@ -453,6 +468,7 @@ class _HomeViewState extends State<HomeView> {
                   ///5. last 30 days
                   const Gap(10),
                   CommonContainer(
+                    color: CommonColor.color1,
                     padding: const EdgeInsetsDirectional.all(9.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -505,6 +521,15 @@ class _HomeViewState extends State<HomeView> {
 
 
                   ///6. show date, effective hours, gross hours
+                  if(state.logNRequestClickIndex == 1)...[
+                     shiftSchedule()
+                  ]else if(state.logNRequestClickIndex == 2)...[
+                     attendanceRequest()
+                  ]else...[
+                    attendanceLog(),
+                  ],
+
+                  const Gap(15.0)
 
                 ],
               ),
@@ -514,4 +539,148 @@ class _HomeViewState extends State<HomeView> {
       ),
     );
   }
+
+
+  ///when user click on Attendance Log
+  Widget attendanceLog(){
+    return CommonContainer(
+      color: const Color(0xff3f4b65),
+      child: Padding(
+        padding: const EdgeInsetsDirectional.all(20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+
+            const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CommonText(text: 'DATE : Feb 23, Fri', color: Colors.white),
+                Gap(3),
+                CommonText(text: 'EFFECTIVE HOUR : 8h 25m', color: Colors.white),
+                Gap(3),
+                CommonText(text: 'GROSS HOURS: 9h 14m', color: Colors.white),
+              ],
+            ),
+
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const CommonText(text: 'ARRIVAL : On Time', color: Colors.white),
+                Row(
+                  children: [
+                    const CommonText(text: 'Log : ', color: Colors.white,),
+                    IconButton(onPressed: (){}, icon: const Icon(Icons.info_outline, color: Colors.green,)),
+                  ],
+                )
+              ],
+            ),
+
+          ],
+        ),
+      ),
+    );
+  }
+
+
+  ///when user click on Shift Schedule
+  Widget shiftSchedule(){
+    return CommonContainer(
+      color: const Color(0xff3f4b65),
+      child: TableCalendar(
+        calendarFormat: CalendarFormat.month,
+        focusedDay: DateTime.now(),
+        daysOfWeekHeight: 30,
+        daysOfWeekStyle: const DaysOfWeekStyle(
+          weekdayStyle: TextStyle(color: Colors.white),
+          weekendStyle: TextStyle(color: Colors.white),
+        ),
+        firstDay: DateTime.utc(2001, 01, 01),
+        lastDay: DateTime.utc(2050, 12, 12),
+        startingDayOfWeek: StartingDayOfWeek.monday,
+        calendarStyle: CalendarStyle(
+          weekNumberTextStyle: const TextStyle(color: Colors.black),
+          weekendTextStyle: const TextStyle(color: Colors.red),
+          tablePadding: const EdgeInsets.all(5),
+          cellMargin: const EdgeInsets.all(9),
+          // holidayDecoration: BoxDecoration(
+          //  color: Colors.red ,
+          //   image: DecorationImage(
+          //     image: AssetImage('assets/images/appstore.png')
+          //   )
+          // ),
+          todayDecoration: BoxDecoration(color: Colors.white.withOpacity(0.8)),
+          todayTextStyle: const TextStyle(color: Colors.indigo, fontWeight: TextWeight.bold),
+          tableBorder: TableBorder.all(
+            width: 1,
+            color: CommonColor.grey,
+          ),
+        ),
+        headerStyle: const HeaderStyle(
+            titleTextStyle: TextStyle(color: Colors.white),
+            titleCentered: true,
+            headerPadding: EdgeInsets.symmetric(horizontal: 30),
+            leftChevronIcon: Icon(Icons.chevron_left, color: Colors.white),
+            rightChevronIcon: Icon(Icons.chevron_right, color: Colors.white),
+            formatButtonVisible: false,
+        ),
+
+        calendarBuilders: CalendarBuilders(
+          defaultBuilder: (context, date, event) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                CommonText(
+                  fontWeight: TextWeight.medium,
+                  text: date.day.toString(),
+                  color: (DateTime.saturday != date.weekday)
+                      && (DateTime.sunday != date.weekday)
+                      ? Colors.white
+                      : Colors.red.shade400,
+                ),
+                const Gap(5),
+                Flexible(
+                  child: AutoSizeText(
+                    // DateTime.saturday == date.weekday ? Colors.red: Colors.green,
+                    ((DateTime.saturday != date.weekday) &&
+                        (DateTime.sunday != date.weekday))
+                        ? '9:00 AM - 6:00 PM'
+                        : 'Holiday',
+                    maxLines: 2,
+                    minFontSize: 5,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontWeight: TextWeight.medium,
+                        color: ((DateTime.saturday != date.weekday)
+                            && (DateTime.sunday != date.weekday))
+                            ? Colors.white.withOpacity(0.6)
+                            : Colors.red
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+      )
+    );
+  }
+
+
+  ///when user click on Attendance Request
+  Widget attendanceRequest(){
+    return const Card(
+      color: Colors.blue,
+      child: Column(
+        children: [
+          CommonText(text: 'DATE :'),
+          CommonText(text: 'EFFECTIVE HOUR :'),
+          CommonText(text: 'GROSS HOURS:'),
+        ],
+      ),
+    );
+  }
+
+
 }

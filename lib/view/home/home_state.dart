@@ -11,7 +11,10 @@ class HomeState extends Equatable {
   final String currentTime;
 
   final bool hourFormatOnOff;
+
   final List logsNRequest;
+  final int logNRequestClickIndex;
+
 
   const HomeState(
       {this.color = CommonColor.blueColor,
@@ -20,7 +23,8 @@ class HomeState extends Equatable {
       this.currentDate = "",
       this.currentTime = "",
       this.hourFormatOnOff = false,
-      this.logsNRequest = const ['Attendance Log', 'Shift Schedule', 'Attendance Request']
+      this.logsNRequest = const ['Attendance Log', 'Shift Schedule', 'Attendance Request'],
+      this.logNRequestClickIndex = 0
       });
 
   @override
@@ -31,7 +35,8 @@ class HomeState extends Equatable {
         currentDate,
         currentTime,
         hourFormatOnOff,
-        logsNRequest
+        logsNRequest,
+        logNRequestClickIndex
       ];
 
   HomeState copyWith(
@@ -42,7 +47,8 @@ class HomeState extends Equatable {
       String? currentTime,
       bool? onOff,
       bool? hourFormatOnOff,
-      List? logsNRequest
+      List? logsNRequest,
+      int? logNRequestClickIndex
       }) {
     return HomeState(
         color: color ?? this.color,
@@ -51,7 +57,8 @@ class HomeState extends Equatable {
         currentDate: currentDate ?? this.currentDate,
         currentTime: currentTime ?? this.currentTime,
         hourFormatOnOff: hourFormatOnOff ?? this.hourFormatOnOff,
-        logsNRequest: logsNRequest ?? this.logsNRequest
+        logsNRequest: logsNRequest ?? this.logsNRequest,
+        logNRequestClickIndex: logNRequestClickIndex ?? this.logNRequestClickIndex
     );
   }
 }
