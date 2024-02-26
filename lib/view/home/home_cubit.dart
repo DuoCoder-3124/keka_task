@@ -17,7 +17,6 @@ class HomeCubit extends Cubit<HomeState> {
 
   ///retrive current date
   void getCurrentDate() {
-    // String date = DateFormat('E dd, MMM yyyy').format(DateTime.now());
     emit(state.copyWith(
         currentDate: DateFormat('E dd, MMM yyyy').format(DateTime.now())));
   }
@@ -26,21 +25,13 @@ class HomeCubit extends Cubit<HomeState> {
   void getCurrentTime({timeStartStop}) {
     print('timer value ----> $timeStartStop');
 
-    if (timeStartStop == true) {
       Timer.periodic(const Duration(seconds: 1), (timer) {
         emit(state.copyWith(
-            currentTime: DateFormat('hh:MM:ss a').format(DateTime.now()),
-            timeStartStop: timeStartStop
+            currentTime: DateFormat('hh:mm:ss a').format(DateTime.now()),
+            // timeStartStop: timeStartStop
         ));
         print('inside value ===> ${state.timeStartStop}');
       });
-    }
-    else{
-      emit(state.copyWith(
-          currentTime: DateFormat('hh:MM:ss a').format(DateTime.now()),
-          timeStartStop: timeStartStop
-      ));
-    }
 
   }
 

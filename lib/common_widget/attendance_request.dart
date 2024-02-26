@@ -18,6 +18,8 @@ class AttendanceRequest extends StatelessWidget {
   Widget build(BuildContext context) {
     return CommonContainer(
       padding: PaddingValue.small,
+      borderRadius: 5,
+      borderWidth: 0.6,
       width: double.infinity,
       color: const Color(0xff3f4b65),
       child: Column(
@@ -28,8 +30,10 @@ class AttendanceRequest extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CommonText(text: text, color: CommonColor.white,),
-              PopupMenuButton(itemBuilder: (context){
-                //
+              PopupMenuButton(
+                color: CommonColor.white,
+                iconColor: CommonColor.white,
+                itemBuilder: (context){
                 return const [
                   PopupMenuItem(
                     value: 'Last 7 days',

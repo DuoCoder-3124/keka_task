@@ -24,7 +24,7 @@ class CommonContainer extends StatelessWidget {
       decoration: BoxDecoration(
         color: color,
         border: Border.all(
-          color: borderColor ?? Colors.white,
+          color: borderColor ?? Colors.transparent,
           width: borderWidth ?? 0,
         ),
         borderRadius: BorderRadius.circular(borderRadius ?? 0)
