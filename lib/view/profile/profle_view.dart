@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:keka_task/common_attribute/common_colors.dart';
@@ -125,9 +126,12 @@ class _ProfileViewState extends State<ProfileView> {
                                   size: 18,
                                 ),
                                 const Gap(2),
-                                CommonText(
-                                  text: 'nehal.s@elaunchinfotech.in',
-                                  color: CommonColor.white,
+                                AutoSizeText(
+                                 'nehal.s@elaunchinfotech.in',
+                                  maxLines: 2,
+                                  style: TextStyle(
+                                    color: CommonColor.white,
+                                  ),
                                 )
                               ],
                             ),
