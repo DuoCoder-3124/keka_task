@@ -125,7 +125,6 @@ class _LeaveViewState extends State<LeaveView> {
                       DropdownButtonFormField(
                         value: state.leaveTypeItem,
                         validator: (value)=>(value==null || value.isEmpty)?'Enter the leave type':null,
-                        hint: const Text('Select', style: TextStyle(fontWeight: TextWeight.regular)),
                         decoration: InputDecoration(border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
                         items: state.leaveType.map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
                         onChanged: (value) => cubit.changeLeaveType(leaveTypeValue: value ?? ""),
