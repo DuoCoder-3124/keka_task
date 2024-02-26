@@ -460,45 +460,57 @@ class _HomeViewState extends State<HomeView> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+
                           Flexible(
                             child: MaterialButton(
                               color: state.logNRequestClickIndex == 0
                                   ? const Color(0xff3f4b65)
                                   : null,
                               onPressed: () => cubit.getIndex(index: 0),
-                              child: CommonText(
-                                text: 'Attendance Log',
+                              child: AutoSizeText(
+                                'Attendance Log',
+                                maxLines: 2,
+                                style: TextStyle(
+                                  color: CommonColor.white,
+                                  fontSize: TextSize.label,
+                                ),
                                 textAlign: TextAlign.center,
-                                fontSize: 15,
-                                color: CommonColor.white,
                               ),
                             ),
                           ),
+
                           Flexible(
                             child: MaterialButton(
                               color: state.logNRequestClickIndex == 1
                                   ? const Color(0xff3f4b65)
                                   : null,
                               onPressed: () => cubit.getIndex(index: 1),
-                              child: CommonText(
+                              child: AutoSizeText(
+                                'Shift Schedule',
+                                maxLines: 2,
+                                style: TextStyle(
+                                  color: CommonColor.white,
+                                  fontSize: TextSize.label,
+                                ),
                                 textAlign: TextAlign.center,
-                                text: 'Shift Schedule',
-                                fontSize: 15,
-                                color: CommonColor.white,
                               ),
                             ),
                           ),
+
                           Flexible(
                             child: MaterialButton(
                               color: state.logNRequestClickIndex == 2
                                   ? const Color(0xff3f4b65)
                                   : null,
                               onPressed: () => cubit.getIndex(index: 2),
-                              child: const CommonText(
+                              child: AutoSizeText(
+                                'Attendance Request',
+                                maxLines: 2,
+                                style: TextStyle(
+                                  color: CommonColor.white,
+                                  fontSize: TextSize.label,
+                                ),
                                 textAlign: TextAlign.center,
-                                text: 'Attendance Request',
-                                fontSize: 15,
-                                color: Colors.white,
                               ),
                             ),
                           ),
@@ -638,13 +650,13 @@ class _HomeViewState extends State<HomeView> {
                                 children: [
                                   Row(
                                     children: [
-                                      IconButton(onPressed: (){}, icon: Icon(Icons.circle, color: Colors.green)),
+                                      IconButton(onPressed: (){}, icon: const Icon(Icons.circle, color: Colors.green)),
                                       CommonText(text: '8:34:08 AM', fontWeight: TextWeight.bold, color: CommonColor.white,),
                                     ],
                                   ),
                                   Row(
                                     children: [
-                                      IconButton(onPressed: (){}, icon: Icon(Icons.circle, color: Colors.red)),
+                                      IconButton(onPressed: (){}, icon: const Icon(Icons.circle, color: Colors.red)),
                                       CommonText(text: 'MISSING', fontWeight: TextWeight.bold, color: CommonColor.white,),
                                     ],
                                   ),
