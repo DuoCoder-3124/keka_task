@@ -26,7 +26,10 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // initialRoute: BottomNavBarView.routeName,
-      initialRoute: ProfileView.routeName,
+      // initialRoute: ProfileView.routeName,
+      // initialRoute: HomeView.routeName,
+      // initialRoute: HomeView.routeName,
+      initialRoute: LoginView.routeName,
       routes: route,
     );
   }

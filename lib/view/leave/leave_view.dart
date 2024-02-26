@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:keka_task/common_attribute/common_colors.dart';
 import 'package:keka_task/common_attribute/common_value.dart';
 import 'package:keka_task/common_widget/common_elevated_button.dart';
+import 'package:keka_task/common_widget/common_text.dart';
 import 'package:keka_task/common_widget/common_text_field.dart';
 
 part 'leave_cubit.dart';
@@ -47,7 +48,16 @@ class _LeaveViewState extends State<LeaveView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Apply Leave')),
+     appBar: AppBar(
+      foregroundColor: CommonColor.white,
+      title: CommonText(
+        text: 'Leave Request',
+        color: CommonColor.white,
+        fontWeight: FontWeight.bold,
+        fontSize: TextSize.largeHHeading,
+      ),
+      backgroundColor: CommonColor.blueColor,
+    ),
       body: BlocBuilder<LeaveCubit, LeaveState>(
         builder: (context, state) {
           var cubit = context.read<LeaveCubit>();
@@ -113,7 +123,8 @@ class _LeaveViewState extends State<LeaveView> {
                       const Gap(Spacing.normal),
 
                       DropdownButtonFormField(
-                        validator: (value)=>'Enter the leave type',
+                        value: state.leaveTypeItem,
+                        validator: (value)=>(value==null || value.isEmpty)?'Enter the leave type':null,
                         hint: const Text('Select', style: TextStyle(fontWeight: TextWeight.regular)),
                         decoration: InputDecoration(border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
                         items: state.leaveType.map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
@@ -128,7 +139,7 @@ class _LeaveViewState extends State<LeaveView> {
 
                       CommonTextField(
                         controller: state.noteController,
-                        validator: (value)=>'field is required',
+                        validator: (value)=>value?.isEmpty??false?'field is required':null,
                         hintText: 'Type here',
                       ),
 
@@ -140,7 +151,7 @@ class _LeaveViewState extends State<LeaveView> {
 
                       CommonTextField(
                         controller: state.notifyController,
-                        validator: (value)=>'field is required',
+                        validator: (value)=>value?.isEmpty??false?'field is required':null,
                         hintText: 'Search Employee',
                       ),
 
