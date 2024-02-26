@@ -461,57 +461,51 @@ class _HomeViewState extends State<HomeView> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
 
-                          Flexible(
-                            child: MaterialButton(
-                              color: state.logNRequestClickIndex == 0
-                                  ? const Color(0xff3f4b65)
-                                  : null,
-                              onPressed: () => cubit.getIndex(index: 0),
-                              child: AutoSizeText(
-                                'Attendance Log',
-                                maxLines: 2,
-                                style: TextStyle(
-                                  color: CommonColor.white,
-                                  fontSize: TextSize.label,
-                                ),
-                                textAlign: TextAlign.center,
+                          MaterialButton(
+                            color: state.logNRequestClickIndex == 0
+                                ? const Color(0xff3f4b65)
+                                : null,
+                            onPressed: () => cubit.getIndex(index: 0),
+                            child: AutoSizeText(
+                              'Attendance Log',
+                              maxLines: 2,
+                              style: TextStyle(
+                                color: CommonColor.white,
+                                fontSize: TextSize.label,
                               ),
+                              textAlign: TextAlign.center,
                             ),
                           ),
 
-                          Flexible(
-                            child: MaterialButton(
-                              color: state.logNRequestClickIndex == 1
-                                  ? const Color(0xff3f4b65)
-                                  : null,
-                              onPressed: () => cubit.getIndex(index: 1),
-                              child: AutoSizeText(
-                                'Shift Schedule',
-                                maxLines: 2,
-                                style: TextStyle(
-                                  color: CommonColor.white,
-                                  fontSize: TextSize.label,
-                                ),
-                                textAlign: TextAlign.center,
+                          MaterialButton(
+                            color: state.logNRequestClickIndex == 1
+                                ? const Color(0xff3f4b65)
+                                : null,
+                            onPressed: () => cubit.getIndex(index: 1),
+                            child: AutoSizeText(
+                              'Shift Schedule',
+                              maxLines: 2,
+                              style: TextStyle(
+                                color: CommonColor.white,
+                                fontSize: TextSize.label,
                               ),
+                              textAlign: TextAlign.center,
                             ),
                           ),
 
-                          Flexible(
-                            child: MaterialButton(
-                              color: state.logNRequestClickIndex == 2
-                                  ? const Color(0xff3f4b65)
-                                  : null,
-                              onPressed: () => cubit.getIndex(index: 2),
-                              child: AutoSizeText(
-                                'Attendance Request',
-                                maxLines: 2,
-                                style: TextStyle(
-                                  color: CommonColor.white,
-                                  fontSize: TextSize.label,
-                                ),
-                                textAlign: TextAlign.center,
+                          MaterialButton(
+                            color: state.logNRequestClickIndex == 2
+                                ? const Color(0xff3f4b65)
+                                : null,
+                            onPressed: () => cubit.getIndex(index: 2),
+                            child: AutoSizeText(
+                              'Attendance Request',
+                              maxLines: 2,
+                              style: TextStyle(
+                                color: CommonColor.white,
+                                fontSize: TextSize.label,
                               ),
+                              textAlign: TextAlign.center,
                             ),
                           ),
                         ],

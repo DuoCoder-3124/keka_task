@@ -160,7 +160,7 @@ class _ProfileViewState extends State<ProfileView> {
                             Row(
                               children: [
                                 CommonText(color: CommonColor.grey, text: 'BUSINESS UNIT', fontSize: Spacing.medium,),
-                                CommonText(color: CommonColor.white, text: ' : ELaunch Solution Pvt.Ltd', fontSize: Spacing.medium, fontWeight: TextWeight.medium),
+                                Flexible(child: CommonText(color: CommonColor.white, text: ' : ELaunch Solution Pvt.Ltd', fontSize: Spacing.medium, fontWeight: TextWeight.medium)),
                               ],
                             ),
 
