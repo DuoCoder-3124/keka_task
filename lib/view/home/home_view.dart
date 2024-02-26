@@ -50,7 +50,7 @@ class _HomeViewState extends State<HomeView> {
           fontWeight: FontWeight.bold,
           fontSize: TextSize.largeHHeading,
         ),
-        backgroundColor: CommonColor.redAccent,
+        backgroundColor: CommonColor.blue,
       ),
       body: SingleChildScrollView(
         child: BlocBuilder<HomeCubit, HomeState>(

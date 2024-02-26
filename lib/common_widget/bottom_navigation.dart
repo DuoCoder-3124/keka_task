@@ -96,13 +96,13 @@ class BottomNavIcon extends StatelessWidget {
         children: [
 
           Icon(isSelected ? activeIcon : inactiveIcon,
-            color: isSelected ? CommonColor.redAccent : CommonColor.grey,),
+            color: isSelected ? CommonColor.blue : CommonColor.grey,),
 
           // SvgImageFromAsset(isSelected ? activeIcon : inactiveIcon),
           const Gap(6),
           CommonText(
             text: label,
-            color: isSelected ? CommonColor.redAccent : CommonColor.grey,
+            color: isSelected ? CommonColor.blue : CommonColor.grey,
             fontSize: 12,
             fontWeight: FontWeight.w500,
             // letterSpacing: 0.8,

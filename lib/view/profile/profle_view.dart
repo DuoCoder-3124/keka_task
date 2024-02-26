@@ -32,7 +32,7 @@ class _ProfileViewState extends State<ProfileView> {
             fontWeight: FontWeight.bold,
             fontSize: TextSize.largeHHeading,
           ),
-          backgroundColor: CommonColor.redAccent,
+          backgroundColor: CommonColor.blue,
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -51,7 +51,7 @@ class _ProfileViewState extends State<ProfileView> {
                       CommonContainer(
                         width: MediaQuery.of(context).size.width / 4,
                         height: MediaQuery.of(context).size.height / 3,
-                        color: Colors.indigo,
+                        color: CommonColor.blue,
                         padding: PaddingValue.small,
                         borderRadius: 5,
                         borderWidth: 0.6,
