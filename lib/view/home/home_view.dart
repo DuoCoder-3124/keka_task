@@ -13,6 +13,8 @@ import 'package:keka_task/common_widget/attendance_request.dart';
 import 'package:keka_task/common_widget/common_container.dart';
 import 'package:keka_task/common_widget/common_elevated_button.dart';
 import 'package:keka_task/common_widget/common_text.dart';
+import 'package:syncfusion_flutter_core/theme.dart';
+import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 part 'home_cubit.dart';
@@ -60,6 +62,7 @@ class _HomeViewState extends State<HomeView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+
                   /// ***************** Attendance stats ***********************
                   const Gap(Spacing.small),
                   const Padding(
@@ -85,15 +88,23 @@ class _HomeViewState extends State<HomeView> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
+
                           /// timer
                           Column(
                             children: [
+
                               ///count-up timer
                               CommonContainer(
                                 color: CommonColor.color1,
-                                width: MediaQuery.of(context).size.width / 3,
+                                width: MediaQuery
+                                    .of(context)
+                                    .size
+                                    .width / 3,
                                 height:
-                                MediaQuery.of(context).size.height / 19,
+                                MediaQuery
+                                    .of(context)
+                                    .size
+                                    .height / 19,
                                 borderRadius: 5,
                                 borderWidth: 0.6,
                                 borderColor: Colors.grey,
@@ -172,7 +183,8 @@ class _HomeViewState extends State<HomeView> {
                                 color: CommonColor.red,
                                 padding: PaddingValue.medium,
                                 onPressed: () {
-                                  cubit.getCurrentTime(timeStartStop: !(state.timeStartStop));
+                                  cubit.getCurrentTime(
+                                      timeStartStop: !(state.timeStartStop));
                                 },
                                 child: CommonText(
                                   text: 'Web Clock-out',
@@ -254,10 +266,12 @@ class _HomeViewState extends State<HomeView> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
+
                             /// last seen and info button
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
+
                                 ///drop down button
                                 DropdownButton<String>(
                                     items: List.from(state.lastSeen
@@ -414,6 +428,7 @@ class _HomeViewState extends State<HomeView> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+
                         ///Logs and request
                         const CommonText(
                           text: 'Logs & Request',
@@ -525,6 +540,7 @@ class _HomeViewState extends State<HomeView> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+
                           ///last 30 days
                           CommonText(
                             text: 'Last 30 Days',
@@ -552,11 +568,13 @@ class _HomeViewState extends State<HomeView> {
                   ///6. show date, effective hours, gross hours
                   if (state.logNRequestClickIndex == 1) ...[
                     shiftSchedule()
-                  ] else if (state.logNRequestClickIndex == 2) ...[
-                    attendanceRequest()
-                  ] else ...[
-                    attendanceLog(),
-                  ],
+                  ] else
+                    if (state.logNRequestClickIndex == 2) ...[
+                      attendanceRequest()
+                    ] else
+                      ...[
+                        attendanceLog(),
+                      ],
 
                   const Gap(15.0)
                 ],
@@ -570,7 +588,7 @@ class _HomeViewState extends State<HomeView> {
 
 
   ///show the month 30Days, jan, feb, march
-  Widget showMonth({String? monthName}){
+  Widget showMonth({String? monthName}) {
     return CommonContainer(
       borderColor: CommonColor.grey,
       borderWidth: 0.5,
@@ -584,6 +602,7 @@ class _HomeViewState extends State<HomeView> {
 
   ///when user click on Attendance Log
   Widget attendanceLog() {
+    SfRangeValues? sfRangeValues = const SfRangeValues(4.0, 8.0);
     return Card(
       elevation: 10,
       child: Flexible(
@@ -596,22 +615,33 @@ class _HomeViewState extends State<HomeView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
+              /// Date & Arrival
               const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CommonText(text: 'DATE : Feb 23, Fri', color: Colors.white, fontSize: TextSize.label),
-                  CommonText(text: 'ARRIVAL : On Time', color: Colors.white, fontSize: TextSize.label),
+                  CommonText(text: 'DATE : Feb 23, Fri',
+                      color: Colors.white,
+                      fontSize: TextSize.label),
+                  CommonText(text: 'ARRIVAL : On Time',
+                      color: Colors.white,
+                      fontSize: TextSize.label),
                 ],
               ),
 
+              ///Effective hours
               const Gap(Spacing.xMedium),
               const CommonText(
-                  text: 'EFFECTIVE HOUR : 8h 25m', color: Colors.white,fontSize: TextSize.label),
+                  text: 'EFFECTIVE HOUR : 8h 25m',
+                  color: Colors.white,
+                  fontSize: TextSize.label),
 
+              /// gross hours & log
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const CommonText(text: 'GROSS HOURS: 9h 14m', color: Colors.white, fontSize: TextSize.label),
+                  const CommonText(text: 'GROSS HOURS: 9h 14m',
+                      color: Colors.white,
+                      fontSize: TextSize.label),
                   Row(
                     children: [
                       const CommonText(
@@ -628,31 +658,46 @@ class _HomeViewState extends State<HomeView> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
 
-                              CommonText(text: 'General Shift (Feb 26)', color: CommonColor.white,),
-                              CommonText(text: '9:00 AM - 6:00 PM', color: CommonColor.white,),
+                              CommonText(text: 'General Shift (Feb 26)',
+                                color: CommonColor.white,),
+                              CommonText(text: '9:00 AM - 6:00 PM',
+                                color: CommonColor.white,),
                               Divider(color: CommonColor.grey),
 
                               Row(
                                 children: [
-                                  IconButton(onPressed: (){}, icon: const Icon(Icons.edit, color: Colors.blue,),),
-                                  const CommonText(text: 'Apply Partial Day', color: Colors.blue,),
+                                  IconButton(onPressed: () {},
+                                    icon: const Icon(
+                                      Icons.edit, color: Colors.blue,),),
+                                  const CommonText(text: 'Apply Partial Day',
+                                    color: Colors.blue,),
                                 ],
                               ),
 
-                              CommonText(text: 'Web Clock In', fontWeight: TextWeight.bold, color: CommonColor.white,),
+                              CommonText(text: 'Web Clock In',
+                                fontWeight: TextWeight.bold,
+                                color: CommonColor.white,),
 
                               Row(
                                 children: [
                                   Row(
                                     children: [
-                                      IconButton(onPressed: (){}, icon: const Icon(Icons.circle, color: Colors.green)),
-                                      CommonText(text: '8:34:08 AM', fontWeight: TextWeight.bold, color: CommonColor.white,),
+                                      IconButton(onPressed: () {},
+                                          icon: const Icon(Icons.circle,
+                                              color: Colors.green)),
+                                      CommonText(text: '8:34:08 AM',
+                                        fontWeight: TextWeight.bold,
+                                        color: CommonColor.white,),
                                     ],
                                   ),
                                   Row(
                                     children: [
-                                      IconButton(onPressed: (){}, icon: const Icon(Icons.circle, color: Colors.red)),
-                                      CommonText(text: 'MISSING', fontWeight: TextWeight.bold, color: CommonColor.white,),
+                                      IconButton(onPressed: () {},
+                                          icon: const Icon(
+                                              Icons.circle, color: Colors.red)),
+                                      CommonText(text: 'MISSING',
+                                        fontWeight: TextWeight.bold,
+                                        color: CommonColor.white,),
                                     ],
                                   ),
                                 ],
@@ -672,6 +717,32 @@ class _HomeViewState extends State<HomeView> {
                   )
 
                 ],
+              ),
+
+
+              ///ATTENDANCE VISUAL
+              SfRangeSliderTheme(
+                data: SfRangeSliderThemeData(
+                  activeTickColor: Colors.blue,
+                  activeMinorTickColor: Colors.blue,
+                  inactiveTickColor: Colors.blue,
+                  inactiveMinorTickColor: Colors.blue,
+                  tickSize: Size(3.0, 12.0),
+                  minorTickSize: Size(3.0, 8.0),
+                ),
+                child:  SfRangeSlider(
+                  min: 2.0,
+                  max: 10.0,
+                  interval: 2,
+                  minorTicksPerInterval: 1,
+                  showTicks: true,
+                  values: sfRangeValues,
+                  onChanged: (SfRangeValues newValues){
+                    setState(() {
+                      sfRangeValues = newValues;
+                    });
+                  },
+                ),
               )
 
             ],
