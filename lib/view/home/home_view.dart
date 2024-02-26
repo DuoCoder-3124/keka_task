@@ -25,7 +25,7 @@ class HomeView extends StatefulWidget {
   static const String routeName = '/home_view';
 
   static Widget builder(BuildContext context) {
-    final args = ModalRoute.of(context)?.settings.arguments;
+    //final args = ModalRoute.of(context)?.settings.arguments;
     return BlocProvider(
       create: (context) => HomeCubit(const HomeState()),
       child: const HomeView(),

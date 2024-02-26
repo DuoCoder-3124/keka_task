@@ -12,7 +12,7 @@ class ProfileView extends StatefulWidget {
   static const String routeName = '/profile_view';
 
   static Widget builder(BuildContext context) {
-    final args = ModalRoute.of(context)?.settings.arguments;
+    //final args = ModalRoute.of(context)?.settings.arguments;
     return const ProfileView();
   }
 
