@@ -7,7 +7,6 @@ part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   final BuildContext context;
-
   LoginCubit(super.initialState, this.context);
 
   void loginPressed() {

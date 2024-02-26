@@ -60,6 +60,7 @@ class _HomeViewState extends State<HomeView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+
                   /// ***************** Attendance stats ***********************
                   const Gap(Spacing.small),
                   const Padding(
@@ -70,20 +71,20 @@ class _HomeViewState extends State<HomeView> {
                       fontSize: TextSize.heading,
                     ),
                   ),
-
                   const Gap(Spacing.small),
 
                   ///1. for clock in & clock out card
                   Card(
                     elevation: 20,
+                    color: CommonColor.color1,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        side: const BorderSide(width: 0.6, color:  CommonColor.color1)
+                    ),
                     child: CommonContainer(
-                      color: CommonColor.color1,
-                      borderRadius: 5,
-                      borderWidth: 0.6,
-                      borderColor: CommonColor.color1,
+                      padding: PaddingValue.small,
                       child: Padding(
-                        padding:
-                            const EdgeInsetsDirectional.symmetric(vertical: 15),
+                        padding: PaddingValue.small,
 
                         ///1st card
                         child: Row(
@@ -93,26 +94,31 @@ class _HomeViewState extends State<HomeView> {
                             Column(
                               children: [
                                 ///count-up timer
-                                CommonContainer(
+                                Card(
                                   color: CommonColor.color1,
-                                  width: MediaQuery.of(context).size.width / 3,
-                                  height:
-                                      MediaQuery.of(context).size.height / 19,
-                                  borderRadius: 5,
-                                  borderWidth: 0.6,
-                                  borderColor: Colors.grey,
-                                  child: Center(
-                                    child: CommonText(
-                                      text: state.currentTime,
-                                      color: CommonColor.white,
-                                      fontSize: TextSize.heading,
-                                      fontWeight: TextWeight.medium,
-                                      textAlign: TextAlign.center,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                      side: BorderSide(width: 0.6, color:  CommonColor.grey)
+                                  ),
+                                  child: Padding(
+                                    padding: PaddingValue.zero,
+                                    child: SizedBox(
+                                      width: MediaQuery.of(context).size.width/3,
+                                      height: MediaQuery.of(context).size.height/18,
+                                      child: Center(
+                                        child: CommonText(
+                                          text: state.currentTime,
+                                          color: CommonColor.white,
+                                          fontSize: TextSize.heading,
+                                          fontWeight: TextWeight.medium,
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
 
-                                const Gap(5),
+                                const Gap(Spacing.xSmall),
 
                                 ///current date
                                 CommonText(
@@ -122,15 +128,19 @@ class _HomeViewState extends State<HomeView> {
                                 ),
 
                                 ///total hours and info
-                                const Gap(8),
+                                const Gap(Spacing.small),
                                 Row(
                                   children: [
+
+                                    /// total hours text
                                     CommonText(
                                       text: 'TOTAL HOURS',
                                       color: CommonColor.grey,
                                       fontSize: TextSize.body,
                                     ),
-                                    const Gap(5),
+                                    const Gap(Spacing.xSmall),
+
+                                    ///tooltip
                                     AlignedTooltip(
                                       showDuration: const Duration(seconds: 20),
                                       backgroundColor: Colors.black,
@@ -138,7 +148,7 @@ class _HomeViewState extends State<HomeView> {
                                         padding: PaddingValue.small,
                                         child: CommonText(
                                           text:
-                                           'These hours are calculated w.r.t Web and forgot id clock-ins/outs for the current day only. Bio-metric clock-ins are not considered.',
+                                          'These hours are calculated w.r.t Web and forgot id clock-ins/outs for the current day only. Bio-metric clock-ins are not considered.',
                                           color: CommonColor.white,
                                         ),
                                       ),
@@ -160,7 +170,7 @@ class _HomeViewState extends State<HomeView> {
                                 ),
 
                                 ///gross over
-                                const Gap(4),
+                                const Gap(Spacing.xSmall),
                                 CommonText(
                                   text: 'Gross: 7h 21m',
                                   color: CommonColor.white,
@@ -172,9 +182,11 @@ class _HomeViewState extends State<HomeView> {
                             /// web clock out button
                             Column(
                               children: [
+
+                                /// web clock-out button
                                 CommonElevatedButton(
                                   color: CommonColor.red,
-                                  padding: PaddingValue.normal,
+                                  padding: PaddingValue.medium,
                                   onPressed: () {
                                     cubit.getCurrentTime(timeStartStop: !(state.timeStartStop));
                                   },
@@ -187,7 +199,7 @@ class _HomeViewState extends State<HomeView> {
                                 ),
 
                                 ///since last login
-                                const Gap(5),
+                                const Gap(Spacing.xSmall),
                                 Row(
                                   children: [
                                     CommonText(
@@ -195,7 +207,7 @@ class _HomeViewState extends State<HomeView> {
                                       color: CommonColor.white,
                                       fontSize: TextSize.content,
                                     ),
-                                    const Gap(4),
+                                    const Gap(Spacing.xSmall),
                                     CommonText(
                                       text: 'Since Last Login',
                                       color: CommonColor.grey,
@@ -205,7 +217,7 @@ class _HomeViewState extends State<HomeView> {
                                 ),
 
                                 ///home
-                                const Gap(8),
+                                const Gap(Spacing.small),
                                 GestureDetector(
                                   onTap: () {},
                                   child: const CommonText(
@@ -243,168 +255,166 @@ class _HomeViewState extends State<HomeView> {
                       ),
                     ),
                   ),
-
                   const Gap(Spacing.normal),
 
                   ///2. Attends state
                   Card(
                     elevation: 20,
-                    child: CommonContainer(
-                      borderRadius: 5,
-                      borderWidth: 0.6,
-                      color: CommonColor.color1,
-                      borderColor: CommonColor.color1,
-                      child: Padding(
-                        padding: PaddingValue.small,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            /// last seen and info button
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                ///drop down button
-                                DropdownButton<String>(
-                                    items: List.from(state.lastSeen
-                                        .map<DropdownMenuItem<String>>(
-                                            (String val) {
-                                      return DropdownMenuItem<String>(
-                                          value: val,
-                                          child: CommonText(text: val));
-                                    })),
-                                    dropdownColor: CommonColor.color2,
-                                    borderRadius: BorderRadius.circular(0),
-                                    isDense: true,
-                                    alignment: Alignment.center,
-                                    value: state.dropDownItemValue,
-                                    padding: const EdgeInsetsDirectional.all(5),
-                                    style: TextStyle(color: CommonColor.white),
-                                    icon: Icon(
-                                      Icons.keyboard_arrow_down_rounded,
-                                      color: CommonColor.white,
-                                    ),
-                                    onChanged: (val) {
-                                      cubit.dropDownItemUpdate(
-                                          dropDownItem: val);
-                                      print('in valu ----> $val');
-                                    }),
-
-                                /// info icon button
-                                AlignedTooltip(
-                                  showDuration: const Duration(seconds: 20),
-                                  backgroundColor: CommonColor.black,
-                                  content: Padding(
-                                    padding: PaddingValue.small,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        CommonText(
-                                          text:
-                                              'From Feb 19, 2024 to Feb 25, 2024',
-                                          color: CommonColor.white,
-                                          fontWeight: TextWeight.bold,
-                                        ),
-                                        const Gap(Spacing.small),
-                                        CommonText(
-                                          text: 'Total effective Hours: 42:15',
-                                          color: CommonColor.white,
-                                        ),
-                                        CommonText(
-                                          text: 'Working Days: 5',
-                                          color: CommonColor.white,
-                                        ),
-                                        CommonText(
-                                          text:
-                                              'Average Effective Hours: 8h 26m',
-                                          color: CommonColor.white,
-                                        ),
-                                        const Gap(Spacing.small),
-                                        CommonText(
-                                          text:
-                                              "'My Team' refers to all employees reporting to you, as well as those employees reporting(along with you) to your reporting manager.",
-                                          color: CommonColor.white,
-                                        ),
-                                      ],
-                                    ),
+                    color: CommonColor.color1,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        side: BorderSide(width: 0.6, color:  CommonColor.grey)
+                    ),
+                    child: Padding(
+                      padding: PaddingValue.small,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          /// last seen and info button
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              ///drop down button
+                              DropdownButton<String>(
+                                  items: List.from(state.lastSeen
+                                      .map<DropdownMenuItem<String>>(
+                                          (String val) {
+                                        return DropdownMenuItem<String>(
+                                            value: val,
+                                            child: CommonText(text: val));
+                                      })),
+                                  dropdownColor: CommonColor.color2,
+                                  borderRadius: BorderRadius.circular(0),
+                                  isDense: true,
+                                  alignment: Alignment.center,
+                                  value: state.dropDownItemValue,
+                                  padding: const EdgeInsetsDirectional.all(5),
+                                  style: TextStyle(color: CommonColor.white),
+                                  icon: Icon(
+                                    Icons.keyboard_arrow_down_rounded,
+                                    color: CommonColor.white,
                                   ),
-                                  child: IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(
-                                      Icons.info_outline,
-                                      color: CommonColor.grey,
-                                    ),
+                                  onChanged: (val) {
+                                    cubit.dropDownItemUpdate(
+                                        dropDownItem: val);
+                                    print('in valu ----> $val');
+                                  }),
+
+                              /// info icon button
+                              AlignedTooltip(
+                                showDuration: const Duration(seconds: 20),
+                                backgroundColor: CommonColor.black,
+                                content: Padding(
+                                  padding: PaddingValue.small,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    children: [
+                                      CommonText(
+                                        text:
+                                        'From Feb 19, 2024 to Feb 25, 2024',
+                                        color: CommonColor.white,
+                                        fontWeight: TextWeight.bold,
+                                      ),
+                                      const Gap(Spacing.small),
+                                      CommonText(
+                                        text: 'Total effective Hours: 42:15',
+                                        color: CommonColor.white,
+                                      ),
+                                      CommonText(
+                                        text: 'Working Days: 5',
+                                        color: CommonColor.white,
+                                      ),
+                                      CommonText(
+                                        text:
+                                        'Average Effective Hours: 8h 26m',
+                                        color: CommonColor.white,
+                                      ),
+                                      const Gap(Spacing.small),
+                                      CommonText(
+                                        text:
+                                        "'My Team' refers to all employees reporting to you, as well as those employees reporting(along with you) to your reporting manager.",
+                                        color: CommonColor.white,
+                                      ),
+                                    ],
                                   ),
-                                )
-                              ],
-                            ),
+                                ),
+                                child: IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    Icons.info_outline,
+                                    color: CommonColor.grey,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
 
-                            const Gap(Spacing.small),
+                          const Gap(Spacing.small),
 
-                            ///me, avg hrs/day, on time arriver
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Column(
-                                  children: [
-                                    const Gap(Spacing.small),
-                                    Row(
-                                      children: [
-                                        CircleAvatar(
-                                          backgroundColor:
-                                              Colors.yellow.shade700,
-                                          child: Icon(
-                                            Icons.person_2_outlined,
-                                            color: CommonColor.white,
-                                          ),
-                                        ),
-                                        const Gap(15),
-                                        CommonText(
-                                          text: "Me",
+                          ///me, avg hrs/day, on time arriver
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Column(
+                                children: [
+                                  const Gap(Spacing.small),
+                                  Row(
+                                    children: [
+                                      CircleAvatar(
+                                        backgroundColor:
+                                        Colors.yellow.shade700,
+                                        child: Icon(
+                                          Icons.person_2_outlined,
                                           color: CommonColor.white,
-                                          fontWeight: FontWeight.w500,
                                         ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    CommonText(
-                                      text: "AVG HRS / DAY",
-                                      color: CommonColor.grey,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: TextSize.content,
-                                    ),
-                                    CommonText(
-                                      text: "8h 13m",
-                                      color: CommonColor.white,
-                                      fontWeight: FontWeight.w500,
-                                    )
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    CommonText(
-                                      text: "ON TIME ARRIVAL",
-                                      color: CommonColor.grey,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: TextSize.content,
-                                    ),
-                                    CommonText(
-                                      text: "100%",
-                                      color: CommonColor.white,
-                                      fontWeight: FontWeight.w500,
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+                                      ),
+                                      const Gap(15),
+                                      CommonText(
+                                        text: "Me",
+                                        color: CommonColor.white,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  CommonText(
+                                    text: "AVG HRS / DAY",
+                                    color: CommonColor.grey,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: TextSize.content,
+                                  ),
+                                  CommonText(
+                                    text: "8h 13m",
+                                    color: CommonColor.white,
+                                    fontWeight: FontWeight.w500,
+                                  )
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  CommonText(
+                                    text: "ON TIME ARRIVAL",
+                                    color: CommonColor.grey,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: TextSize.content,
+                                  ),
+                                  CommonText(
+                                    text: "100%",
+                                    color: CommonColor.white,
+                                    fontWeight: FontWeight.w500,
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -415,7 +425,7 @@ class _HomeViewState extends State<HomeView> {
                   ///3.logs & request
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.symmetric(horizontal: 5),
+                    const EdgeInsetsDirectional.symmetric(horizontal: 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -452,10 +462,12 @@ class _HomeViewState extends State<HomeView> {
                   const Gap(Spacing.small),
                   Card(
                     elevation: 10,
-                    child: CommonContainer(
-                      color: CommonColor.color1,
-                      borderRadius: 5,
-                      borderWidth: 0.6,
+                    color: CommonColor.color1,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        side: BorderSide(width: 0.6, color:  CommonColor.grey)
+                    ),
+                    child: Padding(
                       padding: PaddingValue.small,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -522,10 +534,12 @@ class _HomeViewState extends State<HomeView> {
                   ///5. last 30 days
                   const Gap(Spacing.small),
                   Card(
-                    child: CommonContainer(
-                      color: CommonColor.color1,
-                      borderRadius: 5,
-                      borderWidth: 0.6,
+                    color: CommonColor.color1,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        side: BorderSide(width: 0.6, color:  CommonColor.grey)
+                    ),
+                    child: Padding(
                       padding: PaddingValue.small,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -591,12 +605,14 @@ class _HomeViewState extends State<HomeView> {
   Widget attendanceLog() {
     return Card(
       elevation: 10,
-      child: Flexible(
-        child: CommonContainer(
-          borderRadius: 5,
-          borderWidth: 0.6,
-          color: const Color(0xff3f4b65),
-          padding: PaddingValue.small,
+      color: CommonColor.color2,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5),
+          side: BorderSide(width: 0.6, color:  CommonColor.grey)
+      ),
+      child: Padding(
+        padding: PaddingValue.small,
+        child: Flexible(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -716,7 +732,7 @@ class _HomeViewState extends State<HomeView> {
             //   )
             // ),
             todayDecoration:
-                BoxDecoration(color: Colors.white.withOpacity(0.8)),
+            BoxDecoration(color: Colors.white.withOpacity(0.8)),
             todayTextStyle: const TextStyle(
                 color: Colors.indigo, fontWeight: TextWeight.bold),
             tableBorder: TableBorder.all(
@@ -741,7 +757,7 @@ class _HomeViewState extends State<HomeView> {
                     fontWeight: TextWeight.medium,
                     text: date.day.toString(),
                     color: (DateTime.saturday != date.weekday) &&
-                            (DateTime.sunday != date.weekday)
+                        (DateTime.sunday != date.weekday)
                         ? Colors.white
                         : Colors.red.shade400,
                   ),
@@ -750,7 +766,7 @@ class _HomeViewState extends State<HomeView> {
                     child: AutoSizeText(
                       // DateTime.saturday == date.weekday ? Colors.red: Colors.green,
                       ((DateTime.saturday != date.weekday) &&
-                              (DateTime.sunday != date.weekday))
+                          (DateTime.sunday != date.weekday))
                           ? '9:00 AM - 6:00 PM'
                           : 'Holiday',
                       maxLines: 2,
@@ -759,7 +775,7 @@ class _HomeViewState extends State<HomeView> {
                       style: TextStyle(
                           fontWeight: TextWeight.medium,
                           color: ((DateTime.saturday != date.weekday) &&
-                                  (DateTime.sunday != date.weekday))
+                              (DateTime.sunday != date.weekday))
                               ? Colors.white.withOpacity(0.6)
                               : Colors.red),
                     ),

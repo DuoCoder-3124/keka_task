@@ -168,7 +168,7 @@ class _ProfileViewState extends State<ProfileView> {
                             Row(
                               children: [
                                 CommonText(color: CommonColor.grey, text: 'REPORTED BY', fontSize: Spacing.medium,),
-                                CommonText(color: CommonColor.white, text: ' : Ajay Pate', fontSize: Spacing.medium, fontWeight: TextWeight.medium),
+                                CommonText(color: CommonColor.white, text: ' : Ajay Patel', fontSize: Spacing.medium, fontWeight: TextWeight.medium),
                               ],
                             ),
 

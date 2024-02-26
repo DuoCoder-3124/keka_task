@@ -47,7 +47,7 @@ class _BottomNavBarViewState extends State<BottomNavBarView> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar:
-          BlocSelector<BottomNavBarCubit, BottomNavBarState, BottomNavigationOption>(
+        BlocSelector<BottomNavBarCubit, BottomNavBarState, BottomNavigationOption>(
         selector: (state) => state.navigationOption,
         builder: (context, selectTab) {
           return BottomNavBar(

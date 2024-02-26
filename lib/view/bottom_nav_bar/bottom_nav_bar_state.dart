@@ -13,8 +13,7 @@ class BottomNavBarState extends Equatable {
   });
 
   @override
-  List<Object?> get props =>
-      [navigationOption];
+  List<Object?> get props => [navigationOption];
 
   BottomNavBarState copyWith({
     BottomNavigationOption? navigationOption,

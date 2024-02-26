@@ -4,7 +4,6 @@ part of 'login_cubit.dart';
 class LoginState extends Equatable{
 
   TextEditingController emailController=TextEditingController();
-
   GlobalKey<FormState> formKey;
 
   LoginState({required this.emailController,required this.formKey});
