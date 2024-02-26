@@ -578,92 +578,94 @@ class _HomeViewState extends State<HomeView> {
   Widget attendanceLog() {
     return Card(
       elevation: 10,
-      child: CommonContainer(
-        borderRadius: 5,
-        borderWidth: 0.6,
-        color: const Color(0xff3f4b65),
-        padding: PaddingValue.small,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CommonText(text: 'DATE : Feb 23, Fri', color: Colors.white),
-                Gap(3),
-                CommonText(
-                    text: 'EFFECTIVE HOUR : 8h 25m', color: Colors.white),
-                Gap(3),
-                CommonText(text: 'GROSS HOURS: 9h 14m', color: Colors.white),
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const CommonText(
-                    text: 'ARRIVAL : On Time', color: Colors.white),
-                Row(
-                  children: [
-                    const CommonText(
-                      text: 'Log : ',
-                      color: Colors.white,
-                    ),
-                    AlignedTooltip(
-                      showDuration: const Duration(seconds: 20),
-                      backgroundColor: CommonColor.black,
-                      content: Padding(
-                        padding: PaddingValue.small,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-
-                            CommonText(text: 'General Shift (Feb 26)', color: CommonColor.white,),
-                            CommonText(text: '9:00 AM - 6:00 PM', color: CommonColor.white,),
-                            Divider(color: CommonColor.grey),
-
-                            Row(
-                              children: [
-                                IconButton(onPressed: (){}, icon: const Icon(Icons.edit, color: Colors.blue,),),
-                                const CommonText(text: 'Apply Partial Day', color: Colors.blue,),
-                              ],
-                            ),
-
-                            CommonText(text: 'Web Clock In', fontWeight: TextWeight.bold, color: CommonColor.white,),
-
-                            Row(
-                              children: [
-                                Row(
-                                  children: [
-                                    IconButton(onPressed: (){}, icon: Icon(Icons.circle, color: Colors.green)),
-                                    CommonText(text: '8:34:08 AM', fontWeight: TextWeight.bold, color: CommonColor.white,),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    IconButton(onPressed: (){}, icon: Icon(Icons.circle, color: Colors.red)),
-                                    CommonText(text: 'MISSING', fontWeight: TextWeight.bold, color: CommonColor.white,),
-                                  ],
-                                ),
-                              ],
-                            )
-
-                          ],
-                        ),
+      child: Flexible(
+        child: CommonContainer(
+          borderRadius: 5,
+          borderWidth: 0.6,
+          color: const Color(0xff3f4b65),
+          padding: PaddingValue.small,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CommonText(text: 'DATE : Feb 23, Fri', color: Colors.white, fontSize: TextSize.label),
+                  Gap(3),
+                  CommonText(
+                      text: 'EFFECTIVE HOUR : 8h 25m', color: Colors.white,fontSize: TextSize.label),
+                  Gap(3),
+                  CommonText(text: 'GROSS HOURS: 9h 14m', color: Colors.white, fontSize: TextSize.label),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const CommonText(
+                      text: 'ARRIVAL : On Time', color: Colors.white, fontSize: TextSize.label),
+                  Row(
+                    children: [
+                      const CommonText(
+                        text: 'Log : ',
+                        color: Colors.white,
                       ),
-                      child: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.info_outline,
-                            color: Colors.green,
-                          )),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ],
+                      AlignedTooltip(
+                        showDuration: const Duration(seconds: 20),
+                        backgroundColor: CommonColor.black,
+                        content: Padding(
+                          padding: PaddingValue.small,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+
+                              CommonText(text: 'General Shift (Feb 26)', color: CommonColor.white,),
+                              CommonText(text: '9:00 AM - 6:00 PM', color: CommonColor.white,),
+                              Divider(color: CommonColor.grey),
+
+                              Row(
+                                children: [
+                                  IconButton(onPressed: (){}, icon: const Icon(Icons.edit, color: Colors.blue,),),
+                                  const CommonText(text: 'Apply Partial Day', color: Colors.blue,),
+                                ],
+                              ),
+
+                              CommonText(text: 'Web Clock In', fontWeight: TextWeight.bold, color: CommonColor.white,),
+
+                              Row(
+                                children: [
+                                  Row(
+                                    children: [
+                                      IconButton(onPressed: (){}, icon: Icon(Icons.circle, color: Colors.green)),
+                                      CommonText(text: '8:34:08 AM', fontWeight: TextWeight.bold, color: CommonColor.white,),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      IconButton(onPressed: (){}, icon: Icon(Icons.circle, color: Colors.red)),
+                                      CommonText(text: 'MISSING', fontWeight: TextWeight.bold, color: CommonColor.white,),
+                                    ],
+                                  ),
+                                ],
+                              )
+
+                            ],
+                          ),
+                        ),
+                        child: IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.info_outline,
+                              color: Colors.green,
+                            )),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
