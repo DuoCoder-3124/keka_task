@@ -3,13 +3,13 @@ part of 'login_password_cubit.dart';
 class LoginPasswordState extends Equatable {
   bool isVisible;
 
-  TextEditingController passwordController;
-  TextEditingController captchaController;
+  TextEditingController passwordController=TextEditingController();
+  TextEditingController captchaController=TextEditingController();
 
   GlobalKey<FormState> formKey;
 
   LoginPasswordState(
-      {this.isVisible = false,
+      {this.isVisible = true,
       required this.passwordController,
       required this.formKey,
       required this.captchaController});

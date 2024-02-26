@@ -4,7 +4,6 @@ import 'package:keka_task/common_attribute/common_colors.dart';
 import 'package:keka_task/common_widget/enum.dart';
 
 class BottomNavBarState extends Equatable {
-
   ///for drop down
   final BottomNavigationOption navigationOption;
 
