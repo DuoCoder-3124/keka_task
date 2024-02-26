@@ -107,6 +107,7 @@ class _HomeViewState extends State<HomeView> {
                                       color: CommonColor.white,
                                       fontSize: TextSize.heading,
                                       fontWeight: TextWeight.medium,
+                                      textAlign: TextAlign.center,
                                     ),
                                   ),
                                 ),
