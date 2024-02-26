@@ -126,11 +126,13 @@ class _ProfileViewState extends State<ProfileView> {
                                   size: 18,
                                 ),
                                 const Gap(2),
-                                AutoSizeText(
-                                 'nehal.s@elaunchinfotech.in',
-                                  maxLines: 2,
-                                  style: TextStyle(
-                                    color: CommonColor.white,
+                                Flexible(
+                                  child: AutoSizeText(
+                                   'nehal.s@elaunchinfotech.in',
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                      color: CommonColor.white,
+                                    ),
                                   ),
                                 )
                               ],
@@ -158,7 +160,7 @@ class _ProfileViewState extends State<ProfileView> {
                             Row(
                               children: [
                                 CommonText(color: CommonColor.grey, text: 'BUSINESS UNIT', fontSize: Spacing.medium,),
-                                Flexible(child: CommonText(color: CommonColor.white, text: ' : ELaunch Solution Pvt.Ltd', fontSize: Spacing.medium, fontWeight: TextWeight.medium)),
+                                CommonText(color: CommonColor.white, text: ' : ELaunch Solution Pvt.Ltd', fontSize: Spacing.medium, fontWeight: TextWeight.medium),
                               ],
                             ),
 
