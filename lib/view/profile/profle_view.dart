@@ -126,13 +126,11 @@ class _ProfileViewState extends State<ProfileView> {
                                   size: 18,
                                 ),
                                 const Gap(2),
-                                Flexible(
-                                  child: AutoSizeText(
-                                   'nehal.s@elaunchinfotech.in',
-                                    maxLines: 2,
-                                    style: TextStyle(
-                                      color: CommonColor.white,
-                                    ),
+                                AutoSizeText(
+                                 'nehal.s@elaunchinfotech.in',
+                                  maxLines: 2,
+                                  style: TextStyle(
+                                    color: CommonColor.white,
                                   ),
                                 )
                               ],
