@@ -155,7 +155,7 @@ class _ProfileViewState extends State<ProfileView> {
                                 CommonText(color: CommonColor.white, text: ' : Android/Flutter', fontSize: Spacing.medium, fontWeight: TextWeight.medium),
                               ],
                             ),
-
+//
                             ///business unit
                             Row(
                               children: [
