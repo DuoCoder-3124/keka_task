@@ -585,26 +585,26 @@ class _HomeViewState extends State<HomeView> {
           borderWidth: 0.6,
           color: const Color(0xff3f4b65),
           padding: PaddingValue.small,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CommonText(text: 'DATE : Feb 23, Fri', color: Colors.white, fontSize: TextSize.label),
-                  Gap(3),
-                  CommonText(
-                      text: 'EFFECTIVE HOUR : 8h 25m', color: Colors.white,fontSize: TextSize.label),
-                  Gap(3),
-                  CommonText(text: 'GROSS HOURS: 9h 14m', color: Colors.white, fontSize: TextSize.label),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
+
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const CommonText(
-                      text: 'ARRIVAL : On Time', color: Colors.white, fontSize: TextSize.label),
+                  CommonText(text: 'DATE : Feb 23, Fri', color: Colors.white, fontSize: TextSize.label),
+                  CommonText(text: 'ARRIVAL : On Time', color: Colors.white, fontSize: TextSize.label),
+                ],
+              ),
+
+              const Gap(Spacing.xMedium),
+              const CommonText(
+                  text: 'EFFECTIVE HOUR : 8h 25m', color: Colors.white,fontSize: TextSize.label),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const CommonText(text: 'GROSS HOURS: 9h 14m', color: Colors.white, fontSize: TextSize.label),
                   Row(
                     children: [
                       const CommonText(
@@ -663,8 +663,10 @@ class _HomeViewState extends State<HomeView> {
                       ),
                     ],
                   )
+
                 ],
-              ),
+              )
+
             ],
           ),
         ),
