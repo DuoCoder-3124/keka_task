@@ -18,6 +18,10 @@ class HomeState extends Equatable {
 
   final List attendaceRequestList;
 
+  final SfRangeValues sfRangeValues;// = const SfRangeValues(0.4, 0.8);
+
+
+
   const HomeState(
       {this.color = CommonColor.blueColor,
       this.lastSeen = const ['Last Week', 'Last Month', 'Custom Range'],
@@ -28,7 +32,8 @@ class HomeState extends Equatable {
       this.logsNRequest = const ['Attendance Log', 'Shift Schedule', 'Attendance Request'],
       this.logNRequestClickIndex = 0,
       this.timeStartStop = false,
-      this.attendaceRequestList = const ['Last 7 days', 'Last 14 days', 'Last 30 days','Custom Range']
+      this.attendaceRequestList = const ['Last 7 days', 'Last 14 days', 'Last 30 days','Custom Range'],
+      this.sfRangeValues = const SfRangeValues(0.4, 0.8)
       });
 
   @override
@@ -42,7 +47,8 @@ class HomeState extends Equatable {
         logsNRequest,
         logNRequestClickIndex,
         timeStartStop,
-        attendaceRequestList
+        attendaceRequestList,
+        sfRangeValues
       ];
 
   HomeState copyWith(
@@ -56,7 +62,8 @@ class HomeState extends Equatable {
       List? logsNRequest,
       int? logNRequestClickIndex,
       bool? timeStartStop,
-      List? attendaceRequestList
+      List? attendaceRequestList,
+      SfRangeValues? sfRangeValues
       }) {
     return HomeState(
         color: color ?? this.color,
@@ -68,7 +75,8 @@ class HomeState extends Equatable {
         logsNRequest: logsNRequest ?? this.logsNRequest,
         logNRequestClickIndex: logNRequestClickIndex ?? this.logNRequestClickIndex,
         timeStartStop: timeStartStop ?? this.timeStartStop,
-        attendaceRequestList: attendaceRequestList ?? this.attendaceRequestList
+        attendaceRequestList: attendaceRequestList ?? this.attendaceRequestList,
+        sfRangeValues: sfRangeValues ?? this.sfRangeValues
     );
   }
 }
