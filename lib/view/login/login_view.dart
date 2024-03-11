@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -8,8 +9,12 @@ import 'package:keka_task/common_attribute/validation.dart';
 import 'package:keka_task/common_widget/common_elevated_button.dart';
 import 'package:keka_task/common_widget/common_rich_text.dart';
 import 'package:keka_task/common_widget/common_text_field.dart';
-import 'package:keka_task/view/login/login_cubit.dart';
 import 'package:keka_task/view/login_password/login_password_view.dart';
+import 'package:keka_task/view/register/register_view.dart';
+
+part 'login_cubit.dart';
+
+part 'login_state.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -18,8 +23,8 @@ class LoginView extends StatefulWidget {
 
   static Widget builder(BuildContext context) {
     return BlocProvider(
-      create: (context) => LoginCubit(
-        LoginState(emailController: TextEditingController(), formKey: GlobalKey<FormState>()),
+      create: (context) => RegisterCubit(
+        RegisterState(emailController: TextEditingController(), formKey: GlobalKey<FormState>()),
         context,
       ),
       child: const LoginView(),
@@ -34,7 +39,7 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<LoginCubit, LoginState>(
+      body: BlocBuilder<RegisterCubit, RegisterState>(
         builder: (context, state) {
           return Center(
             child: Form(
@@ -45,7 +50,7 @@ class _LoginViewState extends State<LoginView> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: <Widget>[
                     const Text('Login to Keka', style: TextStyle(fontSize: TextSize.appBarTitle)),
                     const Gap(Spacing.normal),
                     CommonTextField(
@@ -57,7 +62,7 @@ class _LoginViewState extends State<LoginView> {
                     ),
                     const Gap(Spacing.normal),
                     CommonElevatedButton(
-                      onPressed: () => context.read<LoginCubit>().loginPressed(),
+                      onPressed: () => context.read<RegisterCubit>().loginPressed(),
                       color: CommonColor.blueColor,
                       height: 50,
                       width: MediaQuery.of(context).size.width,
@@ -126,6 +131,14 @@ class _LoginViewState extends State<LoginView> {
                         const Gap(Spacing.normal),
                         const Expanded(child: SizedBox()),
                       ],
+                    ),
+                    const Gap(Spacing.normal),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: TextButton(
+                        onPressed: () =>Navigator.pushNamed(context, RegisterView.routeName),
+                        child: const Text('create an account?',style: TextStyle(color: CommonColor.blueColor),),
+                      ),
                     ),
                     const Gap(Spacing.xxxLarge * 2),
                     Row(

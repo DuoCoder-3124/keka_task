@@ -1,21 +1,21 @@
 
-part of 'login_cubit.dart';
+part of 'login_view.dart';
 
-class LoginState extends Equatable{
+class RegisterState extends Equatable{
 
   TextEditingController emailController=TextEditingController();
   GlobalKey<FormState> formKey;
 
-  LoginState({required this.emailController,required this.formKey});
+  RegisterState({required this.emailController,required this.formKey});
 
   @override
   List<Object?> get props => [emailController,formKey];
 
-  LoginState copyWith({
+  RegisterState copyWith({
     TextEditingController? emailController,
     GlobalKey<FormState>? formKey,
   }) {
-    return LoginState(
+    return RegisterState(
       emailController: emailController ?? this.emailController,
       formKey: formKey ?? this.formKey,
     );

@@ -9,6 +9,8 @@ import 'package:keka_task/view/leave/leave_view.dart';
 import 'package:keka_task/view/login/login_view.dart';
 import 'package:keka_task/view/login_password/login_password_view.dart';
 import 'package:keka_task/view/profile/profle_view.dart';
+import 'package:keka_task/view/register/register_view.dart';
+import 'package:keka_task/view/register/register_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,6 +36,7 @@ class MyApp extends StatelessWidget {
   }
 
   Map<String, WidgetBuilder> get route => <String, WidgetBuilder>{
+    RegisterView.routeName:RegisterView.builder,
     LoginView.routeName:LoginView.builder,
     LoginPasswordView.routeName:LoginPasswordView.builder,
     ForgotPasswordView.routeName:ForgotPasswordView.builder,
