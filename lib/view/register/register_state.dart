@@ -12,7 +12,6 @@ class RegisterState extends Equatable {
   TextEditingController dobController = TextEditingController();
   TextEditingController reportedByController = TextEditingController();
   TextEditingController jobTitleController = TextEditingController();
-
   GlobalKey<FormState> formKey;
 
   RegisterState({
@@ -43,6 +42,7 @@ class RegisterState extends Equatable {
         genderController,
         dobController,
         jobTitleController,
+        reportedByController,
       ];
 
   RegisterState copyWith({
