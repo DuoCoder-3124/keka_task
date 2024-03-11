@@ -37,11 +37,13 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
   // final uuid = const Uuid();
   // final captcha = const Uuid().v4().substring(1, 5).toUpperCase();
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocBuilder<ForgotPasswordCubit, ForgotPasswordState>(
         builder: (context, state) {
+          var cubit=context.read<ForgotPasswordCubit>();
           return Form(
             key: state.formKey,
             child: Center(
@@ -69,11 +71,12 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Expanded(
+                        Expanded(
                           child: Text(
                             textAlign: TextAlign.center,
                             // uuid.v4().substring(1, 5).toUpperCase(),
-                            'N6D4',
+                            // 'N6D4',
+                            state.captcha??'',
                             style: TextStyle(
                               color: Color(0xFF1e6a72),
                               fontStyle: FontStyle.italic,
@@ -81,16 +84,18 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                             ),
                           ),
                         ),
-                        const Padding(
+                        Padding(
                           padding: EdgeInsetsDirectional.only(end: 16),
-                          child: Icon(Icons.refresh, color: CommonColor.blueColor),
+                          child: IconButton(icon: Icon(Icons.refresh, color: CommonColor.blueColor), onPressed: () =>cubit.refreshCaptcha(),),
                         ),
                         Expanded(
                             child: CommonTextField(
                           hintText: 'Captcha',
                           validator: (value) {
-                            if (value == null || value.isEmpty || value!='N6D4') {
+                            if (value == null || value.isEmpty ) {
                               return 'Enter captcha';
+                            }else if(state.captcha!=value){
+                              return 'Invalid captcha';
                             }
                             return null;
                           },

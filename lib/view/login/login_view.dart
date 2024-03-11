@@ -19,10 +19,7 @@ class LoginView extends StatefulWidget {
   static Widget builder(BuildContext context) {
     return BlocProvider(
       create: (context) => LoginCubit(
-        LoginState(
-          emailController: TextEditingController(),
-          formKey: GlobalKey<FormState>(),
-        ),
+        LoginState(emailController: TextEditingController(), formKey: GlobalKey<FormState>()),
         context,
       ),
       child: const LoginView(),
@@ -56,7 +53,7 @@ class _LoginViewState extends State<LoginView> {
                       hintText: 'Email or Mobile',
                       validator: validateEmailAndPhone,
                       isVisiblePassword: false,
-                      keyboardType: TextInputType.emailAddress
+                      keyboardType: TextInputType.emailAddress,
                     ),
                     const Gap(Spacing.normal),
                     CommonElevatedButton(
@@ -147,14 +144,18 @@ class _LoginViewState extends State<LoginView> {
                           child: CommonRichText(
                             listSpan: [
                               LinkTextSpan(
-                                  text: 'By logging in,you agree to Keka ', linkStyle: TextStyle(color: Colors.grey)),
+                                text: 'By logging in,you agree to Keka ',
+                                linkStyle: TextStyle(color: Colors.grey),
+                              ),
                               LinkTextSpan(
-                                  text: 'Terms of Use',
-                                  linkStyle: TextStyle(color: Colors.grey, decoration: TextDecoration.underline)),
+                                text: 'Terms of Use',
+                                linkStyle: TextStyle(color: Colors.grey, decoration: TextDecoration.underline),
+                              ),
                               LinkTextSpan(text: ' and ', linkStyle: TextStyle(color: Colors.grey)),
                               LinkTextSpan(
-                                  text: 'Privacy Policy',
-                                  linkStyle: TextStyle(color: Colors.grey, decoration: TextDecoration.underline)),
+                                text: 'Privacy Policy',
+                                linkStyle: TextStyle(color: Colors.grey, decoration: TextDecoration.underline),
+                              ),
                             ],
                           ),
                         ),
