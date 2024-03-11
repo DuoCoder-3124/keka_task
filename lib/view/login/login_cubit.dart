@@ -1,9 +1,13 @@
 
 part of 'login_view.dart';
 
-class RegisterCubit extends Cubit<RegisterState> {
+class LoginCubit extends Cubit<LoginState> {
   final BuildContext context;
-  RegisterCubit(super.initialState, this.context);
+  LoginCubit(super.initialState, this.context){
+    log('hdgshdg');
+      // ApiService.helper.registerUser(RegisterModel());
+
+  }
 
   void loginPressed() {
     if ((state.formKey.currentState?.validate() ?? false)) {

@@ -74,7 +74,10 @@ class _RegisterViewState extends State<RegisterView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Gap(Spacing.xLarge),
-                    const Text('Register to Keka', style: TextStyle(fontSize: TextSize.largeHHeading,fontWeight: FontWeight.bold,)),
+                    const Text(
+                      'Register to Keka',
+                      style: TextStyle(fontSize: TextSize.largeHHeading, fontWeight: FontWeight.bold),
+                    ),
                     const Gap(Spacing.normal),
                     CommonTextField(
                       controller: state.firstNameController,
