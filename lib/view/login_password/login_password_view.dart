@@ -10,6 +10,7 @@ import 'package:keka_task/common_widget/common_text_field.dart';
 import 'package:keka_task/view/bottom_nav_bar/bottom_nav_bar_view.dart';
 import 'package:keka_task/view/forgot_password/forgot_password_view.dart';
 import 'package:keka_task/view/home/home_view.dart';
+import 'package:uuid/uuid.dart';
 
 import 'login_password_cubit.dart';
 
@@ -22,9 +23,10 @@ class LoginPasswordView extends StatefulWidget {
     return BlocProvider(
       create: (context) => LoginPasswordCubit(
         LoginPasswordState(
-            passwordController: TextEditingController(),
-            captchaController: TextEditingController(),
-            formKey: GlobalKey<FormState>()),
+          passwordController: TextEditingController(),
+          captchaController: TextEditingController(),
+          formKey: GlobalKey<FormState>(),
+        ),
         context,
       ),
       child: const LoginPasswordView(),
@@ -44,6 +46,9 @@ class _LoginPasswordViewState extends State<LoginPasswordView> {
     return Scaffold(
       body: BlocBuilder<LoginPasswordCubit, LoginPasswordState>(
         builder: (context, state) {
+
+          var cubit=context.read<LoginPasswordCubit>();
+
           return Form(
             key: state.formKey,
             child: Center(
@@ -77,7 +82,7 @@ class _LoginPasswordViewState extends State<LoginPasswordView> {
                       controller: state.passwordController,
                       hintText: 'Password',
                       validator: (value) {
-                        if (value == null || value.isEmpty ) {
+                        if (value == null || value.isEmpty) {
                           return 'Enter password';
                         }
                         return null;
@@ -85,7 +90,7 @@ class _LoginPasswordViewState extends State<LoginPasswordView> {
                       isVisiblePassword: state.isVisible,
                       suffixIcon: IconButton(
                         onPressed: () => context.read<LoginPasswordCubit>().changeVisibility(),
-                        icon: Icon(state.isVisible ? Icons.visibility_off_outlined:Icons.visibility_outlined ),
+                        icon: Icon(state.isVisible ? Icons.visibility_off_outlined : Icons.visibility_outlined),
                         color: Colors.grey,
                       ),
                       keyboardType: TextInputType.text,
@@ -94,19 +99,23 @@ class _LoginPasswordViewState extends State<LoginPasswordView> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Expanded(
+                         Expanded(
                           // flex: 4,
                           child: Text(
                             textAlign: TextAlign.center,
                             // uuid.v4().substring(1, 5).toUpperCase(),
-                            'N6D4',
-                            style: TextStyle(
-                                color: Color(0xFF1e6a72), fontStyle: FontStyle.italic, fontSize: TextSize.largeHHeading),
+                            // uuid.v4().substring(1, 5).toUpperCase(),
+                            // 'N6D4',
+                            state.captcha??'',
+                            style: const TextStyle(
+                                color: Color(0xFF1e6a72),
+                                fontStyle: FontStyle.italic,
+                                fontSize: TextSize.largeHHeading),
                           ),
                         ),
-                        const Padding(
+                        Padding(
                           padding: EdgeInsetsDirectional.only(end: 16),
-                          child: Icon(Icons.refresh, color: CommonColor.blueColor),
+                          child: IconButton(icon: Icon(Icons.refresh, color: CommonColor.blueColor), onPressed: () =>cubit.refreshCaptcha(),),
                         ),
                         Expanded(
                           //
@@ -114,8 +123,11 @@ class _LoginPasswordViewState extends State<LoginPasswordView> {
                           child: CommonTextField(
                             controller: state.captchaController,
                             validator: (value) {
-                              if (value == null || value.isEmpty || value!='N6D4') {
+                              // if (value == null || value.isEmpty || value != 'N6D4') {
+                              if (value == null || value.isEmpty ) {
                                 return 'Enter captcha';
+                              }else if(state.captcha!=value){
+                                return 'Invalid captcha';
                               }
                               return null;
                             },
