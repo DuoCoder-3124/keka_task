@@ -12,6 +12,7 @@ import 'package:keka_task/view/profile/profle_view.dart';
 import 'package:keka_task/view/register/register_view.dart';
 import 'package:keka_task/view/register/register_view.dart';
 
+//entry point
 void main() {
   runApp(const MyApp());
 }
