@@ -4,7 +4,9 @@ import 'package:gap/gap.dart';
 import 'package:keka_task/common_attribute/common_colors.dart';
 import 'package:keka_task/common_attribute/common_value.dart';
 import 'package:keka_task/common_widget/common_container.dart';
+import 'package:keka_task/common_widget/common_elevated_button.dart';
 import 'package:keka_task/common_widget/common_text.dart';
+import 'package:keka_task/view/register/register_view.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -28,6 +30,7 @@ class _ProfileViewState extends State<ProfileView> {
           actions: [
             IconButton(
               onPressed: () {
+                Navigator.pushNamed(context, RegisterView.routeName);
                 print('edit');
               },
               icon: Icon(Icons.edit_note_sharp),
@@ -342,6 +345,21 @@ class _ProfileViewState extends State<ProfileView> {
                     ],
                   ),
                 ),
+
+
+                /// logout user
+                const Gap(Spacing.xLarge),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width/4,
+                  child: CommonElevatedButton(
+                      onPressed: (){},
+                       shape: const RoundedRectangleBorder(
+                         borderRadius: ShapeBorderRadius.small
+                       ),
+                      child: CommonText(text: 'LogOut',color: CommonColor.white)
+                  ),
+                )
+
               ],
             ),
           ),
