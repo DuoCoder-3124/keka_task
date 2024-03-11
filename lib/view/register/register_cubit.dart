@@ -1,5 +1,3 @@
-
-
 part of 'register_view.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {
@@ -11,6 +9,5 @@ class RegisterCubit extends Cubit<RegisterState> {
       // emit(state.copyWith(emailController: state.emailController,formKey: state.formKey));
       Navigator.pushNamedAndRemoveUntil(context, LoginPasswordView.routeName,(route) => false);
     }
-
   }
 }

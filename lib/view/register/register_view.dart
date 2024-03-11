@@ -51,6 +51,14 @@ class _RegisterViewState extends State<RegisterView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // appBar: AppBar(
+      //   foregroundColor: CommonColor.white,
+      //   title: Text(
+      //     'Register to keka',
+      //     style: TextStyle(color: CommonColor.white, fontWeight: FontWeight.bold, fontSize: TextSize.largeHHeading),
+      //   ),
+      //   backgroundColor: CommonColor.blue,
+      // ),
       body: BlocBuilder<RegisterCubit, RegisterState>(
         builder: (context, state) {
           var cubit = context.read<RegisterCubit>();
@@ -65,7 +73,11 @@ class _RegisterViewState extends State<RegisterView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text('Register to Keka', style: TextStyle(fontSize: TextSize.appBarTitle)),
+                    const Gap(Spacing.xLarge),
+                    const Text(
+                      'Register to Keka',
+                      style: TextStyle(fontSize: TextSize.largeHHeading, fontWeight: FontWeight.bold),
+                    ),
                     const Gap(Spacing.normal),
                     CommonTextField(
                       controller: state.firstNameController,

@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:keka_task/api%20/api_helper.dart';
 import 'package:keka_task/common_attribute/common_colors.dart';
 import 'package:keka_task/common_attribute/common_images.dart';
 import 'package:keka_task/common_attribute/common_value.dart';
@@ -9,6 +12,7 @@ import 'package:keka_task/common_attribute/validation.dart';
 import 'package:keka_task/common_widget/common_elevated_button.dart';
 import 'package:keka_task/common_widget/common_rich_text.dart';
 import 'package:keka_task/common_widget/common_text_field.dart';
+import 'package:keka_task/model/register_modal.dart';
 import 'package:keka_task/view/login_password/login_password_view.dart';
 import 'package:keka_task/view/register/register_view.dart';
 
@@ -23,8 +27,8 @@ class LoginView extends StatefulWidget {
 
   static Widget builder(BuildContext context) {
     return BlocProvider(
-      create: (context) => RegisterCubit(
-        RegisterState(emailController: TextEditingController(), formKey: GlobalKey<FormState>()),
+      create: (context) => LoginCubit(
+        LoginState(emailController: TextEditingController(), formKey: GlobalKey<FormState>()),
         context,
       ),
       child: const LoginView(),
@@ -36,10 +40,18 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
+
+
+  @override
+  void initState() {
+    ApiService.helper.registerUser(RegisterModel());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<RegisterCubit, RegisterState>(
+      body: BlocBuilder<LoginCubit, LoginState>(
         builder: (context, state) {
           return Center(
             child: Form(
@@ -62,7 +74,7 @@ class _LoginViewState extends State<LoginView> {
                     ),
                     const Gap(Spacing.normal),
                     CommonElevatedButton(
-                      onPressed: () => context.read<RegisterCubit>().loginPressed(),
+                      onPressed: () => context.read<LoginCubit>().loginPressed(),
                       color: CommonColor.blueColor,
                       height: 50,
                       width: MediaQuery.of(context).size.width,
