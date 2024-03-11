@@ -25,6 +25,14 @@ class _ProfileViewState extends State<ProfileView> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          actions: [
+            IconButton(
+              onPressed: () {
+                print('edit');
+              },
+              icon: Icon(Icons.edit_note_sharp),
+            )
+          ],
           foregroundColor: CommonColor.white,
           title: CommonText(
             text: 'Profile',
@@ -39,7 +47,6 @@ class _ProfileViewState extends State<ProfileView> {
             padding: PaddingValue.small,
             child: Column(
               children: [
-
                 ///1st card
                 CommonContainer(
                   borderRadius: 5,
@@ -47,7 +54,6 @@ class _ProfileViewState extends State<ProfileView> {
                   color: CommonColor.color1,
                   child: Row(
                     children: [
-
                       CommonContainer(
                         width: MediaQuery.of(context).size.width / 4,
                         height: MediaQuery.of(context).size.height / 3,
@@ -65,17 +71,15 @@ class _ProfileViewState extends State<ProfileView> {
                           ),
                         ),
                       ),
-
                       CommonContainer(
-                        width: MediaQuery.of(context).size.width/1.5,
-                        height: MediaQuery.of(context).size.height/3,
+                        width: MediaQuery.of(context).size.width / 1.5,
+                        height: MediaQuery.of(context).size.height / 3,
                         padding: PaddingValue.small,
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-
                             ///Nehal Shinde
                             CommonText(
                               text: 'Nehal Shinde',
@@ -128,7 +132,7 @@ class _ProfileViewState extends State<ProfileView> {
                                 const Gap(2),
                                 Flexible(
                                   child: AutoSizeText(
-                                   'nehal.s@elaunchinfotech.in',
+                                    'nehal.s@elaunchinfotech.in',
                                     maxLines: 2,
                                     style: TextStyle(
                                       color: CommonColor.white,
@@ -143,51 +147,91 @@ class _ProfileViewState extends State<ProfileView> {
                             ///job title
                             Row(
                               children: [
-                                CommonText(color: CommonColor.grey, text: 'JOB TITLE', fontSize: Spacing.medium,),
-                                CommonText(color: CommonColor.white, text: ' : Trainee', fontSize: Spacing.medium, fontWeight: TextWeight.medium),
+                                CommonText(
+                                  color: CommonColor.grey,
+                                  text: 'JOB TITLE',
+                                  fontSize: Spacing.medium,
+                                ),
+                                CommonText(
+                                    color: CommonColor.white,
+                                    text: ' : Trainee',
+                                    fontSize: Spacing.medium,
+                                    fontWeight: TextWeight.medium),
                               ],
                             ),
 
                             ///department
                             Row(
                               children: [
-                                CommonText(color: CommonColor.grey, text: 'DEPARTMENT', fontSize: Spacing.medium,),
-                                CommonText(color: CommonColor.white, text: ' : Android/Flutter', fontSize: Spacing.medium, fontWeight: TextWeight.medium),
+                                CommonText(
+                                  color: CommonColor.grey,
+                                  text: 'DEPARTMENT',
+                                  fontSize: Spacing.medium,
+                                ),
+                                CommonText(
+                                    color: CommonColor.white,
+                                    text: ' : Android/Flutter',
+                                    fontSize: Spacing.medium,
+                                    fontWeight: TextWeight.medium),
                               ],
                             ),
 //
                             ///business unit
                             Row(
                               children: [
-                                CommonText(color: CommonColor.grey, text: 'BUSINESS UNIT', fontSize: Spacing.medium,),
-                                Flexible(child: CommonText(color: CommonColor.white, text: ' : ELaunch Solution Pvt.Ltd', fontSize: Spacing.medium, fontWeight: TextWeight.medium)),
+                                CommonText(
+                                  color: CommonColor.grey,
+                                  text: 'BUSINESS UNIT',
+                                  fontSize: Spacing.medium,
+                                ),
+                                Flexible(
+                                    child: CommonText(
+                                        color: CommonColor.white,
+                                        text: ' : ELaunch Solution Pvt.Ltd',
+                                        fontSize: Spacing.medium,
+                                        fontWeight: TextWeight.medium)),
                               ],
                             ),
 
                             ///reported by
                             Row(
                               children: [
-                                CommonText(color: CommonColor.grey, text: 'REPORTED BY', fontSize: Spacing.medium,),
-                                CommonText(color: CommonColor.white, text: ' : Ajay Patel', fontSize: Spacing.medium, fontWeight: TextWeight.medium),
+                                CommonText(
+                                  color: CommonColor.grey,
+                                  text: 'REPORTED BY',
+                                  fontSize: Spacing.medium,
+                                ),
+                                CommonText(
+                                    color: CommonColor.white,
+                                    text: ' : Ajay Patel',
+                                    fontSize: Spacing.medium,
+                                    fontWeight: TextWeight.medium),
                               ],
                             ),
 
                             ///emp no
                             Row(
                               children: [
-                                CommonText(color: CommonColor.grey, text: 'EMP NO', fontSize: Spacing.medium,),
-                                CommonText(color: CommonColor.white, text: ' : EL168', fontSize: Spacing.medium, fontWeight: TextWeight.medium),
+                                CommonText(
+                                  color: CommonColor.grey,
+                                  text: 'EMP NO',
+                                  fontSize: Spacing.medium,
+                                ),
+                                CommonText(
+                                    color: CommonColor.white,
+                                    text: ' : EL168',
+                                    fontSize: Spacing.medium,
+                                    fontWeight: TextWeight.medium),
                               ],
                             ),
-
                           ],
                         ),
                       )
-
                     ],
                   ),
                 ),
 
+                ///2nd card
                 const Gap(Spacing.xLarge),
                 CommonContainer(
                   borderRadius: 5,
@@ -197,58 +241,64 @@ class _ProfileViewState extends State<ProfileView> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CommonText(text: 'Primary Details', color: CommonColor.white, fontWeight: TextWeight.extraBold, fontSize: TextSize.appBarSubTitle),
-                          TextButton(onPressed: (){}, child: const CommonText(text: 'Edit', color: Colors.blue,))
-                        ],
+                      CommonText(
+                        text: 'Primary Details',
+                        color: CommonColor.white,
+                        fontWeight: TextWeight.extraBold,
+                        fontSize: TextSize.appBarSubTitle,
                       ),
-
-                      const Divider(height: 1,),
-
+                      const Gap(RadiusValue.small),
+                      const Divider(
+                        height: 1,
+                      ),
                       const Gap(RadiusValue.large),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          CommonText(text: 'FIRST NAME',color: CommonColor.grey),
-                          CommonText(text: 'MIDDLE NAME',color: CommonColor.grey),
-                          CommonText(text: 'LAST NAME',color: CommonColor.grey),
+                          CommonText(
+                              text: 'FIRST NAME', color: CommonColor.grey),
+                          CommonText(
+                              text: 'MIDDLE NAME', color: CommonColor.grey),
+                          CommonText(
+                              text: 'LAST NAME', color: CommonColor.grey),
                         ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          CommonText(text: 'Nehal',color: CommonColor.white),
-                          CommonText(text: 'PremendraKumar',color: CommonColor.white),
-                          CommonText(text: 'Shinde',color: CommonColor.white),
+                          CommonText(text: 'Nehal', color: CommonColor.white),
+                          CommonText(
+                              text: 'PremendraKumar', color: CommonColor.white),
+                          CommonText(text: 'Shinde', color: CommonColor.white),
                         ],
                       ),
-
                       const Gap(RadiusValue.large),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          CommonText(text: 'DISPLAY NAME',color: CommonColor.grey),
-                          CommonText(text: 'GENDER',color: CommonColor.grey),
-                          CommonText(text: 'DATE OF BIRTH',color: CommonColor.grey),
+                          CommonText(
+                              text: 'DISPLAY NAME', color: CommonColor.grey),
+                          CommonText(text: 'GENDER', color: CommonColor.grey),
+                          CommonText(
+                              text: 'DATE OF BIRTH', color: CommonColor.grey),
                         ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          CommonText(text: 'Nehal Shinde',color: CommonColor.white),
-                          CommonText(text: 'Male',color: CommonColor.white),
-                          CommonText(text: '23 Feb 2003',color: CommonColor.white),
+                          CommonText(
+                              text: 'Nehal Shinde', color: CommonColor.white),
+                          CommonText(text: 'Male', color: CommonColor.white),
+                          CommonText(
+                              text: '23 Feb 2003', color: CommonColor.white),
                         ],
                       ),
-
                     ],
                   ),
                 ),
 
+                ///3rd card
                 const Gap(Spacing.xLarge),
                 CommonContainer(
                   borderRadius: 5,
@@ -258,38 +308,40 @@ class _ProfileViewState extends State<ProfileView> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CommonText(text: 'Contact Details', color: CommonColor.white, fontWeight: TextWeight.extraBold, fontSize: TextSize.appBarSubTitle),
-                          TextButton(onPressed: (){}, child: const CommonText(text: 'Edit', color: Colors.blue,))
-                        ],
+                      CommonText(
+                        text: 'Contact Details',
+                        color: CommonColor.white,
+                        fontWeight: TextWeight.extraBold,
+                        fontSize: TextSize.appBarSubTitle,
                       ),
-
-                      const Divider(height: 1,),
-
+                      const Gap(RadiusValue.small),
+                      const Divider(
+                        height: 1,
+                      ),
                       const Gap(RadiusValue.large),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          CommonText(text: 'WORK EMAIL',color: CommonColor.grey),
-                          CommonText(text: 'MOBILE NUMBER',color: CommonColor.grey),
+                          CommonText(
+                              text: 'WORK EMAIL', color: CommonColor.grey),
+                          CommonText(
+                              text: 'MOBILE NUMBER', color: CommonColor.grey),
                         ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          CommonText(text: 'nehal.s@elaunchinfotech.in',color: CommonColor.white),
-                          CommonText(text: '9909127817',color: CommonColor.white),
+                          CommonText(
+                              text: 'nehal.s@elaunchinfotech.in',
+                              color: CommonColor.white),
+                          CommonText(
+                              text: '9909127817', color: CommonColor.white),
                         ],
                       ),
-
                     ],
                   ),
                 ),
-
               ],
             ),
           ),
