@@ -146,7 +146,11 @@ class _RegisterViewState extends State<RegisterView> {
                     ),
                     const Gap(Spacing.normal),
                     CommonElevatedButton(
-                      onPressed: () => context.read<RegisterCubit>().registerPressed(),
+                      onPressed: () {
+                        context.read<RegisterCubit>().registerPressed(
+                          // registerModel:
+                        );
+                      },
                       color: CommonColor.blueColor,
                       height: 50,
                       width: MediaQuery.of(context).size.width,
