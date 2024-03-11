@@ -68,7 +68,7 @@ class _HomeViewState extends State<HomeView> {
                   const Padding(
                     padding: EdgeInsetsDirectional.only(start: 5),
                     child: CommonText(
-                      text: 'Attendance Stats',
+                      text: 'Actions',
                       fontWeight: FontWeight.bold,
                       fontSize: TextSize.heading,
                     ),
@@ -251,9 +251,19 @@ class _HomeViewState extends State<HomeView> {
                     ),
                   ),
 
-                  const Gap(Spacing.normal),
+                  const Gap(Spacing.xLarge),
 
                   ///2. Attends state
+                  const Padding(
+                    padding: EdgeInsetsDirectional.only(start: 5),
+                    child: CommonText(
+                      text: 'Attendance Stats',
+                      fontWeight: FontWeight.bold,
+                      fontSize: TextSize.heading,
+                    ),
+                  ),
+
+                  const Gap(Spacing.small),
                   Card(
                     elevation: 20,
                     child: CommonContainer(
