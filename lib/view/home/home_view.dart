@@ -507,7 +507,7 @@ class _HomeViewState extends State<HomeView> {
                             ),
                           ),
 
-                          Flexible(
+                         /* Flexible(
                             child: MaterialButton(
                               color: state.logNRequestClickIndex == 2
                                   ? const Color(0xff3f4b65)
@@ -523,7 +523,7 @@ class _HomeViewState extends State<HomeView> {
                                 textAlign: TextAlign.center,
                               ),
                             ),
-                          ),
+                          ),*/
                         ],
                       ),
                     ),
@@ -568,10 +568,11 @@ class _HomeViewState extends State<HomeView> {
                   ///6. show date, effective hours, gross hours
                   if (state.logNRequestClickIndex == 1) ...[
                     shiftSchedule()
-                  ] else
-                    if (state.logNRequestClickIndex == 2) ...[
+                  ]
+                  /*else if (state.logNRequestClickIndex == 2) ...[
                       attendanceRequest()
-                    ] else
+                    ] */
+                    else
                       ...[
                         attendanceLog(),
                       ],
@@ -838,7 +839,7 @@ class _HomeViewState extends State<HomeView> {
   }
 
   ///when user click on Attendance Request
-  Widget attendanceRequest() {
+  /*Widget attendanceRequest() {
     return const Column(
       children: [
         AttendanceRequest(
@@ -866,5 +867,5 @@ class _HomeViewState extends State<HomeView> {
         ),
       ],
     );
-  }
+  }*/
 }
