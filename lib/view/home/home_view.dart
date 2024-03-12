@@ -7,12 +7,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
+import 'package:keka_task/api/api_helper.dart';
 import 'package:keka_task/common_attribute/common_colors.dart';
 import 'package:keka_task/common_attribute/common_value.dart';
-import 'package:keka_task/common_widget/attendance_request.dart';
 import 'package:keka_task/common_widget/common_container.dart';
 import 'package:keka_task/common_widget/common_elevated_button.dart';
 import 'package:keka_task/common_widget/common_text.dart';
+import 'package:keka_task/modal/clockInOutModal.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -175,16 +176,32 @@ class _HomeViewState extends State<HomeView> {
                                 color: CommonColor.red,
                                 padding: PaddingValue.medium,
                                 onPressed: () {
-                                  print('bool value in main 1-====> ${state.timeStartStop}');
-                                  cubit.changeInOutText(timeStartStop: !(state.timeStartStop));
+                                  print('bool value in main 1-====> ${state.changeInToOutToIn}');
                                   cubit.getCurrentTime();
+                                  cubit.changeInOutText(timeStartStop: !(state.changeInToOutToIn));
 
-                                  print('clock in time ====> ${state.currentTime}');
-                                  print('clock in Date ====> ${state.currentDate}');
+                                  // ApiHelper.instance.insertClockInData(clockInOutModal: ClockInOutModal(
+                                  //   userId: '1',
+                                  //   clockIn: state.changeInToOutToIn ? [state.currentTime] : [],
+                                  //   clockOut: state.changeInToOutToIn ? [] : [state.currentTime],
+                                  //   date: state.currentDate,
+                                  //   effectiveHours: state.currentTime,
+                                  //   grossHours: state.currentTime,
+                                  //   arrival: "1",
+                                  // ));
+
+                                  /*
+                                  * clock in --> currTime
+                                  * clock out ----> currData
+                                  * date ---> date
+                                  * effective hours ---> working hour
+                                  * gross hour ---> begin to end time
+                                  * arrive(onTime) ----> 1
+                                  * */
 
                                 },
                                 child: CommonText(
-                                  text: state.timeStartStop ? 'Web Clock-out' : 'Web Clock-in',
+                                  text: state.changeInToOutToIn ? 'Web Clock-out' : 'Web Clock-in',
                                   color: CommonColor.white,
                                   fontSize: TextSize.appBarSubTitle,
                                   fontWeight: TextWeight.medium,

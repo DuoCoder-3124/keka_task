@@ -17,8 +17,11 @@ class HomeCubit extends Cubit<HomeState> {
 
   ///retrive current date
   void getCurrentDate() {
-    emit(state.copyWith(
-        currentDate: DateFormat('E dd, MMM yyyy').format(DateTime.now())));
+    emit(
+      state.copyWith(
+        currentDate: DateFormat('E dd, MMM yyyy').format(DateTime.now()),
+      ),
+    );
   }
 
   ///retrive current time
@@ -32,18 +35,43 @@ class HomeCubit extends Cubit<HomeState> {
     });
   }
 
-
   /// update clockIn to ClockOut OR ClockOut to clockIn
-  void changeInOutText({required bool timeStartStop}){
-    emit(state.copyWith(timeStartStop: timeStartStop));
-    print('timeStartStop ======> ${state.timeStartStop}');
+  void changeInOutText({required bool timeStartStop}) {
+
+    String time = "xyz";
+
+    ApiHelper.instance.insertClockInData(clockInOutModal: ClockInOutModal(
+      userId: '1',
+      clockIn: state.changeInToOutToIn ? [state.currentTime] : [],
+      clockOut: state.changeInToOutToIn ? [] : [state.currentTime],
+      date: state.currentDate,
+      effectiveHours: time,
+      grossHours: time,
+      arrival: "1",
+    ));
+    print('time ===> $time');
+    // emit(state.copyWith(changeInToOutToIn: timeStartStop));
+
   }
 
+  ///insert Clock Record
+  // void insertClockInData({required ClockInOutModal clockInOutModal}){
+  //
+  //   // print('cubit time ====> ${state.currentTime}');
+  //
+  //   // ApiHelper.instance.insertClockInData(clockInOutModal: ClockInOutModal(
+  //   //   userId: '1',
+  //   //   clockIn: state.changeInToOutToIn ? [state.currentTime] : [],
+  //   //   clockOut: state.changeInToOutToIn ? [] : [state.currentTime],
+  //   //   date: state.currentDate,
+  //   //   effectiveHours: state.currentTime,
+  //   //   grossHours: state.currentTime,
+  //   //   arrival: "1",
+  //   // ));
+  // }
 
   /// get clock in time
-  void getClockInTime(){
-
-  }
+  void getClockInTime() {}
 
   ///24 hour format on off
   void hourFormatOnOff({isHourFormatOn}) {

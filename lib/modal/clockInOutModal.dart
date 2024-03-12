@@ -16,10 +16,9 @@ class ClockInOutModal{
     this.effectiveHours = "",
     this.grossHours = "",
     this.arrival = "",
-    this.clockIn = const[],
-    this.clockOut = const[]
+    this.clockIn = const [],
+    this.clockOut = const []
   });
-
 
   factory ClockInOutModal.fromJson(Map<String, dynamic> json) => ClockInOutModal(
       clockInOutId: json['_id'],
