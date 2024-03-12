@@ -1,12 +1,13 @@
 part of 'server.dart';
 
+///Login API endpoint.
 Future<Response> _loginEmployee(Request request) async {
   String body = await request.readAsString();
   Map<String, dynamic> data = jsonDecode(body);
   Map<String, dynamic> rawBody = {
     "email": data["email"],
     "password": data["password"],
-    // 'fcmToken': data['fcmToken'],
+    'fcmToken': data['fcmToken'],
   };
   List nullFields = [];
   rawBody.forEach((key, value) {
@@ -24,6 +25,11 @@ Future<Response> _loginEmployee(Request request) async {
     if (userData != null) {
       rawBody.update('password', (value) => _encryptPassword(rawBody['password']));
       if (userData['password'] == rawBody['password']) {
+        await collection?.updateOne(await collection.findOne(where.eq('email', rawBody['email'])), {
+          '\$set': {
+            'fcmToken': rawBody['fcmToken'],
+          }
+        });
         return Response.ok(
           jsonEncode(
             {"message": "Success"},
@@ -47,6 +53,7 @@ Future<Response> _loginEmployee(Request request) async {
   );
 }
 
+///Logout API endpoint.
 Future<Response> _logoutEmployee(Request request) async {
   String body = await request.readAsString();
   Map<String, dynamic> data = jsonDecode(body);

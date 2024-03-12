@@ -42,6 +42,7 @@ void main(List<String> args) async {
 ///Gets id for every document that needs to be inserted in MongoDB.
 String get _docId => ObjectId().oid;
 
+///For encrypting password.
 String _encryptPassword(String password) {
   final bytes = utf8.encode(password);
   final digest = crypto.sha256.convert(bytes);

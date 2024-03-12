@@ -1,6 +1,8 @@
 part of 'server.dart';
 
+///Register Api endpoint.
 Future<Response> _registerEmployee(Request request) async {
+
   String body = await request.readAsString();
   Map<String, dynamic> data = jsonDecode(body);
 

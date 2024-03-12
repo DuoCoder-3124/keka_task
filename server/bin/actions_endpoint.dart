@@ -1,5 +1,6 @@
 part of 'server.dart';
 
+///Clock In & Out Actions are done using this endpoint.
 Future<Response> _clockAction(Request request) async {
   String body = await request.readAsString();
   Map<String, dynamic> data = jsonDecode(body);
@@ -17,11 +18,6 @@ Future<Response> _clockAction(Request request) async {
     if (value == null) nullFields.add(key);
   });
 
-  // if (nullFields.length <= 1) {
-  //   return Response.forbidden(
-  //     jsonEncode({"message": "At-least one of $nullFields should be filled."}),
-  //   );
-  // }
   DbCollection? collection = db?.collection("actions");
   Map<String, dynamic>? userData = await collection?.findOne(
     where.eq('userId', rawBody['userId']).and(
@@ -38,12 +34,7 @@ Future<Response> _clockAction(Request request) async {
     if (data['out'] != null) outList.add(data['out']);
     
     rawBody.addAll({'in': inList, 'out': outList});
-    // rawBody.updateAll(
-    //   (key, value) {
-    //     if(key == "in") value = inList;
-    //     if(key == "out") value = outList;
-    //   },
-    // );
+
     collection?.insertOne(rawBody);
     return Response.ok(
       jsonEncode({"message": "Success created."}),
