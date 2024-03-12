@@ -28,10 +28,32 @@ Future<Response> _register(Request request) async {
 
   if (nullFields.isEmpty) {
     DbCollection? collection = db?.collection("user");
-    rawBody.addAll({'_id': _docId});
-    rawBody.update('password', (value) => _encryptPassword(rawBody['password']));
-    collection?.insertOne(rawBody);
-    return Response.ok(jsonEncode({"message": "Employee inserted Successfully."}));
+    Map<String, dynamic>? userData = await collection?.findOne(
+      where.eq(
+        'email',
+        rawBody["email"],
+      ),
+    );
+    if (userData == null) {
+      rawBody.addAll({'_id': _docId});
+      rawBody.update(
+        'password',
+        (value) => _encryptPassword(
+          rawBody['password'],
+        ),
+      );
+      collection?.insertOne(rawBody);
+      return Response.ok(
+        jsonEncode(
+          {"message": "Employee inserted Successfully."},
+        ),
+      );
+    }
+    return Response.forbidden(
+      jsonEncode(
+        {"message": "Email already exists"},
+      ),
+    );
   }
   return Response.forbidden(
     jsonEncode({"null fields": nullFields}),

@@ -6,11 +6,13 @@ import 'package:shelf/shelf_io.dart';
 import 'package:shelf_router/shelf_router.dart';
 import 'package:crypto/crypto.dart' as crypto;
 
-part 'register_endpoints.dart';
+part 'register_endpoint.dart';
+part 'login_endpoint.dart';
 
 // Configure routes.
 final _router = Router()
   ..get('/', (req) => Response.ok("Hello Keka!!!"))
+  ..post("/loginEmployee", _login)
   ..post('/registerEmployee', _register);
 
 ///Instance for database.
