@@ -23,9 +23,11 @@ class RegisterCubit extends Cubit<RegisterState> {
           reportedBy: state.reportedByController.text,
           secondName: state.lastNameController.text,
         ),
-      );
+      ).then((value) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('User registered successfully')));
+        Navigator.pushNamedAndRemoveUntil(context, LoginView.routeName, (route) => false);
+      });
 
-      Navigator.pushNamedAndRemoveUntil(context, LoginPasswordView.routeName, (route) => false);
     }
   }
 }

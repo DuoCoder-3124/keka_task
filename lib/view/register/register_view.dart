@@ -2,7 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:keka_task/api%20/api_helper.dart';
 import 'package:keka_task/common_attribute/common_colors.dart';
 import 'package:keka_task/common_attribute/common_images.dart';
 import 'package:keka_task/common_attribute/common_value.dart';
@@ -11,6 +10,8 @@ import 'package:keka_task/common_widget/common_elevated_button.dart';
 import 'package:keka_task/common_widget/common_rich_text.dart';
 import 'package:keka_task/common_widget/common_text_field.dart';
 import 'package:keka_task/model/register_modal.dart';
+import 'package:keka_task/services/api_helper.dart';
+import 'package:keka_task/view/login/login_view.dart';
 import 'package:keka_task/view/login_password/login_password_view.dart';
 
 part 'register_state.dart';

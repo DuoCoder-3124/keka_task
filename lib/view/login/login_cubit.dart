@@ -4,7 +4,6 @@ part of 'login_view.dart';
 class LoginCubit extends Cubit<LoginState> {
   final BuildContext context;
   LoginCubit(super.initialState, this.context){
-    log('hdgshdg');
       // ApiService.helper.registerUser(RegisterModel());
 
   }
@@ -12,7 +11,7 @@ class LoginCubit extends Cubit<LoginState> {
   void loginPressed() {
     if ((state.formKey.currentState?.validate() ?? false)) {
       // emit(state.copyWith(emailController: state.emailController,formKey: state.formKey));
-      Navigator.pushNamed(context, LoginPasswordView.routeName);
+      Navigator.pushNamed(context, LoginPasswordView.routeName,arguments: state.emailController.text);
     }
 
   }

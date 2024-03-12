@@ -20,6 +20,7 @@ class LoginPasswordView extends StatefulWidget {
   static String routeName = '/login_password_view';
 
   static Widget builder(BuildContext context) {
+    var args=ModalRoute.of(context)?.settings.arguments as String?;
     return BlocProvider(
       create: (context) => LoginPasswordCubit(
         LoginPasswordState(
@@ -27,7 +28,8 @@ class LoginPasswordView extends StatefulWidget {
           captchaController: TextEditingController(),
           formKey: GlobalKey<FormState>(),
         ),
-        context,
+        context: context,
+        userEmail: args??'',
       ),
       child: const LoginPasswordView(),
     );
