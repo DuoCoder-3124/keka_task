@@ -16,7 +16,8 @@ final _router = Router()
   ..get('/getEmployee', _getEmployee)
   ..post("/loginEmployee", _loginEmployee)
   ..post("/logoutEmployee", _logoutEmployee)
-  ..post('/registerEmployee', _registerEmployee);
+  ..post('/registerEmployee', _registerEmployee)
+  ..post('/clockAction', _clockAction);
 
 ///Instance for database.
 Db? db;
