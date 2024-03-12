@@ -47,6 +47,7 @@ dependencies:
   aligned_tooltip: ^0.0.1
   syncfusion_flutter_sliders: ^24.2.7
   syncfusion_flutter_core: ^24.2.7
+  dio: ^5.4.1
 
 dev_dependencies:
   flutter_test:

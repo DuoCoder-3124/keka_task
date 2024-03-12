@@ -12,7 +12,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   ///change drop down button item
   void dropDownItemUpdate({String? dropDownItem}) {
-    emit(state.copyWith(dropDownMenuItem: dropDownItem));
+    emit(state.copyWith(dropDownItemDefaultValue: dropDownItem));
   }
 
   ///retrive current date
@@ -22,16 +22,26 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   ///retrive current time
-  void getCurrentTime({timeStartStop}) {
-    print('timer value ----> $timeStartStop');
+  void getCurrentTime() {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      emit(
+        state.copyWith(
+          currentTime: DateFormat('hh:mm:ss a').format(DateTime.now()),
+        ),
+      );
+    });
+  }
 
-      Timer.periodic(const Duration(seconds: 1), (timer) {
-        emit(state.copyWith(
-            currentTime: DateFormat('hh:mm:ss a').format(DateTime.now()),
-            // timeStartStop: timeStartStop
-        ));
-        print('inside value ===> ${state.timeStartStop}');
-      });
+
+  /// update clockIn to ClockOut OR ClockOut to clockIn
+  void changeInOutText({required bool timeStartStop}){
+    emit(state.copyWith(timeStartStop: timeStartStop));
+    print('timeStartStop ======> ${state.timeStartStop}');
+  }
+
+
+  /// get clock in time
+  void getClockInTime(){
 
   }
 
@@ -53,3 +63,15 @@ class HomeCubit extends Cubit<HomeState> {
     });
   }
 */
+
+/*void getCurrentTime({bool? timeStartStop}) {
+    print('timer value ----> $timeStartStop');
+      Timer.periodic(const Duration(seconds: 1), (timer) {
+        emit(state.copyWith(
+            currentTime: DateFormat('hh:mm:ss a').format(DateTime.now()),
+            // timeStartStop: timeStartStop
+        ));
+        print('inside value ===> ${state.timeStartStop}');
+      });
+
+  }*/

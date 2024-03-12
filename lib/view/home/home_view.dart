@@ -63,7 +63,7 @@ class _HomeViewState extends State<HomeView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
 
-                  /// ***************** Attendance stats ***********************
+                  /// ***************** Actions ***********************
                   const Gap(Spacing.small),
                   const Padding(
                     padding: EdgeInsetsDirectional.only(start: 5),
@@ -75,7 +75,6 @@ class _HomeViewState extends State<HomeView> {
                   ),
 
                   const Gap(Spacing.small),
-
                   ///1. for clock in & clock out card
                   Card(
                     elevation: 20,
@@ -96,15 +95,8 @@ class _HomeViewState extends State<HomeView> {
                               ///count-up timer
                               CommonContainer(
                                 color: CommonColor.color1,
-                                width: MediaQuery
-                                    .of(context)
-                                    .size
-                                    .width / 3,
-                                height:
-                                MediaQuery
-                                    .of(context)
-                                    .size
-                                    .height / 19,
+                                width: MediaQuery.of(context).size.width / 3,
+                                height: MediaQuery.of(context).size.height / 19,
                                 borderRadius: 5,
                                 borderWidth: 0.6,
                                 borderColor: Colors.grey,
@@ -183,11 +175,16 @@ class _HomeViewState extends State<HomeView> {
                                 color: CommonColor.red,
                                 padding: PaddingValue.medium,
                                 onPressed: () {
-                                  cubit.getCurrentTime(
-                                      timeStartStop: !(state.timeStartStop));
+                                  print('bool value in main 1-====> ${state.timeStartStop}');
+                                  cubit.changeInOutText(timeStartStop: !(state.timeStartStop));
+                                  cubit.getCurrentTime();
+
+                                  print('clock in time ====> ${state.currentTime}');
+                                  print('clock in Date ====> ${state.currentDate}');
+
                                 },
                                 child: CommonText(
-                                  text: 'Web Clock-out',
+                                  text: state.timeStartStop ? 'Web Clock-out' : 'Web Clock-in',
                                   color: CommonColor.white,
                                   fontSize: TextSize.appBarSubTitle,
                                   fontWeight: TextWeight.medium,
@@ -253,7 +250,8 @@ class _HomeViewState extends State<HomeView> {
 
                   const Gap(Spacing.xLarge),
 
-                  ///2. Attends state
+
+                  /// ***************** Attendance stats *****************
                   const Padding(
                     padding: EdgeInsetsDirectional.only(start: 5),
                     child: CommonText(
@@ -271,159 +269,154 @@ class _HomeViewState extends State<HomeView> {
                       borderWidth: 0.6,
                       color: CommonColor.color1,
                       borderColor: CommonColor.color1,
-                      child: Padding(
-                        padding: PaddingValue.small,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
+                      padding: PaddingValue.small,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
 
-                            /// last seen and info button
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
+                          /// last seen and info button
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
 
-                                ///drop down button
-                                DropdownButton<String>(
-                                    items: List.from(state.lastSeen
-                                        .map<DropdownMenuItem<String>>(
-                                            (String val) {
-                                          return DropdownMenuItem<String>(
-                                              value: val,
-                                              child: CommonText(text: val));
-                                        })),
-                                    dropdownColor: CommonColor.color2,
-                                    borderRadius: BorderRadius.circular(0),
-                                    isDense: true,
-                                    alignment: Alignment.center,
-                                    value: state.dropDownItemValue,
-                                    padding: const EdgeInsetsDirectional.all(5),
-                                    style: TextStyle(color: CommonColor.white),
-                                    icon: Icon(
-                                      Icons.keyboard_arrow_down_rounded,
-                                      color: CommonColor.white,
-                                    ),
-                                    onChanged: (val) {
-                                      cubit.dropDownItemUpdate(
-                                          dropDownItem: val);
-                                      print('in valu ----> $val');
-                                    }),
-
-                                /// info icon button
-                                AlignedTooltip(
-                                  showDuration: const Duration(seconds: 20),
-                                  backgroundColor: CommonColor.black,
-                                  content: Padding(
-                                    padding: PaddingValue.small,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        CommonText(
-                                          text:
-                                          'From Feb 19, 2024 to Feb 25, 2024',
-                                          color: CommonColor.white,
-                                          fontWeight: TextWeight.bold,
-                                        ),
-                                        const Gap(Spacing.small),
-                                        CommonText(
-                                          text: 'Total effective Hours: 42:15',
-                                          color: CommonColor.white,
-                                        ),
-                                        CommonText(
-                                          text: 'Working Days: 5',
-                                          color: CommonColor.white,
-                                        ),
-                                        CommonText(
-                                          text:
-                                          'Average Effective Hours: 8h 26m',
-                                          color: CommonColor.white,
-                                        ),
-                                        const Gap(Spacing.small),
-                                        CommonText(
-                                          text:
-                                          "'My Team' refers to all employees reporting to you, as well as those employees reporting(along with you) to your reporting manager.",
-                                          color: CommonColor.white,
-                                        ),
-                                      ],
-                                    ),
+                              ///drop down button
+                              DropdownButton<String>(
+                                  items: List.from(state.dropDownItems
+                                      .map<DropdownMenuItem<String>>(
+                                          (String val) {
+                                        return DropdownMenuItem<String>(
+                                            value: val,
+                                            child: CommonText(text: val));
+                                      })),
+                                  dropdownColor: CommonColor.color2,
+                                  borderRadius: BorderRadius.circular(0),
+                                  isDense: true,
+                                  alignment: Alignment.center,
+                                  value: state.dropDownItemDefaultValue,
+                                  padding: const EdgeInsetsDirectional.all(5),
+                                  style: TextStyle(color: CommonColor.white),
+                                  icon: Icon(
+                                    Icons.keyboard_arrow_down_rounded,
+                                    color: CommonColor.white,
                                   ),
-                                  child: IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(
-                                      Icons.info_outline,
-                                      color: CommonColor.grey,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
+                                  onChanged: (val) {
+                                    cubit.dropDownItemUpdate(
+                                        dropDownItem: val);
+                                    print('in valu ----> $val');
+                                  }),
 
-                            const Gap(Spacing.small),
-
-                            ///me, avg hrs/day, on time arriver
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Column(
+                              /// info icon button
+                              AlignedTooltip(
+                                showDuration: const Duration(seconds: 20),
+                                backgroundColor: CommonColor.black,
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.start,
                                   children: [
+                                    CommonText(
+                                      text:
+                                      'From Feb 19, 2024 to Feb 25, 2024',
+                                      color: CommonColor.white,
+                                      fontWeight: TextWeight.bold,
+                                    ),
                                     const Gap(Spacing.small),
-                                    Row(
-                                      children: [
-                                        CircleAvatar(
-                                          backgroundColor:
-                                          Colors.yellow.shade700,
-                                          child: Icon(
-                                            Icons.person_2_outlined,
-                                            color: CommonColor.white,
-                                          ),
-                                        ),
-                                        const Gap(15),
-                                        CommonText(
-                                          text: "Me",
+                                    CommonText(
+                                      text: 'Total effective Hours: 42:15',
+                                      color: CommonColor.white,
+                                    ),
+                                    CommonText(
+                                      text: 'Working Days: 5',
+                                      color: CommonColor.white,
+                                    ),
+                                    CommonText(
+                                      text:
+                                      'Average Effective Hours: 8h 26m',
+                                      color: CommonColor.white,
+                                    ),
+                                    const Gap(Spacing.small),
+                                    CommonText(
+                                      text:
+                                      "'My Team' refers to all employees reporting to you, as well as those employees reporting(along with you) to your reporting manager.",
+                                      color: CommonColor.white,
+                                    ),
+                                  ],
+                                ),
+                                child: IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    Icons.info_outline,
+                                    color: CommonColor.grey,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+
+                          const Gap(Spacing.small),
+
+                          ///me, avg hrs/day, on time arriver
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Column(
+                                children: [
+                                  const Gap(Spacing.small),
+                                  Row(
+                                    children: [
+                                      CircleAvatar(
+                                        backgroundColor:
+                                        Colors.yellow.shade700,
+                                        child: Icon(
+                                          Icons.person_2_outlined,
                                           color: CommonColor.white,
-                                          fontWeight: FontWeight.w500,
                                         ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    CommonText(
-                                      text: "AVG HRS / DAY",
-                                      color: CommonColor.grey,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: TextSize.content,
-                                    ),
-                                    CommonText(
-                                      text: "8h 13m",
-                                      color: CommonColor.white,
-                                      fontWeight: FontWeight.w500,
-                                    )
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    CommonText(
-                                      text: "ON TIME ARRIVAL",
-                                      color: CommonColor.grey,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: TextSize.content,
-                                    ),
-                                    CommonText(
-                                      text: "100%",
-                                      color: CommonColor.white,
-                                      fontWeight: FontWeight.w500,
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+                                      ),
+                                      const Gap(15),
+                                      CommonText(
+                                        text: "Me",
+                                        color: CommonColor.white,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  CommonText(
+                                    text: "AVG HRS / DAY",
+                                    color: CommonColor.grey,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: TextSize.content,
+                                  ),
+                                  CommonText(
+                                    text: "8h 13m",
+                                    color: CommonColor.white,
+                                    fontWeight: FontWeight.w500,
+                                  )
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  CommonText(
+                                    text: "ON TIME ARRIVAL",
+                                    color: CommonColor.grey,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: TextSize.content,
+                                  ),
+                                  CommonText(
+                                    text: "100%",
+                                    color: CommonColor.white,
+                                    fontWeight: FontWeight.w500,
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -433,8 +426,7 @@ class _HomeViewState extends State<HomeView> {
 
                   ///3.logs & request
                   Padding(
-                    padding:
-                    const EdgeInsetsDirectional.symmetric(horizontal: 5),
+                    padding: const EdgeInsetsDirectional.symmetric(horizontal: 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -613,154 +605,156 @@ class _HomeViewState extends State<HomeView> {
 
   ///when user click on Attendance Log
   Widget attendanceLog() {
-    SfRangeValues? sfRangeValues = const SfRangeValues(4.0, 8.0);
+    SfRangeValues sfRangeValues = const SfRangeValues(4.0, 8.0);
+    return BlocBuilder<HomeCubit, HomeState>(
+  builder: (context, state) {
     return Card(
       elevation: 10,
-      child: Flexible(
-        child: CommonContainer(
-          borderRadius: 5,
-          borderWidth: 0.6,
-          color: const Color(0xff3f4b65),
-          padding: PaddingValue.small,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+      child: CommonContainer(
+        borderRadius: 5,
+        borderWidth: 0.6,
+        color: const Color(0xff3f4b65),
+        padding: PaddingValue.small,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
 
-              /// Date & Arrival
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CommonText(text: 'DATE : Feb 23, Fri',
+            /// Date & Arrival
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CommonText(text: 'DATE : Feb 23, Fri',
+                    color: Colors.white,
+                    fontSize: TextSize.label),
+                CommonText(text: 'ARRIVAL : On Time',
+                    color: Colors.white,
+                    fontSize: TextSize.label),
+              ],
+            ),
+
+            ///Effective hours
+            const Gap(Spacing.xMedium),
+            const CommonText(
+                text: 'EFFECTIVE HOUR : 8h 25m',
+                color: Colors.white,
+                fontSize: TextSize.label),
+
+            /// gross hours & log
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const CommonText(text: 'GROSS HOURS: 9h 14m',
+                    color: Colors.white,
+                    fontSize: TextSize.label),
+                Row(
+                  children: [
+                    const CommonText(
+                      text: 'Log : ',
                       color: Colors.white,
-                      fontSize: TextSize.label),
-                  CommonText(text: 'ARRIVAL : On Time',
-                      color: Colors.white,
-                      fontSize: TextSize.label),
-                ],
-              ),
+                    ),
+                    AlignedTooltip(
+                      showDuration: const Duration(seconds: 20),
+                      backgroundColor: CommonColor.black,
+                      content: Padding(
+                        padding: PaddingValue.small,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
 
-              ///Effective hours
-              const Gap(Spacing.xMedium),
-              const CommonText(
-                  text: 'EFFECTIVE HOUR : 8h 25m',
-                  color: Colors.white,
-                  fontSize: TextSize.label),
+                            CommonText(text: 'General Shift (Feb 26)',
+                              color: CommonColor.white,),
+                            CommonText(text: '9:00 AM - 6:00 PM',
+                              color: CommonColor.white,),
+                            Divider(color: CommonColor.grey),
 
-              /// gross hours & log
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const CommonText(text: 'GROSS HOURS: 9h 14m',
-                      color: Colors.white,
-                      fontSize: TextSize.label),
-                  Row(
-                    children: [
-                      const CommonText(
-                        text: 'Log : ',
-                        color: Colors.white,
-                      ),
-                      AlignedTooltip(
-                        showDuration: const Duration(seconds: 20),
-                        backgroundColor: CommonColor.black,
-                        content: Padding(
-                          padding: PaddingValue.small,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
+                            Row(
+                              children: [
+                                IconButton(onPressed: () {},
+                                  icon: const Icon(
+                                    Icons.edit, color: Colors.blue,),),
+                                const CommonText(text: 'Apply Partial Day',
+                                  color: Colors.blue,),
+                              ],
+                            ),
 
-                              CommonText(text: 'General Shift (Feb 26)',
-                                color: CommonColor.white,),
-                              CommonText(text: '9:00 AM - 6:00 PM',
-                                color: CommonColor.white,),
-                              Divider(color: CommonColor.grey),
+                            CommonText(text: 'Web Clock In',
+                              fontWeight: TextWeight.bold,
+                              color: CommonColor.white,),
 
-                              Row(
-                                children: [
-                                  IconButton(onPressed: () {},
-                                    icon: const Icon(
-                                      Icons.edit, color: Colors.blue,),),
-                                  const CommonText(text: 'Apply Partial Day',
-                                    color: Colors.blue,),
-                                ],
-                              ),
+                            Row(
+                              children: [
+                                Row(
+                                  children: [
+                                    IconButton(onPressed: () {},
+                                        icon: const Icon(Icons.circle,
+                                            color: Colors.green)),
+                                    CommonText(text: state.currentTime,
+                                      fontWeight: TextWeight.bold,
+                                      color: CommonColor.white,),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    IconButton(onPressed: () {},
+                                        icon: const Icon(
+                                            Icons.circle, color: Colors.red)),
+                                    CommonText(text: 'MISSING',
+                                      fontWeight: TextWeight.bold,
+                                      color: CommonColor.white,),
+                                  ],
+                                ),
+                              ],
+                            )
 
-                              CommonText(text: 'Web Clock In',
-                                fontWeight: TextWeight.bold,
-                                color: CommonColor.white,),
-
-                              Row(
-                                children: [
-                                  Row(
-                                    children: [
-                                      IconButton(onPressed: () {},
-                                          icon: const Icon(Icons.circle,
-                                              color: Colors.green)),
-                                      CommonText(text: '8:34:08 AM',
-                                        fontWeight: TextWeight.bold,
-                                        color: CommonColor.white,),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      IconButton(onPressed: () {},
-                                          icon: const Icon(
-                                              Icons.circle, color: Colors.red)),
-                                      CommonText(text: 'MISSING',
-                                        fontWeight: TextWeight.bold,
-                                        color: CommonColor.white,),
-                                    ],
-                                  ),
-                                ],
-                              )
-
-                            ],
-                          ),
+                          ],
                         ),
-                        child: IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.info_outline,
-                              color: Colors.green,
-                            )),
                       ),
-                    ],
-                  )
+                      child: IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.info_outline,
+                            color: Colors.green,
+                          )),
+                    ),
+                  ],
+                )
 
-                ],
+              ],
+            ),
+
+
+            ///ATTENDANCE VISUAL
+            SfRangeSliderTheme(
+              data: SfRangeSliderThemeData(
+                activeTickColor: Colors.blue,
+                activeMinorTickColor: Colors.blue,
+                inactiveTickColor: Colors.blue,
+                inactiveMinorTickColor: Colors.blue,
+                tickSize: Size(3.0, 12.0),
+                minorTickSize: Size(3.0, 8.0),
               ),
+              child:  SfRangeSlider(
+                min: 2.0,
+                max: 10.0,
+                interval: 2,
+                minorTicksPerInterval: 1,
+                showTicks: true,
+                values: sfRangeValues,
+                onChanged: (SfRangeValues newValues){
+                  setState(() {
+                    sfRangeValues = newValues;
+                  });
+                },
+              ),
+            )
 
-
-              ///ATTENDANCE VISUAL
-              SfRangeSliderTheme(
-                data: SfRangeSliderThemeData(
-                  activeTickColor: Colors.blue,
-                  activeMinorTickColor: Colors.blue,
-                  inactiveTickColor: Colors.blue,
-                  inactiveMinorTickColor: Colors.blue,
-                  tickSize: Size(3.0, 12.0),
-                  minorTickSize: Size(3.0, 8.0),
-                ),
-                child:  SfRangeSlider(
-                  min: 2.0,
-                  max: 10.0,
-                  interval: 2,
-                  minorTicksPerInterval: 1,
-                  showTicks: true,
-                  values: sfRangeValues,
-                  onChanged: (SfRangeValues newValues){
-                    setState(() {
-                      sfRangeValues = newValues;
-                    });
-                  },
-                ),
-              )
-
-            ],
-          ),
+          ],
         ),
       ),
     );
+  },
+);
   }
 
   ///when user click on Shift Schedule
