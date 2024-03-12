@@ -6,12 +6,18 @@ import 'package:shelf/shelf_io.dart';
 import 'package:shelf_router/shelf_router.dart';
 import 'package:crypto/crypto.dart' as crypto;
 
-part 'register_endpoints.dart';
+part 'register_endpoint.dart';
+part 'log_endpoint.dart';
+part 'actions_endpoint.dart';
 
 // Configure routes.
 final _router = Router()
-  ..get('/', (req) => Response.ok("Hello Keka!!!"))
-  ..post('/registerEmployee', _register);
+  ..get('/', (req) => Response.ok("Hello Keka!!!"),)
+  ..get('/getEmployee', _getEmployee)
+  ..post("/loginEmployee", _loginEmployee)
+  ..post("/logoutEmployee", _logoutEmployee)
+  ..post('/registerEmployee', _registerEmployee)
+  ..post('/clockAction', _clockAction);
 
 ///Instance for database.
 Db? db;
@@ -36,7 +42,7 @@ void main(List<String> args) async {
 ///Gets id for every document that needs to be inserted in MongoDB.
 String get _docId => ObjectId().oid;
 
-
+///For encrypting password.
 String _encryptPassword(String password) {
   final bytes = utf8.encode(password);
   final digest = crypto.sha256.convert(bytes);
