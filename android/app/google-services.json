@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "797647311714",
+    "project_id": "keka-task",
+    "storage_bucket": "keka-task.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:797647311714:android:96a276886ec4dd5396523b",
+        "android_client_info": {
+          "package_name": "com.example.keka_task"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxaEMgXNc33gRnwVnXdrzesQM2Vap1qPA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
