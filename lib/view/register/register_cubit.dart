@@ -5,7 +5,7 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   RegisterCubit(super.initialState, this.context);
 
-  void registerPressed() {
+  void registerPressed({registerModel}) {
     if ((state.formKey.currentState?.validate() ?? false)) {
       // emit(state.copyWith(emailController: state.emailController,formKey: state.formKey));
 

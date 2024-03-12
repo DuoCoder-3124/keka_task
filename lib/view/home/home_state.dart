@@ -4,19 +4,19 @@ class HomeState extends Equatable {
   final Color color;
 
   ///for drop down
-  final List<String> lastSeen;
-  final String dropDownItemValue;
+  final List<String> dropDownItems;
+  final String dropDownItemDefaultValue;
 
   final String currentDate;
   final String currentTime;
 
   final bool hourFormatOnOff;
-  final bool timeStartStop;
+  final bool changeInToOutToIn;
 
   final List logsNRequest;
   final int logNRequestClickIndex;
 
-  final List attendaceRequestList;
+  // final List attendanceRequestList;
 
   final SfRangeValues sfRangeValues;// = const SfRangeValues(0.4, 0.8);
 
@@ -24,58 +24,58 @@ class HomeState extends Equatable {
 
   const HomeState(
       {this.color = CommonColor.blueColor,
-      this.lastSeen = const ['Last Week', 'Last Month', 'Custom Range'],
-      this.dropDownItemValue = 'Last Week',
+      this.dropDownItems = const ['Last Week', 'Last Month', 'Custom Range'],
+      this.dropDownItemDefaultValue = 'Last Week',
       this.currentDate = "",
       this.currentTime = "",
       this.hourFormatOnOff = false,
-      this.logsNRequest = const ['Attendance Log', 'Shift Schedule', 'Attendance Request'],
+      this.logsNRequest = const ['Attendance Log', 'Shift Schedule', /*'Attendance Request'*/],
       this.logNRequestClickIndex = 0,
-      this.timeStartStop = false,
-      this.attendaceRequestList = const ['Last 7 days', 'Last 14 days', 'Last 30 days','Custom Range'],
+      this.changeInToOutToIn = false,
+      // this.attendanceRequestList = const ['Last 7 days', 'Last 14 days', 'Last 30 days','Custom Range'],
       this.sfRangeValues = const SfRangeValues(0.4, 0.8)
       });
 
   @override
   List<Object?> get props => [
         color,
-        lastSeen,
-        dropDownItemValue,
+        dropDownItems,
+        dropDownItemDefaultValue,
         currentDate,
         currentTime,
         hourFormatOnOff,
         logsNRequest,
         logNRequestClickIndex,
-        timeStartStop,
-        attendaceRequestList,
+        changeInToOutToIn,
+        // attendanceRequestList,
         sfRangeValues
       ];
 
   HomeState copyWith(
       {Color? color,
-      List<String>? lastSeen,
-      String? dropDownMenuItem,
+      List<String>? dropDownItems,
+      String? dropDownItemDefaultValue,
       String? currentDate,
       String? currentTime,
       bool? onOff,
       bool? hourFormatOnOff,
       List? logsNRequest,
       int? logNRequestClickIndex,
-      bool? timeStartStop,
-      List? attendaceRequestList,
+      bool? changeInToOutToIn,
+      // List? attendaceRequestList,
       SfRangeValues? sfRangeValues
       }) {
     return HomeState(
         color: color ?? this.color,
-        lastSeen: lastSeen ?? this.lastSeen,
-        dropDownItemValue: dropDownMenuItem ?? dropDownItemValue,
+        dropDownItems: dropDownItems ?? this.dropDownItems,
+        dropDownItemDefaultValue: dropDownItemDefaultValue ?? this.dropDownItemDefaultValue,
         currentDate: currentDate ?? this.currentDate,
         currentTime: currentTime ?? this.currentTime,
         hourFormatOnOff: hourFormatOnOff ?? this.hourFormatOnOff,
         logsNRequest: logsNRequest ?? this.logsNRequest,
         logNRequestClickIndex: logNRequestClickIndex ?? this.logNRequestClickIndex,
-        timeStartStop: timeStartStop ?? this.timeStartStop,
-        attendaceRequestList: attendaceRequestList ?? this.attendaceRequestList,
+        changeInToOutToIn: changeInToOutToIn ?? this.changeInToOutToIn,
+        // attendanceRequestList: attendaceRequestList ?? this.attendanceRequestList,
         sfRangeValues: sfRangeValues ?? this.sfRangeValues
     );
   }
