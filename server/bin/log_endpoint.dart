@@ -32,7 +32,10 @@ Future<Response> _loginEmployee(Request request) async {
         });
         return Response.ok(
           jsonEncode(
-            {"message": "Success"},
+            {
+              "message": "Success",
+              "userId": userData['_id'],
+            },
           ),
         );
       }

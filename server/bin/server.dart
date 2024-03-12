@@ -8,15 +8,22 @@ import 'package:crypto/crypto.dart' as crypto;
 
 part 'register_endpoint.dart';
 part 'log_endpoint.dart';
-part 'actions_endpoint.dart';
+part 'leave_endpoint.dart';
+part 'actions_endpoints.dart';
 
 // Configure routes.
 final _router = Router()
   ..get('/', (req) => Response.ok("Hello Keka!!!"),)
   ..get('/getEmployee', _getEmployee)
+  ..get('/getUser', _getUser)
+  ..get('/getClockAction', _getClockAction)
+  ..get('/getLeavesByUserId', _getLeavesByUserId)
+  ..get('/getLeavesByNotifyId', _getLeavesByNotifyId)
   ..post("/loginEmployee", _loginEmployee)
   ..post("/logoutEmployee", _logoutEmployee)
   ..post('/registerEmployee', _registerEmployee)
+  ..post("/requestLeave", _requestLeave)
+  ..post("/approveLeave", _approveLeave)
   ..post('/clockAction', _clockAction);
 
 ///Instance for database.
