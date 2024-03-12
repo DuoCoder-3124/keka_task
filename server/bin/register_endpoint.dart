@@ -1,6 +1,6 @@
 part of 'server.dart';
 
-Future<Response> _register(Request request) async {
+Future<Response> _registerEmployee(Request request) async {
   String body = await request.readAsString();
   Map<String, dynamic> data = jsonDecode(body);
 
@@ -35,7 +35,7 @@ Future<Response> _register(Request request) async {
       ),
     );
     if (userData == null) {
-      rawBody.addAll({'_id': _docId});
+      rawBody.addAll({'_id': _docId, 'fcmToken': null});
       rawBody.update(
         'password',
         (value) => _encryptPassword(
@@ -58,5 +58,4 @@ Future<Response> _register(Request request) async {
   return Response.forbidden(
     jsonEncode({"null fields": nullFields}),
   );
-  return Response.badRequest(body: "Body should not be empty.");
 }
