@@ -8,10 +8,13 @@ Future<Response> _requestLeave(Request request) async {
     "userId": data["userId"],
     "from": data["from"],
     "to": data["to"],
+    "approverId": data["approverId"],
+    "reason": null,
+    "totalDays": data["totalDays"],
     "leaveType": data["leaveType"],
     "note": data["note"],
     "notify": data["notify"],
-    "isApproved": 0,
+    "isApproved": data["isApproved"],
   };
 
   List nullFields = [];
@@ -104,21 +107,44 @@ Future<Response> _getLeavesByNotifyId(Request request) async {
 
 ///Approves leave for user.
 Future<Response> _approveLeave(Request request) async {
-  Map<String, dynamic> params = request.url.queryParameters;
+  String body = await request.readAsString();
+  Map<String, dynamic> data = jsonDecode(body);
+  Map<String, dynamic> rawBody = {
+    "approverId": data["approverId"],
+    "reason": data['reason'],
+    "isApproved": data["isApproved"],
+  };
 
-  if (params.isNotEmpty) {
-    String leaveId = params['leaveId'];
-    String approverId = params['approverId'];
+  List nullFields = [];
+
+  rawBody.forEach((key, value) {
+    if (value == null) nullFields.add(key);
+  });
+
+  if (nullFields.isEmpty) {
+    String leaveId = rawBody['leaveId'];
+    String approverId = rawBody['approverId'];
 
     DbCollection? collection = db?.collection("leave");
-    var leaveData = await collection
-        ?.find(
+    Map<String, dynamic>? leaveData = await collection?.findOne(
+      where.eq('_id', leaveId).and(
+            where.eq('approverId', approverId),
+          ),
+    );
+    if (leaveData != null) {
+      await collection?.updateOne(
+        await collection.findOne(
           where.eq('_id', leaveId).and(
-                where.eq('notify', approverId),
+                where.eq('approverId', approverId),
               ),
-        )
-        .toList();
-    if (leaveData!.isNotEmpty) {
+        ),
+        {
+          '\$set': {
+            'isApproved': rawBody['isApproved'],
+            'reason': rawBody['reason'],
+          },
+        },
+      );
       return Response.ok(
         jsonEncode(
           {
@@ -135,5 +161,9 @@ Future<Response> _approveLeave(Request request) async {
       ),
     );
   }
-  return Response.badRequest(body: "Parameter userId should not be empty.");
+  return Response.forbidden(
+    jsonEncode(
+      {"nullFields": nullFields},
+    ),
+  );
 }

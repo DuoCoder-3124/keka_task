@@ -5,11 +5,14 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
 import 'package:shelf_router/shelf_router.dart';
 import 'package:crypto/crypto.dart' as crypto;
+import 'package:http/http.dart' as http;
 
 part 'register_endpoint.dart';
+part 'user_endpoint.dart';
 part 'log_endpoint.dart';
 part 'leave_endpoint.dart';
 part 'actions_endpoints.dart';
+part 'firebase_notification.dart';
 
 // Configure routes.
 final _router = Router()
@@ -19,8 +22,8 @@ final _router = Router()
   ..get('/getClockAction', _getClockAction)
   ..get('/getLeavesByUserId', _getLeavesByUserId)
   ..get('/getLeavesByNotifyId', _getLeavesByNotifyId)
+  ..get("/logoutEmployee", _logoutEmployee)
   ..post("/loginEmployee", _loginEmployee)
-  ..post("/logoutEmployee", _logoutEmployee)
   ..post('/registerEmployee', _registerEmployee)
   ..post("/requestLeave", _requestLeave)
   ..post("/approveLeave", _approveLeave)

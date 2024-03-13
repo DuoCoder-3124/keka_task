@@ -58,27 +58,27 @@ Future<Response> _loginEmployee(Request request) async {
 
 ///Logout API endpoint.
 Future<Response> _logoutEmployee(Request request) async {
-  String body = await request.readAsString();
+  /*String body = await request.readAsString();
   Map<String, dynamic> data = jsonDecode(body);
   Map<String, dynamic> rawBody = {
-    "email": data["email"],
+    "userId": data["userId"],
     // 'fcmToken': data['fcmToken'],
   };
   List nullFields = [];
   rawBody.forEach((key, value) {
     if (value == null) nullFields.add(key);
-  });
-
-  if (nullFields.isEmpty) {
+  });*/
+  Map<String, dynamic> params = request.url.queryParameters;
+  if (params.isNotEmpty) {
     DbCollection? collection = db?.collection("user");
     Map<String, dynamic>? userData = await collection?.findOne(
       where.eq(
-        'email',
-        rawBody["email"],
+        '_id',
+        params["userId"],
       ),
     );
     if (userData != null) {
-      await collection?.updateOne(await collection.findOne(where.eq('email', rawBody['email'])), {
+      await collection?.updateOne(await collection.findOne(where.eq('_id', params['userId'])), {
         '\$set': {
           'fcmToken': null,
         }
@@ -96,7 +96,7 @@ Future<Response> _logoutEmployee(Request request) async {
     );
   }
   return Response.forbidden(
-    jsonEncode({"null fields": nullFields}),
+    jsonEncode({"message": "Parameter are null."}),
   );
 }
 
