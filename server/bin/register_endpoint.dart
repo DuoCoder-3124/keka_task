@@ -45,10 +45,9 @@ Future<Response> _registerEmployee(Request request) async {
       });
       rawBody.update(
         'password',
-            (value) =>
-            _encryptPassword(
-              rawBody['password'],
-            ),
+        (value) => _encryptPassword(
+          rawBody['password'],
+        ),
       );
       collection?.insertOne(rawBody);
       await collection?.updateOne(
@@ -59,7 +58,8 @@ Future<Response> _registerEmployee(Request request) async {
           '\$set': {
             'empNumber': empNumber + 1,
           }
-        },);
+        },
+      );
       return Response.ok(
         jsonEncode(
           {"message": "Employee inserted Successfully."},
