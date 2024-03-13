@@ -12,7 +12,7 @@ part 'register_endpoint.dart';
 
 part 'forgot_endpoint.dart';
 
-part 'user_endpoint.dart';
+part 'employee_endpoint.dart';
 
 part 'log_endpoint.dart';
 
@@ -40,7 +40,8 @@ final _router = Router()
   ..post("/verifyToken", _verifyToken)
   ..post("/requestLeave", _requestLeave)
   ..post("/approveLeave", _approveLeave)
-  ..post('/clockAction', _clockAction);
+  ..post('/clockAction', _clockAction)
+  ..put('/updateEmployee', _updateEmployee);
 
 ///Instance for database.
 Db? db;
