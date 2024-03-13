@@ -1,7 +1,7 @@
 part of 'server.dart';
 
 ///Gets user data on the basis of userId.
-Future<Response> _getUser(Request request) async {
+Future<Response> _getEmployeeById(Request request) async {
   Map<String, dynamic> params = request.url.queryParameters;
 
   if (params.isNotEmpty) {
@@ -30,4 +30,13 @@ Future<Response> _getUser(Request request) async {
     );
   }
   return Response.badRequest(body: "Parameter userId should not be empty.");
+}
+
+
+Future<Response> _getEmployee(Request request) async {
+  DbCollection? collection = db?.collection("user");
+  var docs = await collection?.find().toList();
+  return Response.ok(
+    jsonEncode(docs),
+  );
 }

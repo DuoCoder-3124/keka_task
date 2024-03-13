@@ -99,11 +99,3 @@ Future<Response> _logoutEmployee(Request request) async {
     jsonEncode({"message": "Parameter are null."}),
   );
 }
-
-Future<Response> _getEmployee(Request request) async {
-  DbCollection? collection = db?.collection("user");
-  var docs = await collection?.find().toList();
-  return Response.ok(
-    jsonEncode(docs),
-  );
-}
