@@ -9,7 +9,7 @@ Future<Response> _requestLeave(Request request) async {
     "from": data["from"],
     "to": data["to"],
     "approverId": data["approverId"],
-    "reason": null,
+    // "reason": null,
     "totalDays": data["totalDays"],
     "leaveType": data["leaveType"],
     "note": data["note"],
@@ -38,7 +38,7 @@ Future<Response> _requestLeave(Request request) async {
 }
 
 ///Gets leave for user.
-Future<Response> _getLeavesByUserId(Request request) async {
+Future<Response> _getLeavesByEmployeeId(Request request) async {
   Map<String, dynamic> params = request.url.queryParameters;
 
   if (params.isNotEmpty) {

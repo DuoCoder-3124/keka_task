@@ -72,13 +72,15 @@ Future<Response> _clockAction(Request request) async {
 Future<Response> _getClockAction(Request request) async {
   Map<String, dynamic> params = request.url.queryParameters;
 
+  DbCollection? collection = db?.collection("actions");
   if (params.isNotEmpty) {
     String userId = params['userId'];
 
-    DbCollection? collection = db?.collection("actions");
-    List<Map<String, dynamic>>? userData = await collection?.find(
-      where.eq('userId', userId),
-    ).toList();
+    List<Map<String, dynamic>>? userData = await collection
+        ?.find(
+          where.eq('userId', userId),
+        )
+        .toList();
     if (userData!.isNotEmpty) {
       return Response.ok(
         jsonEncode(
@@ -97,5 +99,11 @@ Future<Response> _getClockAction(Request request) async {
       ),
     );
   }
-  return Response.badRequest(body: "Parameter userId should not be empty.");
+  var docs = await collection?.find().toList();
+  return Response.ok(jsonEncode(
+    {
+      "message": "Found data",
+      "userData": docs,
+    },
+  ),);
 }
