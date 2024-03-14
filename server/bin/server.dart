@@ -7,11 +7,11 @@ import 'package:shelf/shelf_io.dart';
 import 'package:shelf_router/shelf_router.dart';
 import 'package:crypto/crypto.dart' as crypto;
 import 'package:http/http.dart' as http;
-import 'package:uuid/uuid.dart';
-
+import 'package:firebase_dart/firebase_dart.dart';
 
 part 'configurations.dart';
 
+part 'endpoints/firebase_notification.dart';
 
 part 'endpoints/register_endpoint.dart';
 
