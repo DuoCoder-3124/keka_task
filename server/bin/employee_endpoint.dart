@@ -75,7 +75,7 @@ Future<Response> _updateEmployee(Request request) async {
         rawBody["userId"],
       ),
     );
-    if (userData == null) {
+    if (userData != null) {
       collection?.insertOne(rawBody);
       await collection?.updateOne(
         await collection.findOne(
