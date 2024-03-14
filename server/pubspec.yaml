@@ -11,7 +11,9 @@ dependencies:
   shelf: ^1.4.0
   shelf_router: ^1.1.0
   crypto: ^3.0.3
-  mongo_dart: ^0.10.0
+  mongo_dart: ^0.9.4
+  http: ^1.2.1
+  uuid: ^3.0.4
 
 dev_dependencies:
   http: ^1.1.0

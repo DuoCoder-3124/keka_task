@@ -1,23 +1,47 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
 import 'package:shelf_router/shelf_router.dart';
 import 'package:crypto/crypto.dart' as crypto;
+import 'package:http/http.dart' as http;
 
 part 'register_endpoint.dart';
+
+part 'forgot_endpoint.dart';
+
+part 'employee_endpoint.dart';
+
 part 'log_endpoint.dart';
-part 'actions_endpoint.dart';
+
+part 'leave_endpoint.dart';
+
+part 'actions_endpoints.dart';
+
+part 'firebase_notification.dart';
 
 // Configure routes.
 final _router = Router()
-  ..get('/', (req) => Response.ok("Hello Keka!!!"),)
+  ..get(
+    '/',
+    (req) => Response.ok("Hello Keka!!!"),
+  )
   ..get('/getEmployee', _getEmployee)
-  ..post("/loginEmployee", _loginEmployee)
-  ..post("/logoutEmployee", _logoutEmployee)
+  ..get('/getEmployeeById', _getEmployeeById)
+  ..get('/getClockAction', _getClockAction)
+  ..get('/getLeavesByEmployeeId', _getLeavesByEmployeeId)
+  ..get('/getLeavesByNotifyId', _getLeavesByNotifyId)
+  ..get("/logoutEmployee", _logoutEmployee)
   ..post('/registerEmployee', _registerEmployee)
-  ..post('/clockAction', _clockAction);
+  ..post("/loginEmployee", _loginEmployee)
+  ..post("/forgotPassword", _forgotPassword)
+  ..post("/verifyToken", _verifyToken)
+  ..post("/requestLeave", _requestLeave)
+  ..post("/approveLeave", _approveLeave)
+  ..post('/clockAction', _clockAction)
+  ..put('/updateEmployee', _updateEmployee);
 
 ///Instance for database.
 Db? db;
@@ -40,7 +64,17 @@ void main(List<String> args) async {
 }
 
 ///Gets id for every document that needs to be inserted in MongoDB.
-String get _docId => ObjectId().oid;
+String get _docId => ObjectId().$oid;
+
+///Generates a Token for verification.
+String get _generateToken => Uuid().v4();
+
+///Generates OTP.
+String _generateOtp() {
+  final rnd = Random();
+  final otp = "${rnd.nextInt(9)}${rnd.nextInt(9)}${rnd.nextInt(9)}${rnd.nextInt(9)}";
+  return otp;
+}
 
 ///For encrypting password.
 String _encryptPassword(String password) {
