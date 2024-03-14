@@ -7,13 +7,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
-import 'package:keka_task/api/api_helper.dart';
 import 'package:keka_task/common_attribute/common_colors.dart';
 import 'package:keka_task/common_attribute/common_value.dart';
 import 'package:keka_task/common_widget/common_container.dart';
 import 'package:keka_task/common_widget/common_elevated_button.dart';
 import 'package:keka_task/common_widget/common_text.dart';
+import 'package:keka_task/common_widget/enum.dart';
 import 'package:keka_task/modal/clockInOutModal.dart';
+import 'package:keka_task/services/api_helper.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -152,9 +153,11 @@ class _HomeViewState extends State<HomeView> {
                               ),
 
                               ///effective hours
+                              ///"${effectiveTime.inHours}h :${effectiveTime
+                              //               .inMinutes % 60}m:${effectiveTime.inSeconds%60}s"
                               const Gap(2),
                               CommonText(
-                                text: 'Effective: 6h 29m',
+                                text: 'Effective: ${state.effectiveHours}',
                                 color: CommonColor.white,
                                 fontSize: TextSize.content,
                               ),
@@ -162,7 +165,7 @@ class _HomeViewState extends State<HomeView> {
                               ///gross over
                               const Gap(4),
                               CommonText(
-                                text: 'Gross: 7h 21m',
+                                text: 'Gross: ${state.grossHours}',
                                 color: CommonColor.white,
                                 fontSize: TextSize.content,
                               ),
@@ -176,28 +179,16 @@ class _HomeViewState extends State<HomeView> {
                                 color: CommonColor.red,
                                 padding: PaddingValue.medium,
                                 onPressed: () {
-                                  print('bool value in main 1-====> ${state.changeInToOutToIn}');
                                   cubit.getCurrentTime();
+
+                                  /// insert data
                                   cubit.changeInOutText(timeStartStop: !(state.changeInToOutToIn));
 
-                                  // ApiHelper.instance.insertClockInData(clockInOutModal: ClockInOutModal(
-                                  //   userId: '1',
-                                  //   clockIn: state.changeInToOutToIn ? [state.currentTime] : [],
-                                  //   clockOut: state.changeInToOutToIn ? [] : [state.currentTime],
-                                  //   date: state.currentDate,
-                                  //   effectiveHours: state.currentTime,
-                                  //   grossHours: state.currentTime,
-                                  //   arrival: "1",
-                                  // ));
+                                  /// read data
+                                  // cubit.getClockInTime();
 
-                                  /*
-                                  * clock in --> currTime
-                                  * clock out ----> currData
-                                  * date ---> date
-                                  * effective hours ---> working hour
-                                  * gross hour ---> begin to end time
-                                  * arrive(onTime) ----> 1
-                                  * */
+
+                                  // cubit.calculateTime();
 
                                 },
                                 child: CommonText(
@@ -625,6 +616,8 @@ class _HomeViewState extends State<HomeView> {
     SfRangeValues sfRangeValues = const SfRangeValues(4.0, 8.0);
     return BlocBuilder<HomeCubit, HomeState>(
   builder: (context, state) {
+    print('arrvial status ====> ${state.arrivalStatus}');
+
     return Card(
       elevation: 10,
       child: CommonContainer(
@@ -637,13 +630,13 @@ class _HomeViewState extends State<HomeView> {
           children: [
 
             /// Date & Arrival
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CommonText(text: 'DATE : Feb 23, Fri',
+                CommonText(text: 'DATE : ${DateFormat('MMM dd, E').format(DateTime.now())}',
                     color: Colors.white,
                     fontSize: TextSize.label),
-                CommonText(text: 'ARRIVAL : On Time',
+                CommonText(text: 'ARRIVAL : ${state.arrivalStatus}',
                     color: Colors.white,
                     fontSize: TextSize.label),
               ],
@@ -651,8 +644,8 @@ class _HomeViewState extends State<HomeView> {
 
             ///Effective hours
             const Gap(Spacing.xMedium),
-            const CommonText(
-                text: 'EFFECTIVE HOUR : 8h 25m',
+            CommonText(
+                text: 'EFFECTIVE HOURS : ${state.effectiveHours}',
                 color: Colors.white,
                 fontSize: TextSize.label),
 
@@ -660,7 +653,7 @@ class _HomeViewState extends State<HomeView> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const CommonText(text: 'GROSS HOURS: 9h 14m',
+                CommonText(text: 'GROSS HOURS : ${state.grossHours}',
                     color: Colors.white,
                     fontSize: TextSize.label),
                 Row(
@@ -708,7 +701,8 @@ class _HomeViewState extends State<HomeView> {
                                             color: Colors.green)),
                                     CommonText(text: state.currentTime,
                                       fontWeight: TextWeight.bold,
-                                      color: CommonColor.white,),
+                                      color: CommonColor.white,
+                                    ),
                                   ],
                                 ),
                                 Row(

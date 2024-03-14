@@ -9,7 +9,7 @@ import 'package:keka_task/common_attribute/validation.dart';
 import 'package:keka_task/common_widget/common_elevated_button.dart';
 import 'package:keka_task/common_widget/common_rich_text.dart';
 import 'package:keka_task/common_widget/common_text_field.dart';
-import 'package:keka_task/model/register_modal.dart';
+import 'package:keka_task/modal/register_modal.dart';
 import 'package:keka_task/services/api_helper.dart';
 import 'package:keka_task/view/login/login_view.dart';
 import 'package:keka_task/view/login_password/login_password_view.dart';

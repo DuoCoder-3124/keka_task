@@ -18,9 +18,11 @@ class HomeState extends Equatable {
 
   // final List attendanceRequestList;
 
+  final String effectiveHours;
+  final String grossHours;
+  final String arrivalStatus;
+
   final SfRangeValues sfRangeValues;// = const SfRangeValues(0.4, 0.8);
-
-
 
   const HomeState(
       {this.color = CommonColor.blueColor,
@@ -32,6 +34,9 @@ class HomeState extends Equatable {
       this.logsNRequest = const ['Attendance Log', 'Shift Schedule', /*'Attendance Request'*/],
       this.logNRequestClickIndex = 0,
       this.changeInToOutToIn = false,
+      this.effectiveHours = "0h 0m",
+      this.grossHours = "0h 0m",
+      this.arrivalStatus = "",
       // this.attendanceRequestList = const ['Last 7 days', 'Last 14 days', 'Last 30 days','Custom Range'],
       this.sfRangeValues = const SfRangeValues(0.4, 0.8)
       });
@@ -47,6 +52,9 @@ class HomeState extends Equatable {
         logsNRequest,
         logNRequestClickIndex,
         changeInToOutToIn,
+        effectiveHours,
+        grossHours,
+        arrivalStatus,
         // attendanceRequestList,
         sfRangeValues
       ];
@@ -62,6 +70,9 @@ class HomeState extends Equatable {
       List? logsNRequest,
       int? logNRequestClickIndex,
       bool? changeInToOutToIn,
+      String? effectiveHours,
+      String? grossHours,
+      String? arrivalStatus,
       // List? attendaceRequestList,
       SfRangeValues? sfRangeValues
       }) {
@@ -75,6 +86,9 @@ class HomeState extends Equatable {
         logsNRequest: logsNRequest ?? this.logsNRequest,
         logNRequestClickIndex: logNRequestClickIndex ?? this.logNRequestClickIndex,
         changeInToOutToIn: changeInToOutToIn ?? this.changeInToOutToIn,
+        effectiveHours: effectiveHours ?? this.effectiveHours,
+        grossHours: grossHours ?? this.grossHours,
+        arrivalStatus: arrivalStatus ?? this.arrivalStatus,
         // attendanceRequestList: attendaceRequestList ?? this.attendanceRequestList,
         sfRangeValues: sfRangeValues ?? this.sfRangeValues
     );

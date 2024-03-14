@@ -38,40 +38,96 @@ class HomeCubit extends Cubit<HomeState> {
   /// update clockIn to ClockOut OR ClockOut to clockIn
   void changeInOutText({required bool timeStartStop}) {
 
-    String time = "xyz";
+    emit(state.copyWith(changeInToOutToIn: timeStartStop));
 
-    ApiHelper.instance.insertClockInData(clockInOutModal: ClockInOutModal(
-      userId: '1',
-      clockIn: state.changeInToOutToIn ? [state.currentTime] : [],
-      clockOut: state.changeInToOutToIn ? [] : [state.currentTime],
+    final currentTime = DateTime.now().toIso8601String();
+    DateTime constTime = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 9, 0);
+
+
+    ///pending data enter only clock in time not clock out time
+    print('bool value ====> ${state.changeInToOutToIn}');
+    ApiService.helper.insertClockInData(clockInOutModal: ClockInOutModal(
+      userId: '23',
+      postClockIn: state.changeInToOutToIn ? currentTime : null,
+      postClockOut: state.changeInToOutToIn ? null : currentTime,
       date: state.currentDate,
-      effectiveHours: time,
-      grossHours: time,
-      arrival: "1",
-    ));
-    print('time ===> $time');
-    // emit(state.copyWith(changeInToOutToIn: timeStartStop));
+      effectiveHours: currentTime,
+      grossHours: currentTime,
+      arrival: (DateTime.now().isBefore(constTime)) ? ArrivalStatus.OnTime.name : ArrivalStatus.Late.name,
+    )).then((value){
+      getClockInTime();
+    });
 
   }
 
-  ///insert Clock Record
-  // void insertClockInData({required ClockInOutModal clockInOutModal}){
-  //
-  //   // print('cubit time ====> ${state.currentTime}');
-  //
-  //   // ApiHelper.instance.insertClockInData(clockInOutModal: ClockInOutModal(
-  //   //   userId: '1',
-  //   //   clockIn: state.changeInToOutToIn ? [state.currentTime] : [],
-  //   //   clockOut: state.changeInToOutToIn ? [] : [state.currentTime],
-  //   //   date: state.currentDate,
-  //   //   effectiveHours: state.currentTime,
-  //   //   grossHours: state.currentTime,
-  //   //   arrival: "1",
-  //   // ));
+
+  /// get In & Out time, read clock data
+  Future<void> getClockInTime() async{
+
+    print('>>>>>>>>>>>>>>>>>>>> READ DATA');
+
+    List<dynamic> getClockData = await ApiService
+        .helper.readClockInData(userId: '23');
+
+    Duration effectiveTime = Duration();
+    Duration grossTime = Duration();
+
+    List getClockInList = getClockData[0].getClockIn;
+    List getClockOutList = getClockData[0].getClockOut;
+    emit(state.copyWith(arrivalStatus: getClockData[0].arrival));
+
+
+    /// calculate effective hours and gross hours
+    if(getClockOutList.isNotEmpty){
+
+      for (int i = 0; i < getClockOutList.length; i++) {
+
+        /// effective hours
+        DateTime dateTime1 = DateTime.parse(getClockInList[i]);
+        DateTime dateTime2 = DateTime.parse(getClockOutList[i]);
+        // final time1 = DateFormat('hh:mm:ss').format(
+        //     DateTime.parse(dateTime1.toIso8601String()));
+        // final time2 = DateFormat('hh:mm:ss').format(
+        //     DateTime.parse(dateTime2.toIso8601String()));
+        effectiveTime = effectiveTime + dateTime2.difference(dateTime1);
+
+        /// gross hours
+        DateTime grossTime1 = DateTime.parse(getClockInList.first);
+        DateTime grossTime2 = DateTime.parse(getClockOutList.last);
+        grossTime = grossTime2.difference(grossTime1);
+
+        print('effective hours ====> $effectiveTime');
+        print('gross hours ====> $grossTime');
+
+      }
+
+      emit(state.copyWith(
+          effectiveHours: "${effectiveTime.inHours}h ${effectiveTime
+              .inMinutes % 60}m",
+          grossHours: "${grossTime.inHours}h ${grossTime.inMinutes % 60}m",
+      ));
+    }
+
+    ///  check if user clock in on time, same time or late
+    // DateTime constTime = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 9, 0);
+    // if((DateTime.now()).isBefore(constTime)){
+    //   print('>>>>> onTime');
+    // }else{
+    //   print('>>>>> late');
+    // }
+  }
+
+
+  /// getUserId
+  // void getUserId() async{
+  //   List<ClockInOutModal> getUserData = await ApiService.helper.getRegisterUser();
+  //   print('getUserData runType ====> ${getUserData.runtimeType}');
   // }
 
-  /// get clock in time
-  void getClockInTime() {}
+  /// calculate effective and gross hours
+  // void calculateTime({}){
+  //
+  // }
 
   ///24 hour format on off
   void hourFormatOnOff({isHourFormatOn}) {

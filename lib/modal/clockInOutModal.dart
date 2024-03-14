@@ -1,13 +1,17 @@
 class ClockInOutModal{
 
-  final String clockInOutId;
-  final String userId;
-  final String date;
-  final String effectiveHours;
-  final String grossHours;
-  final String arrival;
-  final List<dynamic> clockIn;
-  final List<dynamic> clockOut;
+  final String? clockInOutId;
+  final String? userId;
+  final String? date;
+  final String? effectiveHours;
+  final String? grossHours;
+  final String? arrival;
+
+  final String? postClockIn;
+  final String? postClockOut;
+
+  final List<dynamic> getClockIn;
+  final List<dynamic> getClockOut;
 
   ClockInOutModal({
     this.clockInOutId = "",
@@ -16,30 +20,39 @@ class ClockInOutModal{
     this.effectiveHours = "",
     this.grossHours = "",
     this.arrival = "",
-    this.clockIn = const [],
-    this.clockOut = const []
+    this.postClockIn = "",
+    this.postClockOut = "",
+    this.getClockIn = const <dynamic>[],
+    this.getClockOut = const <dynamic>[]
   });
 
   factory ClockInOutModal.fromJson(Map<String, dynamic> json) => ClockInOutModal(
       clockInOutId: json['_id'],
       userId: json['userId'],
       date: json['date'],
-      effectiveHours: json['effectiveHours'],
-      grossHours: json['grossHours'],
+      effectiveHours: json['effective'],
+      grossHours: json['gross'],
       arrival: json['arrival'],
-      clockIn: json['clockIn'],
-      clockOut: json['clockOut']
+
+      // postClockIn: json['in'],
+      // postClockOut: json['out'],
+
+      getClockIn: json['in'] ?? [],
+      getClockOut: json['out'] ?? [],
   );
 
   Map<String, dynamic> toJson() => {
     '_id':clockInOutId,
     'userId':userId,
     'date':date,
-    'effectiveHours':effectiveHours,
-    'grossHours':grossHours,
+    'effective':effectiveHours,
+    'gross':grossHours,
     'arrival':arrival,
-    'clockIn':clockIn,
-    'clockOut':clockOut
-  };
 
+    'in':postClockIn,
+    'out':postClockOut,
+
+    // 'getClockIn':getClockIn,
+    // 'getClockOut':getClockOut
+  };
 }
