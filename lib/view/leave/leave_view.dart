@@ -10,6 +10,11 @@ import 'package:keka_task/common_attribute/common_value.dart';
 import 'package:keka_task/common_widget/common_elevated_button.dart';
 import 'package:keka_task/common_widget/common_text.dart';
 import 'package:keka_task/common_widget/common_text_field.dart';
+import 'package:keka_task/common_widget/enum.dart';
+import 'package:keka_task/model/leave_model.dart';
+import 'package:keka_task/services/api_helper.dart';
+import 'package:keka_task/view/bottom_nav_bar/bottom_nav_bar_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'leave_cubit.dart';
 
@@ -48,16 +53,16 @@ class _LeaveViewState extends State<LeaveView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     appBar: AppBar(
-      foregroundColor: CommonColor.white,
-      title: CommonText(
-        text: 'Leave Request',
-        color: CommonColor.white,
-        fontWeight: FontWeight.bold,
-        fontSize: TextSize.largeHHeading,
+      appBar: AppBar(
+        foregroundColor: CommonColor.white,
+        title: CommonText(
+          text: 'Leave Request',
+          color: CommonColor.white,
+          fontWeight: FontWeight.bold,
+          fontSize: TextSize.largeHHeading,
+        ),
+        backgroundColor: CommonColor.blueColor,
       ),
-      backgroundColor: CommonColor.blueColor,
-    ),
       body: BlocBuilder<LeaveCubit, LeaveState>(
         builder: (context, state) {
           var cubit = context.read<LeaveCubit>();
@@ -152,6 +157,20 @@ class _LeaveViewState extends State<LeaveView> {
                         controller: state.notifyController,
                         validator: (value)=>value?.isEmpty??false?'field is required':null,
                         hintText: 'Search Employee',
+                        suffixIcon: PopupMenuButton(
+                          itemBuilder: (BuildContext context) {
+                            return [
+                              const PopupMenuItem(value: '65f036ae1be13d738b000000', child: Text('Suresh HR')),
+                            ];
+                          },
+                          onSelected: (value) {
+                            if (value == '65f036ae1be13d738b000000') {
+                              state.notifyController.text='Suresh HR';
+                              state.approverId=value;
+                            }
+                          },
+                          icon: const Icon(Icons.arrow_drop_down, color: Colors.grey),
+                        ),
                       ),
 
                       const Gap(Spacing.normal),

@@ -150,7 +150,7 @@ class _LoginViewState extends State<LoginView> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: TextButton(
-                        onPressed: () =>Navigator.pushNamed(context, RegisterView.routeName),
+                        onPressed: () =>Navigator.pushNamed(context, RegisterView.routeName,arguments: UpdateArgumentPass(isNew: true)),
                         child: const Text('create an account?',style: TextStyle(color: CommonColor.blueColor),),
                       ),
                     ),

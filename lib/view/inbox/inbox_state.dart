@@ -1,10 +1,19 @@
 part of 'inbox_view.dart';
 
-abstract class InboxState extends Equatable {
-  const InboxState();
-}
+class InboxState extends Equatable {
 
-class InboxInitial extends InboxState {
+  final List<LeaveModel> leaveModelListValue;
+
+  const InboxState({required this.leaveModelListValue});
+
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [leaveModelListValue];
+
+  InboxState copyWith({
+    List<LeaveModel>? leaveModelListValue,
+  }) {
+    return InboxState(
+      leaveModelListValue: leaveModelListValue ?? this.leaveModelListValue,
+    );
+  }
 }

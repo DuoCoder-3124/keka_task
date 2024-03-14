@@ -3,10 +3,12 @@ import 'dart:developer';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:keka_task/common_attribute/common_log.dart';
 import 'package:keka_task/services/api_helper.dart';
 import 'package:uuid/uuid.dart';
 
 import '../bottom_nav_bar/bottom_nav_bar_view.dart';
+import '../forgot_password/forgot_password_view.dart';
 
 part 'login_password_state.dart';
 
@@ -30,6 +32,16 @@ class LoginPasswordCubit extends Cubit<LoginPasswordState> {
 
   void changeVisibility() {
     emit(state.copyWith(isVisible: !state.isVisible));
+  }
+
+  Future<void> navigateToForgot() async {
+    await ApiService.helper.getTokenByEmail(userEmail).then((value) {
+    Navigator.pushNamed(context, ForgotPasswordView.routeName,arguments: TokenArgumentPass(email: userEmail,otp: value.otp,token: value.token));
+
+    Log.debug("token===>${value.token}");
+    Log.debug("otp===>${value.otp}");
+
+    });
   }
 
   Future<void> loginPasswordPressed() async {

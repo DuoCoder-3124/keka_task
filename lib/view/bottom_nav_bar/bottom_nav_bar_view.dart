@@ -7,7 +7,7 @@ import 'package:keka_task/view/bottom_nav_bar/bottom_nav_bar_state.dart';
 import 'package:keka_task/view/home/home_view.dart';
 import 'package:keka_task/view/inbox/inbox_view.dart';
 import 'package:keka_task/view/leave/leave_view.dart';
-import 'package:keka_task/view/profile/profle_view.dart';
+import 'package:keka_task/view/profile/profile_view.dart';
 
 class BottomNavBarViewArgument {
   // final String? userCode;

@@ -11,12 +11,21 @@ import 'package:keka_task/common_widget/common_rich_text.dart';
 import 'package:keka_task/common_widget/common_text_field.dart';
 import 'package:keka_task/model/register_modal.dart';
 import 'package:keka_task/services/api_helper.dart';
+import 'package:keka_task/view/bottom_nav_bar/bottom_nav_bar_view.dart';
 import 'package:keka_task/view/login/login_view.dart';
 import 'package:keka_task/view/login_password/login_password_view.dart';
+import 'package:keka_task/view/profile/profile_view.dart';
 
 part 'register_state.dart';
 
 part 'register_cubit.dart';
+
+class UpdateArgumentPass {
+  final bool isNew;
+  final RegisterModel? registerModel;
+
+  UpdateArgumentPass({required this.isNew, this.registerModel});
+}
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -24,6 +33,8 @@ class RegisterView extends StatefulWidget {
   static String routeName = '/register_view';
 
   static Widget builder(BuildContext context) {
+    final args = ModalRoute.of(context)?.settings.arguments as UpdateArgumentPass;
+
     return BlocProvider(
       create: (context) => RegisterCubit(
         RegisterState(
@@ -40,7 +51,8 @@ class RegisterView extends StatefulWidget {
           phoneNumberController: TextEditingController(),
           reportedByController: TextEditingController(),
         ),
-        context,
+        context: context,
+        updateArgumentPass: args,
       ),
       child: const RegisterView(),
     );
@@ -77,8 +89,8 @@ class _RegisterViewState extends State<RegisterView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Gap(Spacing.xLarge),
-                    const Text(
-                      'Register to Keka',
+                    Text(
+                      cubit.updateArgumentPass.isNew ? 'Register to Keka' : 'Update User',
                       style: TextStyle(fontSize: TextSize.largeHHeading, fontWeight: FontWeight.bold),
                     ),
                     const Gap(Spacing.normal),
@@ -152,23 +164,37 @@ class _RegisterViewState extends State<RegisterView> {
                       keyboardType: TextInputType.text,
                     ),
                     const Gap(Spacing.normal),
-                    CommonTextField(
-                      controller: state.passwordController,
-                      hintText: 'Enter password',
-                      validator: (value) => value!.isEmpty ? 'Enter password' : null,
-                      keyboardType: TextInputType.text,
-                      isVisiblePassword: true,
-                    ),
+                    cubit.updateArgumentPass.isNew
+                        ? CommonTextField(
+                            controller: state.passwordController,
+                            hintText: 'Enter password',
+                            validator: (value) => value!.isEmpty ? 'Enter password' : null,
+                            keyboardType: TextInputType.text,
+                            isVisiblePassword: state.isVisible,
+                            suffixIcon: IconButton(
+                              onPressed: () => context.read<RegisterCubit>().changeVisibility(),
+                              icon: Icon(state.isVisible ? Icons.visibility_off_outlined : Icons.visibility_outlined),
+                              color: Colors.grey,
+                            ),
+                          )
+                        : const SizedBox(),
                     const Gap(Spacing.normal),
                     CommonElevatedButton(
                       onPressed: () {
-                        context.read<RegisterCubit>().registerPressed();
+                        if (cubit.updateArgumentPass.isNew) {
+                          context.read<RegisterCubit>().registerPressed();
+                        } else {
+                          context.read<RegisterCubit>().updatePressed();
+                        }
                       },
                       color: CommonColor.blueColor,
                       height: 50,
                       width: MediaQuery.of(context).size.width,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Spacing.small)),
-                      child: const Text('Register', style: TextStyle(color: Colors.white)),
+                      child: Text(
+                        cubit.updateArgumentPass.isNew ? 'Register' : 'Update',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                     const Gap(Spacing.normal),
                   ],

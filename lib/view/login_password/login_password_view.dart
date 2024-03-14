@@ -150,7 +150,7 @@ class _LoginPasswordViewState extends State<LoginPasswordView> {
                     const Gap(Spacing.small),
                     TextButton(
                       child: const Text('Forgot password ?', style: TextStyle(color: CommonColor.blueColor)),
-                      onPressed: () => Navigator.pushNamed(context, ForgotPasswordView.routeName),
+                      onPressed: () => cubit.navigateToForgot(),
                     ),
                     const Gap(Spacing.xxxLarge * 2),
                     Row(

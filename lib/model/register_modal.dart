@@ -2,7 +2,7 @@ class RegisterModel{
 
   final String userId;
   final String firstName;
-  final String secondName;
+  final String lastName;
   final String middleName;
   final String email;
   final String password;
@@ -12,11 +12,12 @@ class RegisterModel{
   final String reportedBy;
   final String jobTitle;
   final String phoneNumber;
+  final int employeeNumber;
 
   RegisterModel({
     this.userId="",
     this.firstName = "",
-    this.secondName = "",
+    this.lastName = "",
     this.middleName = "",
     this.email = "",
     this.password = "",
@@ -26,12 +27,13 @@ class RegisterModel{
     this.reportedBy = "",
     this.jobTitle = "",
     this.phoneNumber = "",
+    this.employeeNumber=0,
   });
 
   factory RegisterModel.fromJson(Map<String, dynamic> json) => RegisterModel(
     userId: json['_id'],
       firstName: json['firstName'],
-      secondName: json['secondName'],
+      lastName: json['secondName'],
       middleName: json['middleName'],
       email: json['email'],
       password: json['password'],
@@ -40,14 +42,15 @@ class RegisterModel{
       department: json['department'],
       reportedBy: json['reportedBy'],
       jobTitle: json['jobTitle'],
-      phoneNumber: json['phoneNumber']
+      phoneNumber: json['phoneNumber'],
+    employeeNumber: json['employeeNumber'],
   );
 
 
   Map<String, dynamic> toJson() => {
     '_id':userId,
     'firstName':firstName,
-    'secondName':secondName,
+    'secondName':lastName,
     'middleName':middleName,
     'email':email,
     'password':password,
@@ -56,8 +59,7 @@ class RegisterModel{
     'department':department,
     'reportedBy':reportedBy,
     'jobTitle':jobTitle,
-    'phoneNumber':phoneNumber
+    'phoneNumber':phoneNumber,
+    'employeeNumber':employeeNumber,
   };
-
-
 }
