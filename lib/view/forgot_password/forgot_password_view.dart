@@ -11,19 +11,34 @@ import 'package:keka_task/common_widget/common_text_field.dart';
 import 'package:keka_task/view/forgot_password/forgot_password_cubit.dart';
 import 'package:keka_task/view/login/login_view.dart';
 
+class TokenArgumentPass {
+  String? email;
+  String? token;
+  String? otp;
+
+  TokenArgumentPass({
+    this.email = '',
+    this.token = '',
+    this.otp = '',
+  });
+}
+
 class ForgotPasswordView extends StatefulWidget {
   const ForgotPasswordView({super.key});
 
   static String routeName = '/forgot_password_view';
 
   static Widget builder(BuildContext context) {
+    final args = ModalRoute.of(context)?.settings.arguments as TokenArgumentPass;
     return BlocProvider(
       create: (context) => ForgotPasswordCubit(
         ForgotPasswordState(
+            confirmPasswordController: TextEditingController(),
             passwordController: TextEditingController(),
             formKey: GlobalKey<FormState>(),
-            captchaController: TextEditingController()),
-        context,
+            otpController: TextEditingController()),
+        context: context,
+        tokenArgumentPass: args,
       ),
       child: const ForgotPasswordView(),
     );
@@ -37,13 +52,12 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
   // final uuid = const Uuid();
   // final captcha = const Uuid().v4().substring(1, 5).toUpperCase();
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocBuilder<ForgotPasswordCubit, ForgotPasswordState>(
         builder: (context, state) {
-          var cubit=context.read<ForgotPasswordCubit>();
+          var cubit = context.read<ForgotPasswordCubit>();
           return Form(
             key: state.formKey,
             child: Center(
@@ -62,10 +76,38 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                     const Gap(Spacing.normal),
                     CommonTextField(
                       controller: state.passwordController,
-                      hintText: 'Email or Mobile',
-                      validator: (value)=>validateEmailAndPhone(value),
-                      isVisiblePassword: false,
+                      hintText: 'Enter password',
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Enter password';
+                        }
+                        return null;
+                      },
                       keyboardType: TextInputType.text,
+                      isVisiblePassword: state.isVisible1,
+                      suffixIcon: IconButton(
+                        onPressed: () => cubit.changeVisibility1(),
+                        icon: Icon(state.isVisible1 ? Icons.visibility_off_outlined : Icons.visibility_outlined),
+                        color: Colors.grey,
+                      ),
+                    ),
+                    const Gap(Spacing.normal),
+                    CommonTextField(
+                      controller: state.confirmPasswordController,
+                      hintText: 'Enter Confirm password',
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Enter confirm password';
+                        }
+                        return null;
+                      },
+                      keyboardType: TextInputType.text,
+                      isVisiblePassword: state.isVisible2,
+                      suffixIcon: IconButton(
+                        onPressed: () => cubit.changeVisibility2(),
+                        icon: Icon(state.isVisible2 ? Icons.visibility_off_outlined : Icons.visibility_outlined),
+                        color: Colors.grey,
+                      ),
                     ),
                     const Gap(Spacing.normal),
                     Row(
@@ -74,9 +116,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                         Expanded(
                           child: Text(
                             textAlign: TextAlign.center,
-                            // uuid.v4().substring(1, 5).toUpperCase(),
-                            // 'N6D4',
-                            state.captcha??'',
+                            state.otp ?? '',
                             style: TextStyle(
                               color: Color(0xFF1e6a72),
                               fontStyle: FontStyle.italic,
@@ -86,27 +126,30 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.only(end: 16),
-                          child: IconButton(icon: Icon(Icons.refresh, color: CommonColor.blueColor), onPressed: () =>cubit.refreshCaptcha(),),
+                          child: IconButton(
+                            icon: Icon(Icons.refresh, color: CommonColor.blueColor),
+                            // onPressed: () => cubit.refreshCaptcha(),
+                            onPressed: () {},
+                          ),
                         ),
                         Expanded(
                             child: CommonTextField(
-                          hintText: 'Captcha',
+                          hintText: 'Enter otp',
                           validator: (value) {
-                            if (value == null || value.isEmpty ) {
-                              return 'Enter captcha';
-                            }else if(state.captcha!=value){
-                              return 'Invalid captcha';
+                            if (value == null || value.isEmpty) {
+                              return 'Enter otp';
+                            } else if (state.otp != value) {
+                              return 'Invalid otp';
                             }
                             return null;
                           },
-                          controller: state.captchaController,
+                          controller: state.otpController,
                         )),
                       ],
                     ),
                     const Gap(Spacing.normal),
                     CommonElevatedButton(
-                      onPressed: () =>
-                          context.read<ForgotPasswordCubit>().loginPasswordPressed(),
+                      onPressed: () => context.read<ForgotPasswordCubit>().loginPasswordPressed(),
                       color: CommonColor.blueColor,
                       height: 50,
                       width: MediaQuery.of(context).size.width,

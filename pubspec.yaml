@@ -52,8 +52,10 @@ dependencies:
   fluttertoast: ^8.2.4
   firebase_core: ^2.25.4
   cloud_firestore: ^4.15.5
-  firebase_messaging: ^14.7.19
   shared_preferences: ^2.2.2
+  firebase_messaging: ^14.7.20
+  flutter_local_notifications: ^17.0.0
+  timezone: ^0.9.2
 
 
 dev_dependencies:

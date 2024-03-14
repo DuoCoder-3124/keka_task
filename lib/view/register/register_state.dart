@@ -1,6 +1,7 @@
 part of 'register_view.dart';
 
 class RegisterState extends Equatable {
+  bool isVisible;
   TextEditingController firstNameController = TextEditingController();
   TextEditingController middleNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
@@ -15,6 +16,7 @@ class RegisterState extends Equatable {
   GlobalKey<FormState> formKey;
 
   RegisterState({
+    this.isVisible = true,
     required this.firstNameController,
     required this.middleNameController,
     required this.lastNameController,
@@ -46,6 +48,7 @@ class RegisterState extends Equatable {
       ];
 
   RegisterState copyWith({
+    bool? isVisible,
     TextEditingController? firstNameController,
     TextEditingController? middleNameController,
     TextEditingController? lastNameController,
@@ -60,6 +63,7 @@ class RegisterState extends Equatable {
     GlobalKey<FormState>? formKey,
   }) {
     return RegisterState(
+      isVisible: isVisible ?? this.isVisible,
       firstNameController: firstNameController ?? this.firstNameController,
       middleNameController: middleNameController ?? this.middleNameController,
       lastNameController: lastNameController ?? this.lastNameController,

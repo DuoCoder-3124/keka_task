@@ -12,6 +12,8 @@ class LeaveState extends Equatable {
 
   TextEditingController notifyController;
 
+  String? approverId;
+
   int? dateDifference;
 
   List<String> leaveType;
@@ -27,6 +29,7 @@ class LeaveState extends Equatable {
     required this.noteController,
     required this.notifyController,
     required this.dateDifference,
+    this.approverId='',
     required this.formKey,
     this.leaveType = const [
       'Comp Offs',

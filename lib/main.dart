@@ -8,12 +8,26 @@ import 'package:keka_task/view/inbox/inbox_view.dart';
 import 'package:keka_task/view/leave/leave_view.dart';
 import 'package:keka_task/view/login/login_view.dart';
 import 'package:keka_task/view/login_password/login_password_view.dart';
-import 'package:keka_task/view/profile/profle_view.dart';
+import 'package:keka_task/view/profile/profile_view.dart';
 import 'package:keka_task/view/register/register_view.dart';
 import 'package:keka_task/view/register/register_view.dart';
+import 'package:keka_task/view/splash_view/splash_screen.dart';
+import 'package:keka_task/view/splash_view/splash_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-//entry point
-void main() {
+import 'firebase_options.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // Set the background messaging handler early on, as a named top-level function
+
+  await FirebaseMessaging.instance.setAutoInitEnabled(true);
+  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  // if (!kIsWeb) {
+  // await setupFlutterNotifications();
+  // }
   runApp(const MyApp());
 }
 
@@ -30,13 +44,16 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // initialRoute: BottomNavBarView.routeName,
-      // initialRoute: HomeView.routeName,
-      // routes: route,
-      home: Temp(),
+      // initialRoute: isNewUser() ? LoginView.routeName : BottomNavBarView.routeName,
+      // initialRoute: LoginView.routeName,
+      initialRoute: SplashScreen.routeName,
+      routes: route,
+      // home: Temp(),
     );
   }
 
   Map<String, WidgetBuilder> get route => <String, WidgetBuilder>{
+    SplashScreen.routeName:SplashScreen.builder,
     RegisterView.routeName:RegisterView.builder,
     LoginView.routeName:LoginView.builder,
     LoginPasswordView.routeName:LoginPasswordView.builder,
