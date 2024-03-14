@@ -9,7 +9,7 @@ import 'package:keka_task/common_attribute/common_value.dart';
 import 'package:keka_task/common_widget/common_container.dart';
 import 'package:keka_task/common_widget/common_elevated_button.dart';
 import 'package:keka_task/common_widget/common_text.dart';
-import 'package:keka_task/model/register_modal.dart';
+import 'package:keka_task/modal/register_modal.dart';
 import 'package:keka_task/services/api_helper.dart';
 import 'package:keka_task/services/firebase_helper.dart';
 import 'package:keka_task/view/login/login_view.dart';

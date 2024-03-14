@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:keka_task/common_attribute/common_colors.dart';
 import 'package:keka_task/common_attribute/common_value.dart';
-import 'package:keka_task/model/leave_model.dart';
+import 'package:keka_task/modal/leave_model.dart';
 
 class InboxCard extends StatelessWidget {
   final LeaveModel leaveModel;

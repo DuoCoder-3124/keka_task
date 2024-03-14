@@ -17,3 +17,4 @@ class ProfileState extends Equatable {
     );
   }
 }
+

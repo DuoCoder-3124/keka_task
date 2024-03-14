@@ -9,7 +9,7 @@ import 'package:keka_task/common_attribute/common_images.dart';
 import 'package:keka_task/common_attribute/common_value.dart';
 import 'package:keka_task/common_widget/common_inbox_card.dart';
 import 'package:keka_task/common_widget/common_text.dart';
-import 'package:keka_task/model/leave_model.dart';
+import 'package:keka_task/modal/leave_model.dart';
 import 'package:keka_task/services/api_helper.dart';
 
 part 'inbox_cubit.dart';

@@ -6,8 +6,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:keka_task/common_attribute/common_log.dart';
-import 'package:keka_task/model/register_modal.dart';
+import 'package:keka_task/modal/clockInOutModal.dart';
+import 'package:keka_task/modal/leave_model.dart';
+import 'package:keka_task/modal/register_modal.dart';
 import 'package:keka_task/services/firebase_helper.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
   static ApiService helper = ApiService._();
@@ -16,10 +19,50 @@ class ApiService {
 
   final Dio _dio = Dio();
 
+  /// post register data
+  Future<RegisterModel?> getProfileDataById(String userId) async {
+    try {
+      var response = await _dio.get("http://192.168.1.121:3000/getEmployeeById?userId=$userId");
+
+      var profileModel = RegisterModel.fromJson(jsonDecode(response.data)["userData"]);
+
+      if (response.statusCode == 200) {
+        log('Success');
+      } else {
+        log('Unsuccessful');
+      }
+
+      return profileModel;
+    } catch (error) {
+      log('error====>$error');
+      return null;
+    }
+  }
+
   Future<void> registerUser(RegisterModel registerModel) async {
     try {
       var response = await _dio.post(
         "http://192.168.1.121:3000/registerEmployee",
+        data: registerModel.toJson(),
+      );
+
+
+      Log.success("response===>${response.data}");
+
+      if (response.statusCode == 200) {
+        log('Success');
+      } else {
+        log('Unsuccessful');
+      }
+    } catch (error) {
+      log('error====>$error');
+    }
+  }
+
+  Future<void> updateUser({required RegisterModel registerModel}) async {
+    try {
+      var response = await _dio.put(
+        "http://192.168.1.121:3000/updateEmployee",
         data: registerModel.toJson(),
       );
 
@@ -35,29 +78,10 @@ class ApiService {
     }
   }
 
-  /// get register data
-  // Future<List<ClockInOutModal>> getRegisterUser() async{
-  //   try{
-  //     Response response = await _dio.get(
-  //       "http://192.168.1.121:3000/getEmployee",
-  //     );
-  //     if(response.statusCode == 200){
-  //       List<ClockInOutModal> list = List<ClockInOutModal>.from(jsonDecode(response.data));
-  //       return list;
-  //     }else{
-  //       throw Exception('Custome Exception');
-  //     }
-  //   }catch(e){
-  //     throw Exception('Custome Exception =====> $e');
-  //   }
-  // }
-
-
 
   /// login
-  Future<bool?> loginUser(
-      {required String email, required String password}) async {
-    var fcmToken = await FirebaseService().connectFirebase();
+
+
   Future<bool?> loginUser({required String email, required String password}) async {
     var fcmToken = await FirebaseService.helper.connectFirebase();
 
@@ -72,7 +96,6 @@ class ApiService {
 
       Log.success('update response===>${response.data}');
 
-      final responseMessage = jsonDecode(response.data)['message'];
       final responseMessage = jsonDecode(response.data)['message'];
 
       if (response.statusCode == 200) {
@@ -97,36 +120,6 @@ class ApiService {
       Fluttertoast.showToast(msg: '$error');
       Log.error('error===>$error');
       return false;
-    }
-  }
-
-  ///clock in & out
-  Future<void> insertClockInData(
-      {required ClockInOutModal clockInOutModal}) async {
-    Response response = await _dio.post(
-      "http://192.168.1.121:3000/clockAction",
-      data: clockInOutModal.toJson(),
-    );
-    print('>>>>>>>>>> clock in response => ${response.data}');
-    if (response.statusCode == 200) {
-      print('>>>>>>>>>> success');
-    } else {
-      print('>>>>>>>>>> failed');//done  ha parameter me pass krna tha sirf
-    }
-  }
-
-  /// read clock in and clock data
-  Future<List<dynamic>> readClockInData({required String userId}) async {
-    Response response = await _dio.get(
-      "http://192.168.1.121:3000/getClockAction?userId=$userId",
-    );
-    if (response.statusCode == 200) {
-      var res = jsonDecode(response.data);
-      var data = res['userData'];
-      print('datas ====> $data');
-      return data.map((e) => ClockInOutModal.fromJson(e)).toList();
-    } else {
-      throw Exception('>>>>>>>>>> failed');
     }
   }
 
@@ -239,4 +232,35 @@ class ApiService {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('newUser', false);
   }
+
+  ///clock in & out
+  Future<void> insertClockInData(
+      {required ClockInOutModal clockInOutModal}) async {
+    Response response = await _dio.post(
+      "http://192.168.1.121:3000/clockAction",
+      data: clockInOutModal.toJson(),
+    );
+    print('>>>>>>>>>> clock in response => ${response.data}');
+    if (response.statusCode == 200) {
+      print('>>>>>>>>>> success');
+    } else {
+      print('>>>>>>>>>> failed');//done  ha parameter me pass krna tha sirf
+    }
+  }
+
+  /// read clock in and clock data
+  Future<List<dynamic>> readClockInData({required String userId}) async {
+    Response response = await _dio.get(
+      "http://192.168.1.121:3000/getClockAction?userId=$userId",
+    );
+    if (response.statusCode == 200) {
+      var res = jsonDecode(response.data);
+      var data = res['userData'];
+      print('datas ====> $data');
+      return data.map((e) => ClockInOutModal.fromJson(e)).toList();
+    } else {
+      throw Exception('>>>>>>>>>> failed');
+    }
+  }
+
 }

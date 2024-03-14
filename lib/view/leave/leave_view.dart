@@ -11,7 +11,7 @@ import 'package:keka_task/common_widget/common_elevated_button.dart';
 import 'package:keka_task/common_widget/common_text.dart';
 import 'package:keka_task/common_widget/common_text_field.dart';
 import 'package:keka_task/common_widget/enum.dart';
-import 'package:keka_task/model/leave_model.dart';
+import 'package:keka_task/modal/leave_model.dart';
 import 'package:keka_task/services/api_helper.dart';
 import 'package:keka_task/view/bottom_nav_bar/bottom_nav_bar_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
