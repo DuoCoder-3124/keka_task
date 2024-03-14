@@ -16,5 +16,5 @@ enum ArrivalStatus {
   // final int value;
   // const ArrivalStatus(this.value);
   OnTime,
-  Late,
+  Late
 }
