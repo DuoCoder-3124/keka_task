@@ -7,20 +7,23 @@ import 'package:shelf/shelf_io.dart';
 import 'package:shelf_router/shelf_router.dart';
 import 'package:crypto/crypto.dart' as crypto;
 import 'package:http/http.dart' as http;
+import 'package:firebase_dart/firebase_dart.dart';
 
-part 'register_endpoint.dart';
+part 'configurations.dart';
 
-part 'forgot_endpoint.dart';
+part 'endpoints/firebase_notification.dart';
 
-part 'employee_endpoint.dart';
+part 'endpoints/register_endpoint.dart';
 
-part 'log_endpoint.dart';
+part 'endpoints/forgot_endpoint.dart';
 
-part 'leave_endpoint.dart';
+part 'endpoints/employee_endpoint.dart';
 
-part 'actions_endpoints.dart';
+part 'endpoints/log_endpoint.dart';
 
-part 'firebase_notification.dart';
+part 'endpoints/leave_endpoint.dart';
+
+part 'endpoints/actions_endpoints.dart';
 
 // Configure routes.
 final _router = Router()
@@ -47,6 +50,16 @@ final _router = Router()
 Db? db;
 
 void main(List<String> args) async {
+  // late FirebaseApp firebaseApp;
+
+  // try {
+  //   firebaseApp = Firebase.app();
+  // } catch (e) {
+  //   firebaseApp = await Firebase.initializeApp(
+  //     options: FirebaseOptions.fromMap(Configurations.firebaseConfig),
+  //   );
+  // }
+
   //Connection to Database.
   db = await Db.create("mongodb+srv://ayushmang:PUPzdiw2Y9tLdMPH@keka.cikkk4s.mongodb.net/Keka");
   db?.open();

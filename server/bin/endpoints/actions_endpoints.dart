@@ -1,4 +1,4 @@
-part of 'server.dart';
+part of '../server.dart';
 
 ///Clock In & Out Actions are done using this endpoint.
 Future<Response> _clockAction(Request request) async {
@@ -7,6 +7,7 @@ Future<Response> _clockAction(Request request) async {
   Map<String, dynamic> rawBody = {
     "userId": data["userId"],
     "date": data["date"],
+    "week": data["week"],
     "effective": data["effective"],
     "gross": data["gross"],
     "arrival": data["arrival"],

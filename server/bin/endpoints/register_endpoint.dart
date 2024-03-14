@@ -1,4 +1,4 @@
-part of 'server.dart';
+part of '../server.dart';
 
 ///Register Api endpoint.
 Future<Response> _registerEmployee(Request request) async {

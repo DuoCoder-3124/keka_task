@@ -1,4 +1,4 @@
-part of 'server.dart';
+part of '../server.dart';
 
 Future<Response> _forgotPassword(Request request) async {
   String body = await request.readAsString();
