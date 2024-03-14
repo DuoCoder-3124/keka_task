@@ -1,65 +1,28 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
 import 'package:shelf_router/shelf_router.dart';
 import 'package:crypto/crypto.dart' as crypto;
-import 'package:http/http.dart' as http;
-import 'package:firebase_dart/firebase_dart.dart';
 
-part 'configurations.dart';
-
-part 'endpoints/firebase_notification.dart';
-
-part 'endpoints/register_endpoint.dart';
-
-part 'endpoints/forgot_endpoint.dart';
-
-part 'endpoints/employee_endpoint.dart';
-
-part 'endpoints/log_endpoint.dart';
-
-part 'endpoints/leave_endpoint.dart';
-
-part 'endpoints/actions_endpoints.dart';
+part 'register_endpoint.dart';
+part 'log_endpoint.dart';
+part 'actions_endpoint.dart';
 
 // Configure routes.
 final _router = Router()
-  ..get(
-    '/',
-    (req) => Response.ok("Hello Keka!!!"),
-  )
+  ..get('/', (req) => Response.ok("Hello Keka!!!"),)
   ..get('/getEmployee', _getEmployee)
-  ..get('/getEmployeeById', _getEmployeeById)
-  ..get('/getClockAction', _getClockAction)
-  ..get('/getLeavesByEmployeeId', _getLeavesByEmployeeId)
-  ..get('/getLeavesByNotifyId', _getLeavesByNotifyId)
-  ..get("/logoutEmployee", _logoutEmployee)
-  ..post('/registerEmployee', _registerEmployee)
   ..post("/loginEmployee", _loginEmployee)
-  ..post("/forgotPassword", _forgotPassword)
-  ..post("/verifyToken", _verifyToken)
-  ..post("/requestLeave", _requestLeave)
-  ..post("/approveLeave", _approveLeave)
-  ..post('/clockAction', _clockAction)
-  ..put('/updateEmployee', _updateEmployee);
+  ..post("/logoutEmployee", _logoutEmployee)
+  ..post('/registerEmployee', _registerEmployee)
+  ..post('/clockAction', _clockAction);
 
 ///Instance for database.
 Db? db;
 
 void main(List<String> args) async {
-  // late FirebaseApp firebaseApp;
-
-  // try {
-  //   firebaseApp = Firebase.app();
-  // } catch (e) {
-  //   firebaseApp = await Firebase.initializeApp(
-  //     options: FirebaseOptions.fromMap(Configurations.firebaseConfig),
-  //   );
-  // }
-
   //Connection to Database.
   db = await Db.create("mongodb+srv://ayushmang:PUPzdiw2Y9tLdMPH@keka.cikkk4s.mongodb.net/Keka");
   db?.open();
@@ -77,17 +40,7 @@ void main(List<String> args) async {
 }
 
 ///Gets id for every document that needs to be inserted in MongoDB.
-String get _docId => ObjectId().$oid;
-
-///Generates a Token for verification.
-String get _generateToken => Uuid().v4();
-
-///Generates OTP.
-String _generateOtp() {
-  final rnd = Random();
-  final otp = "${rnd.nextInt(9)}${rnd.nextInt(9)}${rnd.nextInt(9)}${rnd.nextInt(9)}";
-  return otp;
-}
+String get _docId => ObjectId().oid;
 
 ///For encrypting password.
 String _encryptPassword(String password) {
