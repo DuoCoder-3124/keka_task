@@ -1,4 +1,4 @@
-part of 'server.dart';
+part of '../server.dart';
 
 ///Requests leave for user.
 Future<Response> _requestLeave(Request request) async {
