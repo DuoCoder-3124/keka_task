@@ -1,4 +1,4 @@
-part of 'server.dart';
+part of '../server.dart';
 
 ///Gets user data on the basis of userId.
 Future<Response> _getEmployeeById(Request request) async {
@@ -47,7 +47,7 @@ Future<Response> _updateEmployee(Request request) async {
   Map<String, dynamic> data = jsonDecode(body);
 
   Map<String, dynamic> rawBody = {
-    'userId': data['userId'],
+    '_id': data['_id'],
     'firstName': data['firstName'],
     'secondName': data['secondName'],
     'middleName': data['middleName'],
@@ -72,14 +72,14 @@ Future<Response> _updateEmployee(Request request) async {
     Map<String, dynamic>? userData = await collection?.findOne(
       where.eq(
         '_id',
-        rawBody["userId"],
+        rawBody["_id"],
       ),
     );
     if (userData != null) {
       collection?.insertOne(rawBody);
       await collection?.updateOne(
         await collection.findOne(
-          where.eq('_id', rawBody['userId']),
+          where.eq('_id', rawBody['_id']),
         ),
         {
           '\$set': {

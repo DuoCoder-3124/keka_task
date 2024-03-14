@@ -1,4 +1,4 @@
-part of 'server.dart';
+part of '../server.dart';
 
 ///Login API endpoint.
 Future<Response> _loginEmployee(Request request) async {
