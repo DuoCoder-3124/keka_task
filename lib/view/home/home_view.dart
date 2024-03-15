@@ -10,6 +10,7 @@ import 'package:gap/gap.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:keka_task/common_attribute/common_colors.dart';
+import 'package:keka_task/common_attribute/common_log.dart';
 import 'package:keka_task/common_attribute/common_value.dart';
 import 'package:keka_task/common_widget/common_container.dart';
 import 'package:keka_task/common_widget/common_elevated_button.dart';
@@ -184,14 +185,14 @@ class _HomeViewState extends State<HomeView> {
                                   cubit.getCurrentTime();
 
                                   /// insert data
-                                  cubit.changeInOutText(timeStartStop: !(state.changeInToOutToIn));
+                                  cubit.changeInOutText(timeStartStop: !(state.clockIn));
                                   // cubit.sinceLastLogin();
                                   ///calculate avg time
                                   // cubit.calculateAverageHrsNOnTime();
 
                                 },
                                 child: CommonText(
-                                  text: state.changeInToOutToIn ? 'Web Clock-out' : 'Web Clock-in',
+                                  text: state.clockIn ? 'Web Clock-out' : 'Web Clock-in',
                                   color: CommonColor.white,
                                   fontSize: TextSize.appBarSubTitle,
                                   fontWeight: TextWeight.medium,
