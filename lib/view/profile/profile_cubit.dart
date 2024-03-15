@@ -15,7 +15,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> getProfileData() async {
     var userId = await ApiService.helper.getUserId() ?? '';
 
-    await ApiService.helper.getProfileDataById(userId).then((value) {
+    await ApiService.helper.getUserDataById(userId).then((value) {
       emit(state.copyWith(registerModel: value));
     });
   }
@@ -24,11 +24,18 @@ class ProfileCubit extends Cubit<ProfileState> {
     var userId = await ApiService.helper.getUserId() ?? '';
     await ApiService.helper.logoutUserById(userId).then((value) {
       if (value) {
+        clearWhichUser();
         Navigator.pushNamedAndRemoveUntil(context, SplashScreen.routeName, (route) => false);
       } else {
         Fluttertoast.showToast(msg: 'logout error');
       }
     });
+  }
+
+
+  Future<void> clearWhichUser() async {
+    SharedPreferences prefs=await SharedPreferences.getInstance();
+    prefs.remove('whichUser');
   }
 }
 

@@ -40,6 +40,7 @@ class LeaveModel{
 
   factory LeaveModel.fromMap(Map<String, dynamic> map) {
     return LeaveModel(
+      leaveId: map['_id'] as String,
       userId: map['userId'] as String,
       approverId: map['approverId'] as String,
       from: map['from'] as String,

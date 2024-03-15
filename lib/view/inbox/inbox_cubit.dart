@@ -10,19 +10,7 @@ class InboxCubit extends Cubit<InboxState> {
   Future<void> getInboxData() async {
     var userId = await ApiService.helper.getUserId();
     return await ApiService.helper.getRequestLeaveById(userId ?? "").then(
-      (value) {
-        emit(state.copyWith(leaveModelListValue: value));
-      },
+      (value) => emit(state.copyWith(leaveModelListValue: value)),
     );
   }
-
-  // Future<List<LeaveModel>> getInboxData() async {
-  //   var userId = await ApiService.helper.getUserId();
-  //   return await ApiService.helper.getRequestLeaveById(userId ?? "").then(
-  //         (value) {
-  //       emit(state.copyWith(leaveModelListValue: value));
-  //       return value;
-  //     },
-  //   );
-  // }
 }

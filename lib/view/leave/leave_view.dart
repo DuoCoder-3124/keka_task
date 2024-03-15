@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:keka_task/common_attribute/common_colors.dart';
+import 'package:keka_task/common_attribute/common_log.dart';
 import 'package:keka_task/common_attribute/common_value.dart';
 import 'package:keka_task/common_widget/common_elevated_button.dart';
 import 'package:keka_task/common_widget/common_text.dart';
@@ -47,9 +48,6 @@ class LeaveView extends StatefulWidget {
 }
 
 class _LeaveViewState extends State<LeaveView> {
-
-  // GlobalKey<FormState> formKey=GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,8 +86,10 @@ class _LeaveViewState extends State<LeaveView> {
                                 const Text('From'),
                                 TextButton(
                                   onPressed: () => cubit.selectFromDate(context),
-                                  child:
-                                      Text(state.selectFromDate.text, style: const TextStyle(color: CommonColor.blueColor)),
+                                  child: Text(
+                                    state.selectFromDate.text,
+                                    style: const TextStyle(color: CommonColor.blueColor),
+                                  ),
                                 ),
                               ],
                             ),
@@ -98,10 +98,10 @@ class _LeaveViewState extends State<LeaveView> {
                             flex: 3,
                             child: Container(
                               padding: const EdgeInsetsDirectional.symmetric(
-                                  horizontal: Spacing.normal, vertical: Spacing.small),
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey, width: 0.5),
+                                horizontal: Spacing.normal,
+                                vertical: Spacing.small,
                               ),
+                              decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 0.5)),
                               child: Text('${state.dateDifference.toString()} days'),
                             ),
                           ),
@@ -112,8 +112,10 @@ class _LeaveViewState extends State<LeaveView> {
                                 const Text('To'),
                                 TextButton(
                                   onPressed: () => cubit.selectToDate(context),
-                                  child:
-                                      Text(state.selectToDate.text, style: const TextStyle(color: CommonColor.blueColor)),
+                                  child: Text(
+                                    state.selectToDate.text,
+                                    style: const TextStyle(color: CommonColor.blueColor),
+                                  ),
                                 ),
                               ],
                             ),
@@ -129,8 +131,9 @@ class _LeaveViewState extends State<LeaveView> {
 
                       DropdownButtonFormField(
                         value: state.leaveTypeItem,
-                        validator: (value)=>(value==null || value.isEmpty)?'Enter the leave type':null,
-                        decoration: InputDecoration(border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+                        validator: (value) => (value == null || value.isEmpty) ? 'Enter the leave type' : null,
+                        decoration:
+                            InputDecoration(border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
                         items: state.leaveType.map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
                         onChanged: (value) => cubit.changeLeaveType(leaveTypeValue: value ?? ""),
                       ),
@@ -143,7 +146,7 @@ class _LeaveViewState extends State<LeaveView> {
 
                       CommonTextField(
                         controller: state.noteController,
-                        validator: (value)=>value?.isEmpty??false?'field is required':null,
+                        validator: (value) => value?.isEmpty ?? false ? 'field is required' : null,
                         hintText: 'Type here',
                       ),
 
@@ -155,7 +158,7 @@ class _LeaveViewState extends State<LeaveView> {
 
                       CommonTextField(
                         controller: state.notifyController,
-                        validator: (value)=>value?.isEmpty??false?'field is required':null,
+                        validator: (value) => value?.isEmpty ?? false ? 'field is required' : null,
                         hintText: 'Search Employee',
                         suffixIcon: PopupMenuButton(
                           itemBuilder: (BuildContext context) {
@@ -165,8 +168,8 @@ class _LeaveViewState extends State<LeaveView> {
                           },
                           onSelected: (value) {
                             if (value == '65f036ae1be13d738b000000') {
-                              state.notifyController.text='Suresh HR';
-                              state.approverId=value;
+                              state.notifyController.text = 'Suresh HR';
+                              state.approverId = value;
                             }
                           },
                           icon: const Icon(Icons.arrow_drop_down, color: Colors.grey),
@@ -178,10 +181,10 @@ class _LeaveViewState extends State<LeaveView> {
                       CommonElevatedButton(
                         height: 50,
                         width: MediaQuery.of(context).size.width,
-                        onPressed: () =>cubit.validateLeave(state.formKey,context),
+                        onPressed: () => cubit.validateLeave(state.formKey, context),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Spacing.normal)),
                         child: const Text('Request', style: TextStyle(color: Colors.white)),
-                      )
+                      ),
                     ],
                   ),
                 ),

@@ -4,16 +4,13 @@ class LeaveCubit extends Cubit<LeaveState> {
   LeaveCubit(super.initialState);
 
   Future<void> validateLeave(GlobalKey formKey, context) async {
-
-    final SharedPreferences prefs=await SharedPreferences.getInstance();
-
     var userId = await ApiService.helper.getUserId() ?? '';
 
     if (state.formKey.currentState!.validate()) {
-      //Navigation
-      ApiService.helper.requestLeave(
+      ApiService.helper
+          .requestLeave(
         LeaveModel(
-         from: state.selectFromDate.text,
+          from: state.selectFromDate.text,
           to: state.selectToDate.text,
           totalDays: state.dateDifference,
           note: state.noteController.text,
@@ -23,15 +20,13 @@ class LeaveCubit extends Cubit<LeaveState> {
           userId: userId,
           approverId: state.approverId,
         ),
-      ).then((value) {
+      )
+          .then((value) {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Leave request sent")));
-        Navigator.pushReplacementNamed(context,BottomNavBarView.routeName);
+        Navigator.pushReplacementNamed(context, BottomNavBarView.routeName);
       });
     }
   }
-
-
-
 
   void changeLeaveType({required String leaveTypeValue}) {
     emit(state.copyWith(leaveTypeItem: leaveTypeValue));
@@ -80,5 +75,4 @@ class LeaveCubit extends Cubit<LeaveState> {
       }
     }
   }
-
 }

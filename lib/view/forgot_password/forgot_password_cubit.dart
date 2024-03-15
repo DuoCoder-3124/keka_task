@@ -6,7 +6,6 @@ import 'package:keka_task/services/api_helper.dart';
 import 'package:keka_task/view/forgot_password/forgot_password_view.dart';
 
 import 'package:keka_task/view/login/login_view.dart';
-import 'package:uuid/uuid.dart';
 
 part 'forgot_password_state.dart';
 
@@ -15,19 +14,8 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
   final TokenArgumentPass tokenArgumentPass;
 
   ForgotPasswordCubit(super.initialState, {required this.context, required this.tokenArgumentPass}) {
-    // buildCaptcha();
     emit(state.copyWith(otp: tokenArgumentPass.otp));
   }
-
-  // void buildCaptcha(){
-  //   final captcha = const Uuid().v4().substring(1, 5).toUpperCase();
-  //   emit(state.copyWith(otp: captcha));
-  // }
-  //
-  // void refreshCaptcha(){
-  //   final captcha = const Uuid().v4().substring(1, 5).toUpperCase();
-  //   emit(state.copyWith(otp: captcha));
-  // }
 
   void changeVisibility1() {
     emit(state.copyWith(isVisible1: !state.isVisible1));
@@ -40,12 +28,13 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
   Future<void> loginPasswordPressed() async {
     if ((state.formKey.currentState?.validate() ?? false)) {
       if (state.passwordController.text == state.confirmPasswordController.text) {
-        await ApiService.helper.verifyOtp(
-          otp: tokenArgumentPass.otp ?? '',
-          token: tokenArgumentPass.token ?? '',
-          password: state.passwordController.text,
-        );
-        Navigator.pushNamedAndRemoveUntil(context, LoginView.routeName, (route) => false);
+        await ApiService.helper
+            .verifyOtp(
+              otp: tokenArgumentPass.otp ?? '',
+              token: tokenArgumentPass.token ?? '',
+              password: state.passwordController.text,
+            )
+            .then((value) => Navigator.pushNamedAndRemoveUntil(context, LoginView.routeName, (route) => false));
       } else {
         Fluttertoast.showToast(msg: 'password and confirm password are not same');
       }

@@ -4,12 +4,10 @@ import 'package:gap/gap.dart';
 import 'package:keka_task/common_attribute/common_colors.dart';
 import 'package:keka_task/common_attribute/common_images.dart';
 import 'package:keka_task/common_attribute/common_value.dart';
-import 'package:keka_task/common_attribute/validation.dart';
 import 'package:keka_task/common_widget/common_elevated_button.dart';
 import 'package:keka_task/common_widget/common_rich_text.dart';
 import 'package:keka_task/common_widget/common_text_field.dart';
 import 'package:keka_task/view/forgot_password/forgot_password_cubit.dart';
-import 'package:keka_task/view/login/login_view.dart';
 
 class TokenArgumentPass {
   String? email;
@@ -49,8 +47,7 @@ class ForgotPasswordView extends StatefulWidget {
 }
 
 class _ForgotPasswordViewState extends State<ForgotPasswordView> {
-  // final uuid = const Uuid();
-  // final captcha = const Uuid().v4().substring(1, 5).toUpperCase();
+
 
   @override
   Widget build(BuildContext context) {
@@ -117,19 +114,11 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                           child: Text(
                             textAlign: TextAlign.center,
                             state.otp ?? '',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Color(0xFF1e6a72),
                               fontStyle: FontStyle.italic,
                               fontSize: TextSize.largeHHeading,
                             ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.only(end: 16),
-                          child: IconButton(
-                            icon: Icon(Icons.refresh, color: CommonColor.blueColor),
-                            // onPressed: () => cubit.refreshCaptcha(),
-                            onPressed: () {},
                           ),
                         ),
                         Expanded(

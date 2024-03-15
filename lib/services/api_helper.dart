@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:keka_task/common_attribute/common_log.dart';
+import 'package:keka_task/modal/approval_model.dart';
 import 'package:keka_task/modal/clockInOutModal.dart';
 import 'package:keka_task/modal/leave_model.dart';
 import 'package:keka_task/modal/register_modal.dart';
@@ -19,11 +19,35 @@ class ApiService {
 
   final Dio _dio = Dio();
 
-  /// post register data
-  Future<RegisterModel?> getProfileDataById(String userId) async {
+
+  Future<void> sendNotification({required String fcmToken, required String title, required String body}) async {
+    try {
+      var bodyData = {
+        "fcmToken": fcmToken,
+        "title": title,
+        "body": body,
+      };
+
+      var response = await _dio.post("http://192.168.1.121:3000/sendNotification", data: bodyData);
+
+      Log.debug("response notification=====>${response.data}");
+
+      if (response.statusCode == 200) {
+        Log.success("success");
+      } else {
+        Log.debug("Unsuccess");
+      }
+    } catch (error) {
+      Log.error('error');
+    }
+  }
+
+  ///**************************************************************************************
+
+
+  Future<RegisterModel?> getUserDataById(String userId) async {
     try {
       var response = await _dio.get("http://192.168.1.121:3000/getEmployeeById?userId=$userId");
-
       var profileModel = RegisterModel.fromJson(jsonDecode(response.data)["userData"]);
 
       if (response.statusCode == 200) {
@@ -31,7 +55,6 @@ class ApiService {
       } else {
         log('Unsuccessful');
       }
-
       return profileModel;
     } catch (error) {
       log('error====>$error');
@@ -45,10 +68,6 @@ class ApiService {
         "http://192.168.1.121:3000/registerEmployee",
         data: registerModel.toJson(),
       );
-
-
-      Log.success("response===>${response.data}");
-
       if (response.statusCode == 200) {
         log('Success');
       } else {
@@ -65,9 +84,6 @@ class ApiService {
         "http://192.168.1.121:3000/updateEmployee",
         data: registerModel.toJson(),
       );
-
-      Log.success("response===>${response.data}");
-
       if (response.statusCode == 200) {
         log('Success');
       } else {
@@ -78,11 +94,9 @@ class ApiService {
     }
   }
 
+  ///**************************************************************************************
 
-  /// login
-
-
-  Future<bool?> loginUser({required String email, required String password}) async {
+  Future<String?> loginUser({required String email, required String password}) async {
     var fcmToken = await FirebaseService.helper.connectFirebase();
 
     try {
@@ -93,45 +107,48 @@ class ApiService {
       };
 
       var response = await _dio.post('http://192.168.1.121:3000/loginEmployee', data: body);
-
-      Log.success('update response===>${response.data}');
-
       final responseMessage = jsonDecode(response.data)['message'];
 
       if (response.statusCode == 200) {
-        if (responseMessage == 'Success') {
+        if (responseMessage == 'Success' && (email != 'ayushmanhr@gmail.com' && password != "123456")) {
           storeUserId(jsonDecode(response.data)['userId']);
           setNewUser();
           Log.success('UserId===>${jsonDecode(response.data)['userId']}');
           Fluttertoast.showToast(msg: 'User login successfully');
-          return true;
+          return 'user';
+        }
+        if (responseMessage == 'Success' && (email == 'ayushmanhr@gmail.com' && password == "123456")) {
+          storeAprroverId(jsonDecode(response.data)['userId']);
+          setNewApprover();
+          Log.success('UserId===>${jsonDecode(response.data)['userId']}');
+          Fluttertoast.showToast(msg: 'Admin login successfully');
+          return 'admin';
         } else if (responseMessage == 'Wrong Password') {
           Fluttertoast.showToast(msg: 'Wrong password entered');
-          return false;
+          return 'wrong password';
         } else {
           Fluttertoast.showToast(msg: 'Not found');
-          return false;
+          return 'not found';
         }
       } else {
         Fluttertoast.showToast(msg: 'Fail to connect');
-        return false;
+        return 'fail';
       }
     } catch (error) {
-      Fluttertoast.showToast(msg: '$error');
       Log.error('error===>$error');
-      return false;
+      return 'error';
     }
   }
 
   Future<bool> logoutUserById(String userId) async {
     try {
       var response = await _dio.get("http://192.168.1.121:3000/logoutEmployee?userId=$userId");
-
       final responseMessage = jsonDecode(response.data)['message'];
 
       if (response.statusCode == 200) {
         if (responseMessage == 'Success') {
           clearLoginUser();
+          clearLoginAprrover();
           Fluttertoast.showToast(msg: 'User logout successfully');
           return true;
         } else {
@@ -148,9 +165,9 @@ class ApiService {
     }
   }
 
-  Future<void> requestLeave(LeaveModel leaveModel) async {
-    Log.debug("Modal map=====>${leaveModel.toMap()}");
+  ///**************************************************************************************
 
+  Future<void> requestLeave(LeaveModel leaveModel) async {
     try {
       var response = await _dio.post(
         "http://192.168.1.121:3000/requestLeave",
@@ -189,28 +206,65 @@ class ApiService {
     }
   }
 
+  Future<void> updateLeaveStatus(ApproveModel approveModel) async {
+    try {
+      Log.debug("modal===>${approveModel.toMap()}");
+
+      var response = await _dio.post("http://192.168.1.121:3000/approveLeave", data: approveModel.toMap());
+
+      Log.success("update response ====>$response");
+
+      if (response.statusCode == 200) {
+        Log.success('Success');
+      } else {
+        Log.debug('Unsuccessful');
+      }
+    } catch (error) {
+      Log.error('error===>$error');
+    }
+  }
+
+  Future<List<LeaveModel>> getRequestLeaveByApproverId(String approverId) async {
+    try {
+      var response = await _dio.get("http://192.168.1.121:3000/getLeavesByNotifyId?approverId=$approverId");
+
+      List<dynamic> responseBody = jsonDecode(response.data)['leaveData'];
+
+      var requestListValue = List<LeaveModel>.from(responseBody.map((e) => LeaveModel.fromMap(e)).toList());
+
+      if (response.statusCode == 200) {
+        log('Success');
+      } else {
+        log('Unsuccessful');
+      }
+      return requestListValue;
+    } catch (error) {
+      Log.error('error===>$error');
+      return [];
+    }
+  }
+
+  ///**************************************************************************************
+
   Future<void> verifyOtp({required String otp, required String token, required String password}) async {
     var response = await _dio.post(
       "http://192.168.1.121:3000/verifyToken?userEmail",
-      data: {
-        "otp": otp,
-        "token":token,
-        "password":password
-      },
+      data: {"otp": otp, "token": token, "password": password},
     );
 
     Log.success("response ====>${response.data}");
-
   }
 
-  Future<({String otp, String token})> getTokenByEmail(String userEmail) async {
+  Future<Map<String,dynamic>> getTokenByEmail(String userEmail) async {
     var response = await _dio.post("http://192.168.1.121:3000/forgotPassword?userEmail", data: {"email": userEmail});
 
     Log.success("response otp====>${response.data}");
     String otp = jsonDecode(response.data)["otp"];
     String token = jsonDecode(response.data)["token"];
-    return (token: token, otp: otp);
+    return {"token": token, "otp": otp};
   }
+
+  ///**************************************************************************************
 
   Future<void> storeUserId(String userId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -218,9 +272,9 @@ class ApiService {
     Log.success('Shared prefs UserId===>${prefs.getString('userId')}');
   }
 
-  Future<String?> getUserId() async {
+  Future<void> clearLoginUser() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('userId');
+    prefs.setBool('newUser', false);
   }
 
   Future<void> setNewUser() async {
@@ -228,14 +282,38 @@ class ApiService {
     prefs.setBool('newUser', true);
   }
 
-  Future<void> clearLoginUser() async {
+  Future<String?> getUserId() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('newUser', false);
+    return prefs.getString('userId');
   }
 
+  ///**************************************************************************************
+
+  Future<void> storeAprroverId(String approverId) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('approverId', approverId);
+    Log.success('Shared prefs AprroverId===>${prefs.getString('approverId')}');
+  }
+
+  Future<void> clearLoginAprrover() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('newApprover', false);
+  }
+
+  Future<void> setNewApprover() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('newApprover', true);
+  }
+
+  Future<String?> getAdminId() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('approverId');
+  }
+
+  ///***************************************************************************************
+
   ///clock in & out
-  Future<void> insertClockInData(
-      {required ClockInOutModal clockInOutModal}) async {
+  Future<void> insertClockInData({required ClockInOutModal clockInOutModal}) async {
     Response response = await _dio.post(
       "http://192.168.1.121:3000/clockAction",
       data: clockInOutModal.toJson(),
@@ -243,7 +321,7 @@ class ApiService {
     if (response.statusCode == 200) {
       print('>>>>>>>>>> success');
     } else {
-      print('>>>>>>>>>> failed');//done  ha parameter me pass krna tha sirf
+      print('>>>>>>>>>> failed'); //done  ha parameter me pass krna tha sirf
     }
   }
 
