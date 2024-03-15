@@ -240,7 +240,6 @@ class ApiService {
       "http://192.168.1.121:3000/clockAction",
       data: clockInOutModal.toJson(),
     );
-    print('>>>>>>>>>> clock in response => ${response.data}');
     if (response.statusCode == 200) {
       print('>>>>>>>>>> success');
     } else {
@@ -249,18 +248,38 @@ class ApiService {
   }
 
   /// read clock in and clock data
-  Future<List<dynamic>> readClockInData({required String userId}) async {
-    Response response = await _dio.get(
-      "http://192.168.1.121:3000/getClockAction?userId=$userId",
-    );
+  Future<List<dynamic>> readClockInData({required String userId,required String date,required bool isWholeDataRead}) async {
+
+    // Response response = await _dio.get(
+    //   "http://192.168.1.121:3000/getClockAction?userId=$userId&$date",
+    // );
+
+    Response response =
+      isWholeDataRead
+      ? await _dio.get(
+        "http://192.168.1.121:3000/getClockAction",
+      )
+      : await _dio.get(
+          "http://192.168.1.121:3000/getClockAction?userId=$userId&date=$date",
+      );
+
+
     if (response.statusCode == 200) {
       var res = jsonDecode(response.data);
       var data = res['userData'];
-      print('datas ====> $data');
       return data.map((e) => ClockInOutModal.fromJson(e)).toList();
     } else {
       throw Exception('>>>>>>>>>> failed');
     }
+  }
+
+
+  void (){
+
+  }
+
+  void ml(){
+
   }
 
 }

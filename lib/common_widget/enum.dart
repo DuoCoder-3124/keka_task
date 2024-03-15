@@ -11,10 +11,8 @@ enum ApprovalStatus {
 }
 
 enum ArrivalStatus {
-  // OnTime(0),
-  // Late(1);
-  // final int value;
-  // const ArrivalStatus(this.value);
-  OnTime,
-  Late
+  OnTime(0),
+  Late(1);
+  final int value;
+  const ArrivalStatus(this.value);
 }

@@ -5,11 +5,10 @@ class ClockInOutModal{
   final String? date;
   final String? effectiveHours;
   final String? grossHours;
-  final String? arrival;
-
+  final int arrival;
+  final int weekDay;
   final String? postClockIn;
   final String? postClockOut;
-
   final List<dynamic> getClockIn;
   final List<dynamic> getClockOut;
 
@@ -19,7 +18,8 @@ class ClockInOutModal{
     this.date = "",
     this.effectiveHours = "",
     this.grossHours = "",
-    this.arrival = "",
+    this.arrival = 0,
+    this.weekDay = 0,
     this.postClockIn = "",
     this.postClockOut = "",
     this.getClockIn = const <dynamic>[],
@@ -33,10 +33,7 @@ class ClockInOutModal{
       effectiveHours: json['effective'],
       grossHours: json['gross'],
       arrival: json['arrival'],
-
-      // postClockIn: json['in'],
-      // postClockOut: json['out'],
-
+      weekDay: json['week'],
       getClockIn: json['in'] ?? [],
       getClockOut: json['out'] ?? [],
   );
@@ -48,11 +45,9 @@ class ClockInOutModal{
     'effective':effectiveHours,
     'gross':grossHours,
     'arrival':arrival,
-
+    'week':weekDay,
     'in':postClockIn,
     'out':postClockOut,
 
-    // 'getClockIn':getClockIn,
-    // 'getClockOut':getClockOut
   };
 }
