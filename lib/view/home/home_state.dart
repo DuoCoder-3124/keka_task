@@ -20,7 +20,13 @@ class HomeState extends Equatable {
 
   final String effectiveHours;
   final String grossHours;
-  final String arrivalStatus;
+  final int arrivalStatus;
+  final int totalPercentOfWeekArrival;
+  final Duration totalAvgHours;
+  final String sinceLastLogin;
+  // final bool isReadWholeData;
+
+  final List<dynamic> getClockData;
 
   final SfRangeValues sfRangeValues;// = const SfRangeValues(0.4, 0.8);
 
@@ -30,15 +36,20 @@ class HomeState extends Equatable {
       this.dropDownItemDefaultValue = 'Last Week',
       this.currentDate = "",
       this.currentTime = "",
-      this.hourFormatOnOff = false,
+      this.hourFormatOnOff = false, // 24 hour format
       this.logsNRequest = const ['Attendance Log', 'Shift Schedule', /*'Attendance Request'*/],
       this.logNRequestClickIndex = 0,
       this.changeInToOutToIn = false,
       this.effectiveHours = "0h 0m",
       this.grossHours = "0h 0m",
-      this.arrivalStatus = "",
-      // this.attendanceRequestList = const ['Last 7 days', 'Last 14 days', 'Last 30 days','Custom Range'],
-      this.sfRangeValues = const SfRangeValues(0.4, 0.8)
+      this.arrivalStatus = 0,
+      this.totalPercentOfWeekArrival = 0,
+      this.sinceLastLogin = "0h 0m",
+      required this.totalAvgHours,
+      this.getClockData = const [],
+      // this.isReadWholeData = false,
+      this.sfRangeValues = const SfRangeValues(0.4, 0.8),
+        // this.attendanceRequestList = const ['Last 7 days', 'Last 14 days', 'Last 30 days','Custom Range'],
       });
 
   @override
@@ -55,8 +66,13 @@ class HomeState extends Equatable {
         effectiveHours,
         grossHours,
         arrivalStatus,
+        totalPercentOfWeekArrival,
+        sfRangeValues,
+        sinceLastLogin,
+        totalAvgHours,
+        // isReadWholeData,
+        getClockData
         // attendanceRequestList,
-        sfRangeValues
       ];
 
   HomeState copyWith(
@@ -72,9 +88,14 @@ class HomeState extends Equatable {
       bool? changeInToOutToIn,
       String? effectiveHours,
       String? grossHours,
-      String? arrivalStatus,
+      int? arrivalStatus,
+      int? totalPercentOfWeekArrival,
+      Duration? totalAvgHours,
+      String? sinceLastLogin,
+      // bool? isReadWholeData,
       // List? attendaceRequestList,
-      SfRangeValues? sfRangeValues
+      SfRangeValues? sfRangeValues,
+      List? getClockData
       }) {
     return HomeState(
         color: color ?? this.color,
@@ -89,8 +110,13 @@ class HomeState extends Equatable {
         effectiveHours: effectiveHours ?? this.effectiveHours,
         grossHours: grossHours ?? this.grossHours,
         arrivalStatus: arrivalStatus ?? this.arrivalStatus,
+        totalPercentOfWeekArrival: totalPercentOfWeekArrival ?? this.totalPercentOfWeekArrival,
+        totalAvgHours: totalAvgHours ?? this.totalAvgHours,
+        sinceLastLogin: sinceLastLogin ?? this.sinceLastLogin,
+        getClockData: getClockData ?? this.getClockData,
+        // isReadWholeData: isReadWholeData ?? this.isReadWholeData,
         // attendanceRequestList: attendaceRequestList ?? this.attendanceRequestList,
-        sfRangeValues: sfRangeValues ?? this.sfRangeValues
+        sfRangeValues: sfRangeValues ?? this.sfRangeValues,
     );
   }
 }
