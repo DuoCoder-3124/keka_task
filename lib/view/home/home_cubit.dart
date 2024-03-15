@@ -4,7 +4,8 @@ class HomeCubit extends Cubit<HomeState> {
   HomeCubit(super.initialState) {
     getCurrentDate();
     // calculateAverageHrsNOnTime();
-    readClockData(isReadWholeData: true);
+    // readSingleDayClockData(isReadWholeData: true);
+    readAllDayClockData();
   }
 
   void colorChange({Color? color}) {
@@ -57,27 +58,40 @@ class HomeCubit extends Cubit<HomeState> {
       arrival: (DateTime.now().isBefore(constTime)) ? ArrivalStatus.OnTime.value : ArrivalStatus.Late.value,
       weekDay: (CalendarFormat.week.index)+1
     )).then((value) async {
-      calculateEffectiveHrsNGrossHrs();
-      sinceLastLogin();
-      // calculateAverageHrsNOnTime();
-      readClockData(isReadWholeData: true);
+      calculateAverageHrsNOnTime();
+      // readSingleDayClockData(isReadWholeData: true);
+      readAllDayClockData();
     });
 
   }
 
 
-  ///get clock data
-  Future<List> readClockData({required bool isReadWholeData}) async {
-    List<dynamic> getClockData = await ApiService
-        .helper.readClockInData(
+  /// get one Day User Data
+  Future<List> readSingleDayClockData() async {
+    List<dynamic> getSingleDayClockRecord = await ApiService
+        .helper.readSingleClockData(
             userId: '33',
             date: DateFormat("E dd, MMM yyyy").format(DateTime.now()),
-            isWholeDataRead: isReadWholeData,
     );
-   print('cubit list data ===> ${getClockData.length}');
-    emit(state.copyWith(getClockData: getClockData));
-    return getClockData;
+    // emit(state.copyWith(getClockData: getSingleDayClockRecord));
+    calculateEffectiveHrsNGrossHrs();
+    return getSingleDayClockRecord;
   }
+
+  /// get All Day User Data
+  Future<List> readAllDayClockData() async {
+    List<dynamic> getAllDayClockRecord = await ApiService
+        .helper.readMultiClockData(
+        userId: '33',
+    );
+    emit(state.copyWith(getClockData: getAllDayClockRecord));
+    sinceLastLogin();
+    calculateEffectiveHrsNGrossHrs();
+    return getAllDayClockRecord;
+  }
+
+
+
   /*Future<List<dynamic>> readClockData({required bool isWholeDataRead}) async {
     List<dynamic> getClockData = await ApiService
         .helper.readClockInData(userId: '30', isHoleDataRead: isWholeDataRead);
@@ -88,13 +102,10 @@ class HomeCubit extends Cubit<HomeState> {
   /// calculate clock in and clock data (effectiveTime & grossTime)
   Future<void> calculateEffectiveHrsNGrossHrs() async{
 
-    // List<dynamic> getClockData = await readClockData(isWholeDataRead: false);
-    // emit(state.copyWith(isReadWholeData: false));
-
     Duration effectiveTime = const Duration();
     Duration grossTime = const Duration();
 
-    List<dynamic> getClockData = await readClockData(isReadWholeData: false);
+    List<dynamic> getClockData = await readSingleDayClockData();
 
     List getClockInList = List<dynamic>.from(getClockData[0].getClockIn);
     List getClockOutList = List<dynamic>.from(getClockData[0].getClockOut);
@@ -140,16 +151,9 @@ class HomeCubit extends Cubit<HomeState> {
     List<dynamic> addArrivalStatus = [];
     List<dynamic> addHours = [];
     int totalPresentState = 0;
-    List<dynamic> getClockData = await readClockData(isReadWholeData: true);
+    List<dynamic> getClockData = await readSingleDayClockData();
     // emit(state.copyWith(isReadWholeData: true));
     print('List of data ====> ${state.getClockData}');
-
-    // DateTime dt = DateTime.now();
-    // int parses = int.parse(DateFormat("D").format(dt));
-    // print("week dayss ====> ${((parses - dt.weekday + 10)/7).floor()}");
-
-      // print('week Days ====> ${DateFormat('D').format(DateTime.now())}');
-      // print('week Days 2====> ${(CalendarFormat.week.index)+1}');
 
     /// for onTime
     for(int i=0; i < getClockData.length; i++){
@@ -164,7 +168,6 @@ class HomeCubit extends Cubit<HomeState> {
         ///add time
         // addHours.add(getClockData[i].grossHours);
      }
-
     }
 
     print('hello');
@@ -190,8 +193,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   /// since last login
   void sinceLastLogin() async{
-    // emit(state.copyWith(isReadWholeData: false));
-    List<dynamic> getClockData = await readClockData(isReadWholeData: false);
+    List<dynamic> getClockData = await readSingleDayClockData();
     print('since login data =====> ${getClockData[0].getClockIn}');
     List<dynamic> getClockOutList = List<dynamic>.from(getClockData[0].getClockIn);
     print('since login data length 22=====> ${getClockOutList}');

@@ -247,19 +247,47 @@ class ApiService {
     }
   }
 
-  /// read clock in and clock data
+  Future<List<dynamic>> readSingleClockData({required String userId,required String date}) async{
+    Response response = await _dio.get(
+      "http://192.168.1.121:3000/getClockAction?userId=$userId&date=$date"
+    );
+    if (response.statusCode == 200) {
+      var res = jsonDecode(response.data);
+      var data = res['userData'];
+      return data.map((e) => ClockInOutModal.fromJson(e)).toList();
+    } else {
+      throw Exception('>>>>>>>>>> failed');
+    }
+  }
+
+  Future<List<dynamic>> readMultiClockData({required String userId}) async {
+    Response response = await _dio.get(
+        "http://192.168.1.121:3000/getClockAction?userId=$userId"
+    );
+    if (response.statusCode == 200) {
+      var res = jsonDecode(response.data);
+      var data = res['userData'];
+      return data.map((e) => ClockInOutModal.fromJson(e)).toList();
+    } else {
+      throw Exception('>>>>>>>>>> failed');
+    }
+  }
+
+}
+
+
+
+
+/*/// read clock in and clock data
   Future<List<dynamic>> readClockInData({required String userId,required String date,required bool isWholeDataRead}) async {
-
-    // Response response = await _dio.get(
-    //   "http://192.168.1.121:3000/getClockAction?userId=$userId&$date",
-    // );
-
     Response response =
       isWholeDataRead
       ? await _dio.get(
+        // true - multi
         "http://192.168.1.121:3000/getClockAction",
       )
       : await _dio.get(
+        // false - single
           "http://192.168.1.121:3000/getClockAction?userId=$userId&date=$date",
       );
 
@@ -272,14 +300,4 @@ class ApiService {
       throw Exception('>>>>>>>>>> failed');
     }
   }
-
-
-  void (){
-
-  }
-
-  void ml(){
-
-  }
-
-}
+*/
