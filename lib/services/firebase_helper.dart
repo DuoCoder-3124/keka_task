@@ -24,7 +24,6 @@ class FirebaseService {
       sound: true,
     );
     firebaseMessaging.subscribeToTopic('allTopics');
-    // NotificationService.notificationService.initLocalNotification();
     return FirebaseMessaging.instance.getToken().then(
       (value) {
         var fcmToken = value;
@@ -37,17 +36,19 @@ class FirebaseService {
 
   ///msg notifyListen
   void firebaseNotify() {
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      debugPrint("NotificationOnMessage=======>${message.notification?.title}");
-      initLocalNotification();
-      sendLocalNotification(
-        title: message.notification?.title ?? "",
-        body: message.notification?.body ?? "",
-      );
-    });
+
+
+    // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    //   debugPrint("NotificationOnMessage=======>${message.notification?.title}");
+    //   initLocalNotification();
+    //   sendLocalNotification(
+    //     title: message.notification?.title ?? "",
+    //     body: message.notification?.body ?? "",
+    //   );
+    // });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      debugPrint("NotificationOnMessage=======>>>${message.notification?.title}");
+      debugPrint("NotificationForegroundOnMessage=======>>>${message.notification?.title}");
     });
 
     FirebaseMessaging.onBackgroundMessage((RemoteMessage message) async {

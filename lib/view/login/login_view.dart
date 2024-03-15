@@ -42,14 +42,6 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
 
-
-  @override
-  void initState() {
-    // ApiService.helper.registerUser(RegisterModel());
-    // FirebaseService().connectFirebase();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

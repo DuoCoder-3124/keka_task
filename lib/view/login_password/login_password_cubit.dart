@@ -1,14 +1,12 @@
-import 'dart:developer';
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:keka_task/common_attribute/common_log.dart';
 import 'package:keka_task/services/api_helper.dart';
+import 'package:keka_task/view/admin/admin_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
-
-import '../bottom_nav_bar/bottom_nav_bar_view.dart';
-import '../forgot_password/forgot_password_view.dart';
+import 'package:keka_task/view/bottom_nav_bar/bottom_nav_bar_view.dart';
+import 'package:keka_task/view/forgot_password/forgot_password_view.dart';
 
 part 'login_password_state.dart';
 
@@ -36,25 +34,36 @@ class LoginPasswordCubit extends Cubit<LoginPasswordState> {
 
   Future<void> navigateToForgot() async {
     await ApiService.helper.getTokenByEmail(userEmail).then((value) {
-    Navigator.pushNamed(context, ForgotPasswordView.routeName,arguments: TokenArgumentPass(email: userEmail,otp: value.otp,token: value.token));
-
-    Log.debug("token===>${value.token}");
-    Log.debug("otp===>${value.otp}");
-
+      Navigator.pushNamed(context, ForgotPasswordView.routeName,
+          arguments: TokenArgumentPass(email: userEmail, otp: value['otp'], token: value['token']));
     });
   }
 
   Future<void> loginPasswordPressed() async {
     if ((state.formKey.currentState?.validate() ?? false)) {
       await ApiService.helper.loginUser(email: userEmail, password: state.passwordController.text).then((value) {
-        if (value == true) {
+        if (value == 'user') {
+          userLogin();
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('User login')));
           Navigator.pushNamedAndRemoveUntil(context, BottomNavBarView.routeName, (route) => false);
-        }
-        else{
+        } else if (value == 'admin') {
+          adminLogin();
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Admin Login')));
+          Navigator.pushNamedAndRemoveUntil(context, AdminView.routeName, (route) => false);
+        } else {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Login fail')));
         }
       });
     }
+  }
+
+  Future<void> userLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('whichUser', 'user');
+  }
+
+  Future<void> adminLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('whichUser', 'admin');
   }
 }

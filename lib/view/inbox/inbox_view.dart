@@ -24,7 +24,7 @@ class InboxView extends StatefulWidget {
   static Widget builder(BuildContext context) {
     final args = ModalRoute.of(context)?.settings.arguments;
     return BlocProvider(
-      create: (context) => InboxCubit(InboxState(leaveModelListValue: <LeaveModel>[]), context),
+      create: (context) => InboxCubit(const InboxState(leaveModelListValue: <LeaveModel>[]), context),
       child: const InboxView(),
     );
   }
@@ -49,14 +49,10 @@ class _InboxViewState extends State<InboxView> {
       ),
       body: BlocBuilder<InboxCubit, InboxState>(
         builder: (context, state) {
-
-          var cubit=context.read<InboxCubit>();
-
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Expanded(child: Image.asset(AppImages.inboxBackground,fit: BoxFit.fill)),
                 Flexible(
                   child: Container(
                     height: MediaQuery.of(context).size.height,
@@ -68,20 +64,17 @@ class _InboxViewState extends State<InboxView> {
                         padding: PaddingValue.normal,
                         itemCount: state.leaveModelListValue.length,
                         itemBuilder: (context, index) {
-
-                          if(state.leaveModelListValue.length==0){
+                          if (state.leaveModelListValue.isEmpty) {
                             return const Center(
                               child: Text(
                                 'No Pending Requests',
                                 style: TextStyle(color: Colors.grey, fontSize: TextSize.appBarTitle),
                               ),
                             );
+                          } else {
+                            var selectedLeaveModel = state.leaveModelListValue[index];
+                            return InboxCard(leaveModel: selectedLeaveModel);
                           }
-                          else{
-                          var selectedLeaveModel=state.leaveModelListValue[index];
-                          return InboxCard(
-                            leaveModel: selectedLeaveModel,
-                          );}
                         },
                         separatorBuilder: (BuildContext context, int index) => const Gap(Spacing.normal),
                       ),
@@ -96,11 +89,3 @@ class _InboxViewState extends State<InboxView> {
     );
   }
 }
-
-//
-// child: const Center(
-// child: Text(
-// 'No Pending Requests',
-// style: TextStyle(color: Colors.grey, fontSize: TextSize.appBarTitle),
-// ),
-// ),

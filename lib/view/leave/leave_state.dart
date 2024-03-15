@@ -29,7 +29,7 @@ class LeaveState extends Equatable {
     required this.noteController,
     required this.notifyController,
     required this.dateDifference,
-    this.approverId='',
+    this.approverId = '',
     required this.formKey,
     this.leaveType = const [
       'Comp Offs',

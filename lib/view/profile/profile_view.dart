@@ -11,12 +11,9 @@ import 'package:keka_task/common_widget/common_elevated_button.dart';
 import 'package:keka_task/common_widget/common_text.dart';
 import 'package:keka_task/modal/register_modal.dart';
 import 'package:keka_task/services/api_helper.dart';
-import 'package:keka_task/services/firebase_helper.dart';
-import 'package:keka_task/view/login/login_view.dart';
 import 'package:keka_task/view/register/register_view.dart';
 import 'package:keka_task/view/splash_view/splash_screen.dart';
-
-import '../../common_attribute/common_log.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'profile_state.dart';
 
@@ -28,8 +25,6 @@ class ProfileView extends StatefulWidget {
   static const String routeName = '/profile_view';
 
   static Widget builder(BuildContext context) {
-    //final args = ModalRoute.of(context)?.settings.arguments;
-    // return const ProfileView();
     return BlocProvider(
       create: (context) => ProfileCubit(ProfileState(), context),
       child: const ProfileView(),
@@ -51,9 +46,7 @@ class _ProfileViewState extends State<ProfileView> {
           appBar: AppBar(
             actions: [
               IconButton(
-                onPressed: () {
-                  cubit.moveToUpdateScreen();
-                },
+                onPressed: () => cubit.moveToUpdateScreen(),
                 icon: const Icon(Icons.edit_note_sharp),
               )
             ],
@@ -85,9 +78,10 @@ class _ProfileViewState extends State<ProfileView> {
                           padding: PaddingValue.small,
                           borderRadius: 5,
                           borderWidth: 0.6,
-                          child: const Center(
+                          child: Center(
                             child: CommonText(
-                              text: 'NS',
+                              text:
+                                  '${state.registerModel?.firstName.substring(0, 1) ?? ''}${state.registerModel?.lastName.substring(0, 1) ?? ''}',
                               fontSize: TextSize.largeHHeading,
                               color: Colors.white,
                               textAlign: TextAlign.center,
@@ -117,28 +111,14 @@ class _ProfileViewState extends State<ProfileView> {
                                 children: [
                                   Row(
                                     children: [
-                                      Icon(
-                                        Icons.location_on_outlined,
-                                        color: CommonColor.grey,
-                                        size: 18,
-                                      ),
-                                      CommonText(
-                                        text: 'Katargam',
-                                        color: CommonColor.white,
-                                      )
+                                      Icon(Icons.location_on_outlined, color: CommonColor.grey, size: 18),
+                                      CommonText(text: 'Katargam', color: CommonColor.white)
                                     ],
                                   ),
                                   Row(
                                     children: [
-                                      Icon(
-                                        Icons.phone,
-                                        color: CommonColor.grey,
-                                        size: 18,
-                                      ),
-                                      CommonText(
-                                        text: state.registerModel?.phoneNumber ?? '',
-                                        color: CommonColor.white,
-                                      )
+                                      Icon(Icons.phone, color: CommonColor.grey, size: 18),
+                                      CommonText(text: state.registerModel?.phoneNumber ?? '', color: CommonColor.white)
                                     ],
                                   ),
                                 ],
@@ -147,19 +127,13 @@ class _ProfileViewState extends State<ProfileView> {
                               ///gmail
                               Row(
                                 children: [
-                                  Icon(
-                                    Icons.email_outlined,
-                                    color: CommonColor.grey,
-                                    size: 18,
-                                  ),
+                                  Icon(Icons.email_outlined, color: CommonColor.grey, size: 18),
                                   const Gap(2),
                                   Flexible(
                                     child: AutoSizeText(
                                       state.registerModel?.email ?? '',
                                       maxLines: 2,
-                                      style: TextStyle(
-                                        color: CommonColor.white,
-                                      ),
+                                      style: TextStyle(color: CommonColor.white),
                                     ),
                                   )
                                 ],
@@ -170,81 +144,66 @@ class _ProfileViewState extends State<ProfileView> {
                               ///job title
                               Row(
                                 children: [
+                                  CommonText(color: CommonColor.grey, text: 'JOB TITLE', fontSize: Spacing.medium),
                                   CommonText(
-                                    color: CommonColor.grey,
-                                    text: 'JOB TITLE',
+                                    color: CommonColor.white,
+                                    text: ' : ${state.registerModel?.jobTitle ?? ''}',
                                     fontSize: Spacing.medium,
+                                    fontWeight: TextWeight.medium,
                                   ),
-                                  CommonText(
-                                      color: CommonColor.white,
-                                      text: ' : ${state.registerModel?.jobTitle ?? ''}',
-                                      fontSize: Spacing.medium,
-                                      fontWeight: TextWeight.medium),
                                 ],
                               ),
 
                               ///department
                               Row(
                                 children: [
+                                  CommonText(color: CommonColor.grey, text: 'DEPARTMENT', fontSize: Spacing.medium),
                                   CommonText(
-                                    color: CommonColor.grey,
-                                    text: 'DEPARTMENT',
+                                    color: CommonColor.white,
+                                    text: ' : ${state.registerModel?.department ?? ''}',
                                     fontSize: Spacing.medium,
+                                    fontWeight: TextWeight.medium,
                                   ),
-                                  CommonText(
-                                      color: CommonColor.white,
-                                      text: ' : ${state.registerModel?.department ?? ''}',
-                                      fontSize: Spacing.medium,
-                                      fontWeight: TextWeight.medium),
                                 ],
                               ),
-                              //
+
                               ///business unit
                               Row(
                                 children: [
-                                  CommonText(
-                                    color: CommonColor.grey,
-                                    text: 'BUSINESS UNIT',
-                                    fontSize: Spacing.medium,
-                                  ),
+                                  CommonText(color: CommonColor.grey, text: 'BUSINESS UNIT', fontSize: Spacing.medium),
                                   Flexible(
-                                      child: CommonText(
-                                          color: CommonColor.white,
-                                          text: ' : ELaunch Solution Pvt.Ltd',
-                                          fontSize: Spacing.medium,
-                                          fontWeight: TextWeight.medium)),
+                                    child: CommonText(
+                                        color: CommonColor.white,
+                                        text: ' : ELaunch Solution Pvt.Ltd',
+                                        fontSize: Spacing.medium,
+                                        fontWeight: TextWeight.medium),
+                                  ),
                                 ],
                               ),
 
                               ///reported by
                               Row(
                                 children: [
+                                  CommonText(color: CommonColor.grey, text: 'REPORTED BY', fontSize: Spacing.medium),
                                   CommonText(
-                                    color: CommonColor.grey,
-                                    text: 'REPORTED BY',
+                                    color: CommonColor.white,
+                                    text: ' : ${state.registerModel?.reportedBy ?? ''}',
                                     fontSize: Spacing.medium,
+                                    fontWeight: TextWeight.medium,
                                   ),
-                                  CommonText(
-                                      color: CommonColor.white,
-                                      text: ' : ${state.registerModel?.reportedBy ?? ''}',
-                                      fontSize: Spacing.medium,
-                                      fontWeight: TextWeight.medium),
                                 ],
                               ),
 
                               ///emp no
                               Row(
                                 children: [
+                                  CommonText(color: CommonColor.grey, text: 'EMP NO', fontSize: Spacing.medium),
                                   CommonText(
-                                    color: CommonColor.grey,
-                                    text: 'EMP NO',
+                                    color: CommonColor.white,
+                                    text: ' : EL${state.registerModel?.employeeNumber ?? ''}',
                                     fontSize: Spacing.medium,
+                                    fontWeight: TextWeight.medium,
                                   ),
-                                  CommonText(
-                                      color: CommonColor.white,
-                                      text: ' : EL${state.registerModel?.employeeNumber ?? ''}',
-                                      fontSize: Spacing.medium,
-                                      fontWeight: TextWeight.medium),
                                 ],
                               ),
                             ],
@@ -271,9 +230,7 @@ class _ProfileViewState extends State<ProfileView> {
                           fontSize: TextSize.appBarSubTitle,
                         ),
                         const Gap(RadiusValue.small),
-                        const Divider(
-                          height: 1,
-                        ),
+                        const Divider(height: 1),
                         const Gap(RadiusValue.large),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -361,7 +318,28 @@ class _ProfileViewState extends State<ProfileView> {
                     width: MediaQuery.of(context).size.width,
                     height: 50,
                     child: CommonElevatedButton(
-                        onPressed: () => cubit.logout(),
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: const Text('Do you really want to logout?'),
+                                actions: [
+                                  CommonElevatedButton(
+                                    onPressed: () => cubit.logout(),
+                                    shape: const RoundedRectangleBorder(borderRadius: ShapeBorderRadius.normal),
+                                    child: const Text('ok'),
+                                  ),
+                                  CommonElevatedButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    shape: const RoundedRectangleBorder(borderRadius: ShapeBorderRadius.normal),
+                                    child: const Text('cancel'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
                         shape: const RoundedRectangleBorder(borderRadius: ShapeBorderRadius.small),
                         child: CommonText(text: 'Logout', color: CommonColor.white)),
                   )

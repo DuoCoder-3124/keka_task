@@ -3,18 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:keka_task/common_attribute/common_colors.dart';
-import 'package:keka_task/common_attribute/common_images.dart';
 import 'package:keka_task/common_attribute/common_value.dart';
 import 'package:keka_task/common_attribute/validation.dart';
 import 'package:keka_task/common_widget/common_elevated_button.dart';
-import 'package:keka_task/common_widget/common_rich_text.dart';
 import 'package:keka_task/common_widget/common_text_field.dart';
 import 'package:keka_task/modal/register_modal.dart';
 import 'package:keka_task/services/api_helper.dart';
 import 'package:keka_task/view/bottom_nav_bar/bottom_nav_bar_view.dart';
 import 'package:keka_task/view/login/login_view.dart';
-import 'package:keka_task/view/login_password/login_password_view.dart';
-import 'package:keka_task/view/profile/profile_view.dart';
 
 part 'register_state.dart';
 
@@ -66,14 +62,6 @@ class _RegisterViewState extends State<RegisterView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   foregroundColor: CommonColor.white,
-      //   title: Text(
-      //     'Register to keka',
-      //     style: TextStyle(color: CommonColor.white, fontWeight: FontWeight.bold, fontSize: TextSize.largeHHeading),
-      //   ),
-      //   backgroundColor: CommonColor.blue,
-      // ),
       body: BlocBuilder<RegisterCubit, RegisterState>(
         builder: (context, state) {
           var cubit = context.read<RegisterCubit>();
@@ -91,7 +79,7 @@ class _RegisterViewState extends State<RegisterView> {
                     const Gap(Spacing.xLarge),
                     Text(
                       cubit.updateArgumentPass.isNew ? 'Register to Keka' : 'Update User',
-                      style: TextStyle(fontSize: TextSize.largeHHeading, fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontSize: TextSize.largeHHeading, fontWeight: FontWeight.bold),
                     ),
                     const Gap(Spacing.normal),
                     CommonTextField(
@@ -181,11 +169,9 @@ class _RegisterViewState extends State<RegisterView> {
                     const Gap(Spacing.normal),
                     CommonElevatedButton(
                       onPressed: () {
-                        if (cubit.updateArgumentPass.isNew) {
-                          context.read<RegisterCubit>().registerPressed();
-                        } else {
-                          context.read<RegisterCubit>().updatePressed();
-                        }
+                        cubit.updateArgumentPass.isNew
+                            ? context.read<RegisterCubit>().registerPressed()
+                            : context.read<RegisterCubit>().updatePressed();
                       },
                       color: CommonColor.blueColor,
                       height: 50,
@@ -193,7 +179,7 @@ class _RegisterViewState extends State<RegisterView> {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Spacing.small)),
                       child: Text(
                         cubit.updateArgumentPass.isNew ? 'Register' : 'Update',
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                       ),
                     ),
                     const Gap(Spacing.normal),
