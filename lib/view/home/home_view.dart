@@ -10,6 +10,7 @@ import 'package:gap/gap.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:keka_task/common_attribute/common_colors.dart';
+import 'package:keka_task/common_attribute/common_log.dart';
 import 'package:keka_task/common_attribute/common_value.dart';
 import 'package:keka_task/common_widget/common_container.dart';
 import 'package:keka_task/common_widget/common_elevated_button.dart';
@@ -178,20 +179,20 @@ class _HomeViewState extends State<HomeView> {
                           Column(
                             children: [
                               CommonElevatedButton(
-                                color: state.changeInToOutToIn ? CommonColor.red : CommonColor.blue,
+                                color: state.updateClockInName ? CommonColor.red : CommonColor.blue,
                                 padding: PaddingValue.medium,
                                 onPressed: () {
                                   cubit.getCurrentTime();
 
                                   /// insert data
-                                  cubit.changeInOutText(timeStartStop: !(state.changeInToOutToIn));
+                                  cubit.changeInOutText(timeStartStop: !(state.updateClockInName));
                                   // cubit.sinceLastLogin();
                                   ///calculate avg time
                                   // cubit.calculateAverageHrsNOnTime();
 
                                 },
                                 child: CommonText(
-                                  text: state.changeInToOutToIn ? 'Web Clock-out' : 'Web Clock-in',
+                                  text: state.updateClockInName ? 'Web Clock-out' : 'Web Clock-in',
                                   color: CommonColor.white,
                                   fontSize: TextSize.appBarSubTitle,
                                   fontWeight: TextWeight.medium,
@@ -308,7 +309,7 @@ class _HomeViewState extends State<HomeView> {
                                   ),
                                   onChanged: (val) {
                                     cubit.dropDownItemUpdate(
-                                        dropDownItem: val,
+                                      dropDownItem: val,
                                     );
                                     if(val == 'Last Week'){
                                       cubit.calculateAverageHrsNOnTime();
@@ -526,23 +527,6 @@ class _HomeViewState extends State<HomeView> {
                             ),
                           ),
 
-                         /* Flexible(
-                            child: MaterialButton(
-                              color: state.logNRequestClickIndex == 2
-                                  ? const Color(0xff3f4b65)
-                                  : null,
-                              onPressed: () => cubit.getIndex(index: 2),
-                              child: AutoSizeText(
-                                'Attendance Request',
-                                maxLines: 2,
-                                style: TextStyle(
-                                  color: CommonColor.white,
-                                  fontSize: TextSize.label,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),*/
                         ],
                       ),
                     ),
@@ -588,13 +572,9 @@ class _HomeViewState extends State<HomeView> {
                   if (state.logNRequestClickIndex == 1) ...[
                     shiftSchedule()
                   ]
-                  /*else if (state.logNRequestClickIndex == 2) ...[
-                      attendanceRequest()
-                    ] */
-                    else
-                      ...[
-                        attendanceLog(),
-                      ],
+                  else...[
+                    attendanceLog(),
+                  ],
 
                   const Gap(15.0)
                 ],
@@ -625,175 +605,178 @@ class _HomeViewState extends State<HomeView> {
     ScrollController scrollController = ScrollController();
     SfRangeValues sfRangeValues = const SfRangeValues(4.0, 8.0);
     return BlocBuilder<HomeCubit, HomeState>(
-    builder: (context, state) {
-      // Future<List> list = cubit.readClockData(isReadWholeData: true);
-      // print('list data ====> $list');
-    return Scrollbar(
-      controller: scrollController,
-      child: ListView.builder(
-        controller: scrollController,
-        shrinkWrap: true,
-        itemCount: state.getClockData.length,
-        itemBuilder: (context, index) {
+      builder: (context, state) {
+        // Future<List> list = cubit.readClockData(isReadWholeData: true);
+        // print('list data ====> $list');
 
-         // String g = DateFormat('hh:mm').format(state.getClockData[index].effectiveHours);
+        return Scrollbar(
+          controller: scrollController,
+          child: ListView.builder(
+              controller: scrollController,
+              shrinkWrap: true,
+              itemCount: state.getClockData.length,
+              itemBuilder: (context, index) {
 
-          return Card(
-            elevation: 10,
-            child: CommonContainer(
-              borderRadius: 5,
-              borderWidth: 0.6,
-              color: const Color(0xff3f4b65),
-              padding: PaddingValue.small,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                // String g = DateFormat('hh:mm').format(state.getClockData[index].effectiveHours);
 
-                  /// Date & Arrival
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CommonText(
-                        ///'DATE : ${DateFormat('MMM dd, E').format(DateTime.now())}
-                          text: 'DATE : ${state.getClockData[index].date}',
-                          color: Colors.white,
-                          fontSize: TextSize.label),
-                      CommonText(text: 'ARRIVAL : ${state.getClockData[index].arrival}',
-                          color: Colors.white,
-                          fontSize: TextSize.label),
-                    ],
-                  ),
+                return Card(
+                  elevation: 10,
+                  child: CommonContainer(
+                    borderRadius: 5,
+                    borderWidth: 0.6,
+                    color: const Color(0xff3f4b65),
+                    padding: PaddingValue.small,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
 
-                  ///Effective hours
-                  const Gap(Spacing.xMedium),
-                  CommonText(
-                    //hh:mm // 2h:3m
-                      //'EFFECTIVE HOURS : ${state.effectiveHours}'
-                    //DateFormat('hh:mm').format(DateTime.parse(state.getClockData[index].effectiveHours))
-                      text: 'EFFECTIVE HOURS : ${state.getClockData[index].effectiveHours}',
-                      color: Colors.white,
-                      fontSize: TextSize.label),
+                        /// Date & Arrival
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CommonText(
+                              ///'DATE : ${DateFormat('MMM dd, E').format(DateTime.now())}
+                                text: 'DATE : ${state.getClockData[index].date}',
+                                color: Colors.white,
+                                fontSize: TextSize.label),
+                            CommonText(text: 'ARRIVAL : ${state.getClockData[index].arrival == ArrivalStatus.OnTime.value
+                                ? ArrivalStatus.OnTime.name : ArrivalStatus.Late.name
+                            }',
+                                color: Colors.white,
+                                fontSize: TextSize.label),
+                          ],
+                        ),
 
-                  /// gross hours & log
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CommonText(text: 'GROSS HOURS : ${state.getClockData[index].grossHours}',
-                          color: Colors.white,
-                          fontSize: TextSize.label),
-                      Row(
-                        children: [
-                          const CommonText(
-                            text: 'Log : ',
+                        ///Effective hours
+                        const Gap(Spacing.xMedium),
+                        CommonText(
+                          //hh:mm // 2h:3m
+                          //'EFFECTIVE HOURS : ${state.effectiveHours}'
+                          //DateFormat('hh:mm').format(DateTime.parse(state.getClockData[index].effectiveHours))
+                            text: 'EFFECTIVE HOURS : ${state.getClockData[index].effectiveHours}',
                             color: Colors.white,
-                          ),
-                          AlignedTooltip(
-                            showDuration: const Duration(seconds: 20),
-                            backgroundColor: CommonColor.black,
-                            content: Padding(
-                              padding: PaddingValue.small,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
+                            fontSize: TextSize.label),
 
-                                  CommonText(text: 'General Shift (Feb 26)',
-                                    color: CommonColor.white,),
-                                  CommonText(text: '9:00 AM - 6:00 PM',
-                                    color: CommonColor.white,),
-                                  Divider(color: CommonColor.grey),
+                        /// gross hours & log
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CommonText(text: 'GROSS HOURS : ${state.getClockData[index].grossHours}',
+                                color: Colors.white,
+                                fontSize: TextSize.label),
+                            Row(
+                              children: [
+                                const CommonText(
+                                  text: 'Log : ',
+                                  color: Colors.white,
+                                ),
+                                AlignedTooltip(
+                                  showDuration: const Duration(seconds: 20),
+                                  backgroundColor: CommonColor.black,
+                                  content: Padding(
+                                    padding: PaddingValue.small,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
 
-                                  Row(
-                                    children: [
-                                      IconButton(onPressed: () {},
-                                        icon: const Icon(
-                                          Icons.edit, color: Colors.blue,),),
-                                      const CommonText(text: 'Apply Partial Day',
-                                        color: Colors.blue,),
-                                    ],
-                                  ),
+                                        CommonText(text: 'General Shift (Feb 26)',
+                                          color: CommonColor.white,),
+                                        CommonText(text: '9:00 AM - 6:00 PM',
+                                          color: CommonColor.white,),
+                                        Divider(color: CommonColor.grey),
 
-                                  CommonText(text: 'Web Clock In',
-                                    fontWeight: TextWeight.bold,
-                                    color: CommonColor.white,),
-
-                                  Row(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          IconButton(onPressed: () {},
-                                              icon: const Icon(Icons.circle,
-                                                  color: Colors.green)),
-                                          CommonText(text: state.currentTime,
-                                            fontWeight: TextWeight.bold,
-                                            color: CommonColor.white,
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          IconButton(onPressed: () {},
+                                        Row(
+                                          children: [
+                                            IconButton(onPressed: () {},
                                               icon: const Icon(
-                                                  Icons.circle, color: Colors.red)),
-                                          CommonText(text: 'MISSING',
-                                            fontWeight: TextWeight.bold,
-                                            color: CommonColor.white,),
-                                        ],
-                                      ),
-                                    ],
-                                  )
+                                                Icons.edit, color: Colors.blue,),),
+                                            const CommonText(text: 'Apply Partial Day',
+                                              color: Colors.blue,),
+                                          ],
+                                        ),
 
-                                ],
-                              ),
-                            ),
-                            child: IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  Icons.info_outline,
-                                  color: Colors.green,
-                                )),
+                                        CommonText(text: 'Web Clock In',
+                                          fontWeight: TextWeight.bold,
+                                          color: CommonColor.white,),
+
+                                        Row(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                IconButton(onPressed: () {},
+                                                    icon: const Icon(Icons.circle,
+                                                        color: Colors.green)),
+                                                CommonText(text: state.currentTime,
+                                                  fontWeight: TextWeight.bold,
+                                                  color: CommonColor.white,
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                IconButton(onPressed: () {},
+                                                    icon: const Icon(
+                                                        Icons.circle, color: Colors.red)),
+                                                CommonText(text: 'MISSING',
+                                                  fontWeight: TextWeight.bold,
+                                                  color: CommonColor.white,),
+                                              ],
+                                            ),
+                                          ],
+                                        )
+
+                                      ],
+                                    ),
+                                  ),
+                                  child: IconButton(
+                                      onPressed: () {},
+                                      icon: const Icon(
+                                        Icons.info_outline,
+                                        color: Colors.green,
+                                      )),
+                                ),
+                              ],
+                            )
+
+                          ],
+                        ),
+
+
+                        ///ATTENDANCE VISUAL
+                        SfRangeSliderTheme(
+                          data: SfRangeSliderThemeData(
+                            activeTickColor: Colors.blue,
+                            activeMinorTickColor: Colors.blue,
+                            inactiveTickColor: Colors.blue,
+                            inactiveMinorTickColor: Colors.blue,
+                            tickSize: Size(3.0, 12.0),
+                            minorTickSize: Size(3.0, 8.0),
                           ),
-                        ],
-                      )
+                          child:  SfRangeSlider(
+                            min: 2.0,
+                            max: 10.0,
+                            interval: 2,
+                            minorTicksPerInterval: 1,
+                            showTicks: true,
+                            values: sfRangeValues,
+                            onChanged: (SfRangeValues newValues){
+                              setState(() {
+                                sfRangeValues = newValues;
+                              });
+                            },
+                          ),
+                        )
 
-                    ],
+                      ],
+                    ),
                   ),
-
-
-                  ///ATTENDANCE VISUAL
-                  SfRangeSliderTheme(
-                    data: SfRangeSliderThemeData(
-                      activeTickColor: Colors.blue,
-                      activeMinorTickColor: Colors.blue,
-                      inactiveTickColor: Colors.blue,
-                      inactiveMinorTickColor: Colors.blue,
-                      tickSize: Size(3.0, 12.0),
-                      minorTickSize: Size(3.0, 8.0),
-                    ),
-                    child:  SfRangeSlider(
-                      min: 2.0,
-                      max: 10.0,
-                      interval: 2,
-                      minorTicksPerInterval: 1,
-                      showTicks: true,
-                      values: sfRangeValues,
-                      onChanged: (SfRangeValues newValues){
-                        setState(() {
-                          sfRangeValues = newValues;
-                        });
-                      },
-                    ),
-                  )
-
-                ],
-              ),
-            ),
-          );
-        }
-      ),
+                );
+              }
+          ),
+        );
+      },
     );
-  },
-);
   }
 
   ///when user click on Shift Schedule
@@ -881,34 +864,4 @@ class _HomeViewState extends State<HomeView> {
         ));
   }
 
-  ///when user click on Attendance Request
-  /*Widget attendanceRequest() {
-    return const Column(
-      children: [
-        AttendanceRequest(
-          text: 'Work From Home / On Duty Requests',
-          subText: 'No Work From Home / On Duty Requests Available',
-          date: '25 Jan 2024 - 09 Mar 2024',
-        ),
-        Gap(Spacing.small),
-        AttendanceRequest(
-          text: 'Regularization Requests',
-          subText: 'No Regularization Requests Available',
-          date: '25 Jan 2024 - 09 Mar 2024',
-        ),
-        Gap(Spacing.small),
-        AttendanceRequest(
-          text: 'Remote Clock in Requests',
-          subText: 'No Remote Clock in Requests Available',
-          date: '25 Jan 2024 - 09 Mar 2024',
-        ),
-        Gap(Spacing.small),
-        AttendanceRequest(
-          text: 'Partial Day Requests',
-          subText: 'No Partial Day Requests Available',
-          date: '25 Jan 2024 - 09 Mar 2024',
-        ),
-      ],
-    );
-  }*/
 }
