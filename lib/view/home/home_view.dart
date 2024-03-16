@@ -179,20 +179,20 @@ class _HomeViewState extends State<HomeView> {
                           Column(
                             children: [
                               CommonElevatedButton(
-                                color: state.changeInToOutToIn ? CommonColor.red : CommonColor.blue,
+                                color: state.updateClockInName ? CommonColor.red : CommonColor.blue,
                                 padding: PaddingValue.medium,
                                 onPressed: () {
                                   cubit.getCurrentTime();
 
                                   /// insert data
-                                  cubit.changeInOutText(timeStartStop: !(state.clockIn));
+                                  cubit.changeInOutText(timeStartStop: !(state.updateClockInName));
                                   // cubit.sinceLastLogin();
                                   ///calculate avg time
                                   // cubit.calculateAverageHrsNOnTime();
 
                                 },
                                 child: CommonText(
-                                  text: state.clockIn ? 'Web Clock-out' : 'Web Clock-in',
+                                  text: state.updateClockInName ? 'Web Clock-out' : 'Web Clock-in',
                                   color: CommonColor.white,
                                   fontSize: TextSize.appBarSubTitle,
                                   fontWeight: TextWeight.medium,
@@ -527,23 +527,6 @@ class _HomeViewState extends State<HomeView> {
                             ),
                           ),
 
-                         /* Flexible(
-                            child: MaterialButton(
-                              color: state.logNRequestClickIndex == 2
-                                  ? const Color(0xff3f4b65)
-                                  : null,
-                              onPressed: () => cubit.getIndex(index: 2),
-                              child: AutoSizeText(
-                                'Attendance Request',
-                                maxLines: 2,
-                                style: TextStyle(
-                                  color: CommonColor.white,
-                                  fontSize: TextSize.label,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),*/
                         ],
                       ),
                     ),
@@ -589,11 +572,7 @@ class _HomeViewState extends State<HomeView> {
                   if (state.logNRequestClickIndex == 1) ...[
                     shiftSchedule()
                   ]
-                  /*else if (state.logNRequestClickIndex == 2) ...[
-                      attendanceRequest()
-                    ] */
-                    else
-                      ...[
+                  else...[
                         attendanceLog(),
                       ],
 
@@ -629,6 +608,7 @@ class _HomeViewState extends State<HomeView> {
     builder: (context, state) {
       // Future<List> list = cubit.readClockData(isReadWholeData: true);
       // print('list data ====> $list');
+
     return Scrollbar(
       controller: scrollController,
       child: ListView.builder(
@@ -659,7 +639,9 @@ class _HomeViewState extends State<HomeView> {
                           text: 'DATE : ${state.getClockData[index].date}',
                           color: Colors.white,
                           fontSize: TextSize.label),
-                      CommonText(text: 'ARRIVAL : ${state.getClockData[index].arrival}',
+                      CommonText(text: 'ARRIVAL : ${state.getClockData[index].arrival == ArrivalStatus.OnTime.value
+                                        ? ArrivalStatus.OnTime.name : ArrivalStatus.Late.name
+                          }',
                           color: Colors.white,
                           fontSize: TextSize.label),
                     ],
@@ -882,34 +864,4 @@ class _HomeViewState extends State<HomeView> {
         ));
   }
 
-  ///when user click on Attendance Request
-  /*Widget attendanceRequest() {
-    return const Column(
-      children: [
-        AttendanceRequest(
-          text: 'Work From Home / On Duty Requests',
-          subText: 'No Work From Home / On Duty Requests Available',
-          date: '25 Jan 2024 - 09 Mar 2024',
-        ),
-        Gap(Spacing.small),
-        AttendanceRequest(
-          text: 'Regularization Requests',
-          subText: 'No Regularization Requests Available',
-          date: '25 Jan 2024 - 09 Mar 2024',
-        ),
-        Gap(Spacing.small),
-        AttendanceRequest(
-          text: 'Remote Clock in Requests',
-          subText: 'No Remote Clock in Requests Available',
-          date: '25 Jan 2024 - 09 Mar 2024',
-        ),
-        Gap(Spacing.small),
-        AttendanceRequest(
-          text: 'Partial Day Requests',
-          subText: 'No Partial Day Requests Available',
-          date: '25 Jan 2024 - 09 Mar 2024',
-        ),
-      ],
-    );
-  }*/
 }

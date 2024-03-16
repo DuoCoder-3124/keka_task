@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
       // initialRoute: BottomNavBarView.routeName,
       // initialRoute: isNewUser() ? LoginView.routeName : BottomNavBarView.routeName,
       // initialRoute: LoginView.routeName,
-      initialRoute: SplashScreen.routeName,
+      initialRoute: HomeView.routeName,
       routes: route,
       // home: Temp(),
     );

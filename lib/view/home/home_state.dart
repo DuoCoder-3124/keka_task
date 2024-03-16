@@ -1,17 +1,17 @@
 part of 'home_view.dart';
 
 class HomeState extends Equatable {
-  final Color color;
 
   ///for drop down
   final List<String> dropDownItems;
   final String dropDownItemDefaultValue;
+  final Color color;
 
   final String currentDate;
   final String currentTime;
 
   final bool hourFormatOnOff;
-  final bool changeInToOutToIn;
+  final bool updateClockInName;
 
   final List logsNRequest;
   final int logNRequestClickIndex;
@@ -39,7 +39,7 @@ class HomeState extends Equatable {
       this.hourFormatOnOff = false, // 24 hour format
       this.logsNRequest = const ['Attendance Log', 'Shift Schedule', /*'Attendance Request'*/],
       this.logNRequestClickIndex = 0,
-      this.changeInToOutToIn = false,
+      this.updateClockInName = false,
       this.effectiveHours = "0h 0m",
       this.grossHours = "0h 0m",
       this.arrivalStatus = 0,
@@ -62,7 +62,7 @@ class HomeState extends Equatable {
         hourFormatOnOff,
         logsNRequest,
         logNRequestClickIndex,
-        changeInToOutToIn,
+        updateClockInName,
         effectiveHours,
         grossHours,
         arrivalStatus,
@@ -85,7 +85,7 @@ class HomeState extends Equatable {
       bool? hourFormatOnOff,
       List? logsNRequest,
       int? logNRequestClickIndex,
-      bool? changeInToOutToIn,
+      bool? updateClockInName,
       String? effectiveHours,
       String? grossHours,
       int? arrivalStatus,
@@ -106,7 +106,7 @@ class HomeState extends Equatable {
         hourFormatOnOff: hourFormatOnOff ?? this.hourFormatOnOff,
         logsNRequest: logsNRequest ?? this.logsNRequest,
         logNRequestClickIndex: logNRequestClickIndex ?? this.logNRequestClickIndex,
-        changeInToOutToIn: changeInToOutToIn ?? this.changeInToOutToIn,
+        updateClockInName: updateClockInName ?? this.updateClockInName,
         effectiveHours: effectiveHours ?? this.effectiveHours,
         grossHours: grossHours ?? this.grossHours,
         arrivalStatus: arrivalStatus ?? this.arrivalStatus,
