@@ -19,7 +19,6 @@ class ApiService {
 
   final Dio _dio = Dio();
 
-
   Future<void> sendNotification({required String fcmToken, required String title, required String body}) async {
     try {
       var bodyData = {
@@ -43,7 +42,6 @@ class ApiService {
   }
 
   ///**************************************************************************************
-
 
   Future<RegisterModel?> getUserDataById(String userId) async {
     try {
@@ -206,7 +204,7 @@ class ApiService {
     }
   }
 
-  Future<void> updateLeaveStatus(ApproveModel approveModel) async {
+  Future<void> updateLeaveStatus(ApproveModel approveModel,context) async {
     try {
       Log.debug("modal===>${approveModel.toMap()}");
 
@@ -216,6 +214,8 @@ class ApiService {
 
       if (response.statusCode == 200) {
         Log.success('Success');
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('${jsonDecode(response.data)['message']}')));
+
       } else {
         Log.debug('Unsuccessful');
       }
@@ -255,7 +255,7 @@ class ApiService {
     Log.success("response ====>${response.data}");
   }
 
-  Future<Map<String,dynamic>> getTokenByEmail(String userEmail) async {
+  Future<Map<String, dynamic>> getTokenByEmail(String userEmail) async {
     var response = await _dio.post("http://192.168.1.121:3000/forgotPassword?userEmail", data: {"email": userEmail});
 
     Log.success("response otp====>${response.data}");
@@ -325,10 +325,8 @@ class ApiService {
     }
   }
 
-  Future<List<dynamic>> readSingleClockData({required String userId,required String date}) async{
-    Response response = await _dio.get(
-      "http://192.168.1.121:3000/getClockAction?userId=$userId&date=$date"
-    );
+  Future<List<dynamic>> readSingleClockData({required String userId, required String date}) async {
+    Response response = await _dio.get("http://192.168.1.121:3000/getClockAction?userId=$userId&date=$date");
     if (response.statusCode == 200) {
       var res = jsonDecode(response.data);
       var data = res['userData'];
@@ -339,9 +337,7 @@ class ApiService {
   }
 
   Future<List<dynamic>> readMultiClockData({required String userId}) async {
-    Response response = await _dio.get(
-        "http://192.168.1.121:3000/getClockAction?userId=$userId"
-    );
+    Response response = await _dio.get("http://192.168.1.121:3000/getClockAction?userId=$userId");
     if (response.statusCode == 200) {
       var res = jsonDecode(response.data);
       var data = res['userData'];
@@ -350,11 +346,7 @@ class ApiService {
       throw Exception('>>>>>>>>>> failed');
     }
   }
-
 }
-
-
-
 
 /*/// read clock in and clock data
   Future<List<dynamic>> readClockInData({required String userId,required String date,required bool isWholeDataRead}) async {
