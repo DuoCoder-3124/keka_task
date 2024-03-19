@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:keka_task/common_attribute/common_colors.dart';
+import 'package:keka_task/services/firebase_helper.dart';
 import 'package:keka_task/temp.dart';
 import 'package:keka_task/view/admin/admin_view.dart';
 import 'package:keka_task/view/admin/admin_view.dart';
@@ -22,11 +23,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
+
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // FirebaseService.helper.firebaseNotify();
   // Set the background messaging handler early on, as a named top-level function
 
-  await FirebaseMessaging.instance.setAutoInitEnabled(true);
+  // await FirebaseMessaging.instance.setAutoInitEnabled(true);
   // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   // if (!kIsWeb) {
@@ -50,7 +54,7 @@ class MyApp extends StatelessWidget {
       // initialRoute: BottomNavBarView.routeName,
       // initialRoute: isNewUser() ? LoginView.routeName : BottomNavBarView.routeName,
       // initialRoute: LoginView.routeName,
-      initialRoute: SplashScreen.routeName,
+      initialRoute: HomeView.routeName,
       routes: route,
       // home: Temp(),
     );

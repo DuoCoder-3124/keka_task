@@ -36,23 +36,25 @@ class FirebaseService {
 
   ///msg notifyListen
   void firebaseNotify() {
-
-
-    // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    //   debugPrint("NotificationOnMessage=======>${message.notification?.title}");
-    //   initLocalNotification();
-    //   sendLocalNotification(
-    //     title: message.notification?.title ?? "",
-    //     body: message.notification?.body ?? "",
-    //   );
-    // });
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      debugPrint("NotificationOnMessage=======>${message.notification?.title}");
+      initLocalNotification();
+      sendLocalNotification(
+        title: message.notification?.title ?? "",
+        body: message.notification?.body ?? "",
+      );
+    });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       debugPrint("NotificationForegroundOnMessage=======>>>${message.notification?.title}");
     });
 
     FirebaseMessaging.onBackgroundMessage((RemoteMessage message) async {
-      debugPrint("NotificationOnBackgroundMessage=======>${message.notification?.title}");
+      if(message.notification != null){
+        debugPrint("NotificationOnBackgroundMessage=======>${message.notification!.toMap()}");
+        debugPrint("NotificationOnBackgroundMessage=======>${message.notification!.body}");
+        debugPrint("NotificationOnBackgroundMessage=======>${message.notification!.title}");
+      }
       return await null;
     });
   }

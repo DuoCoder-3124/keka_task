@@ -3,8 +3,9 @@ part of 'home_view.dart';
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit(super.initialState) {
     getCurrentDate();
-    // calculateAverageHrsNOnTime();
-    readClockData(isReadWholeData: true);
+    readAllDayClockData();
+    calculateAverageHrsNOnTime();
+    getMonth();
   }
 
   void colorChange({Color? color}) {
@@ -38,69 +39,76 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   /// update clockIn to ClockOut OR ClockOut to clockIn
-  void changeInOutText({required bool timeStartStop}) {
+  Future<void> changeInOutText({bool? timeStartStop}) async {
 
-    emit(state.copyWith(changeInToOutToIn: timeStartStop));
+    emit(state.copyWith(clockInOut: timeStartStop));
 
     /// get static date 9:00:00 for update arrival status (onTime or Late)
     final currentTime = DateTime.now().toIso8601String();
     DateTime constTime = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 9, 0);
 
+    var userId=await ApiService.helper.getUserId();
+
     ///pending data enter only clock in time not clock out time
     ApiService.helper.insertClockInData(clockInOutModal: ClockInOutModal(
-      userId: '33',
-      postClockIn: state.changeInToOutToIn ? currentTime : null,
-      postClockOut: state.changeInToOutToIn ? null : currentTime,
+      userId: userId,
+      postClockIn: state.clockInOut ? currentTime : null,
+      postClockOut: state.clockInOut ? null : currentTime,
       date: state.currentDate,
-      effectiveHours: state.effectiveHours,
-      grossHours: state.grossHours,
+      effectiveHours: state.effectiveHours, ///'${state.effectiveHours.inHours}h ${state.effectiveHours.inMinutes%60}m',
+      grossHours: state.grossHours, ///'${state.grossHours.inHours}h ${state.grossHours.inMinutes%60}m',
       arrival: (DateTime.now().isBefore(constTime)) ? ArrivalStatus.OnTime.value : ArrivalStatus.Late.value,
       weekDay: (CalendarFormat.week.index)+1
     )).then((value) async {
-      calculateEffectiveHrsNGrossHrs();
-      sinceLastLogin();
-      // calculateAverageHrsNOnTime();
-      readClockData(isReadWholeData: true);
+      await readSingleDayClockData();///
+      await readAllDayClockData();
+      print('read Called= ====>');
     });
-
   }
 
 
-  ///get clock data
-  Future<List> readClockData({required bool isReadWholeData}) async {
-    List<dynamic> getClockData = await ApiService
-        .helper.readClockInData(
-            userId: '33',
+  /// get one Day User Data
+  Future<List<dynamic>> readSingleDayClockData() async {
+
+    var userId=await ApiService.helper.getUserId();
+
+    print('read Called== ====>');
+    List<dynamic> getSingleDayClockRecord = await ApiService
+        .helper.readSingleClockData(
+            userId: userId??"",
             date: DateFormat("E dd, MMM yyyy").format(DateTime.now()),
-            isWholeDataRead: isReadWholeData,
-    );
-   print('cubit list data ===> ${getClockData.length}');
-    emit(state.copyWith(getClockData: getClockData));
-    return getClockData;
+    ).then((value) => readAllDayClockData());
+    emit(state.copyWith(getSingleDaysClockData: getSingleDayClockRecord));
+    state.clockInOut ? sinceLastLogin() : calculateEffectiveHrsNGrossHrs();
+    return getSingleDayClockRecord;
   }
-  /*Future<List<dynamic>> readClockData({required bool isWholeDataRead}) async {
-    List<dynamic> getClockData = await ApiService
-        .helper.readClockInData(userId: '30', isHoleDataRead: isWholeDataRead);
-    emit(state.copyWith(getData: getClockData));
-    return getClockData;
-  }*/
+
+  /// get All Day User Data
+  Future<List<dynamic>> readAllDayClockData() async {
+
+    var userId=await ApiService.helper.getUserId();
+
+
+    List<dynamic> getAllDayClockRecord = await ApiService
+        .helper.readMultiClockData(
+        userId: userId??'',
+    );
+    emit(state.copyWith(getAllDaysClockData: getAllDayClockRecord));
+    return getAllDayClockRecord;
+  }
 
   /// calculate clock in and clock data (effectiveTime & grossTime)
   Future<void> calculateEffectiveHrsNGrossHrs() async{
 
-    // List<dynamic> getClockData = await readClockData(isWholeDataRead: false);
-    // emit(state.copyWith(isReadWholeData: false));
-
     Duration effectiveTime = const Duration();
     Duration grossTime = const Duration();
 
-    List<dynamic> getClockData = await readClockData(isReadWholeData: false);
+    List<dynamic> getClockData = state.getSingleDaysClockData;
 
-    List getClockInList = List<dynamic>.from(getClockData[0].getClockIn);
-    List getClockOutList = List<dynamic>.from(getClockData[0].getClockOut);
+    List<dynamic> getClockInList = List<dynamic>.from(getClockData[0].getClockIn);
+    List<dynamic> getClockOutList = List<dynamic>.from(getClockData[0].getClockOut);
 
-    emit(state.copyWith(arrivalStatus: state.getClockData[0].arrival));
-
+    emit(state.copyWith(arrivalStatus: getClockData[0].arrival));
 
     /// calculate effective hours and gross hours
     if(getClockOutList.isNotEmpty){
@@ -116,22 +124,16 @@ class HomeCubit extends Cubit<HomeState> {
         DateTime grossTime2 = DateTime.parse(getClockOutList.last);
         grossTime = grossTime2.difference(grossTime1);
 
-        print('effective hours ====> $effectiveTime');
-        print('gross hours ====> $grossTime');
+        print('effective hours =====> ${effectiveTime}');
+        print('gross hours =====> ${grossTime}');
 
       }
-      // emit(state.copyWith(
-      //     effectiveHours: "${effectiveTime.inHours}h ${effectiveTime
-      //         .inMinutes % 60}m",
-      //     grossHours: "${grossTime.inHours}h ${grossTime.inMinutes % 60}m",
-      // ));
+      changeInOutText();
     }
     emit(state.copyWith(
-      effectiveHours: "${effectiveTime.inHours}h ${effectiveTime
-          .inMinutes % 60}m",
-      grossHours: "${grossTime.inHours}h ${grossTime.inMinutes % 60}m",
+      effectiveHours: "${effectiveTime.inHours}h ${effectiveTime.inMinutes%60}m",
+      grossHours: "${grossTime.inHours}h ${grossTime.inMinutes%60}m",
     ));
-
   }
 
 
@@ -140,16 +142,8 @@ class HomeCubit extends Cubit<HomeState> {
     List<dynamic> addArrivalStatus = [];
     List<dynamic> addHours = [];
     int totalPresentState = 0;
-    List<dynamic> getClockData = await readClockData(isReadWholeData: true);
-    // emit(state.copyWith(isReadWholeData: true));
-    print('List of data ====> ${state.getClockData}');
-
-    // DateTime dt = DateTime.now();
-    // int parses = int.parse(DateFormat("D").format(dt));
-    // print("week dayss ====> ${((parses - dt.weekday + 10)/7).floor()}");
-
-      // print('week Days ====> ${DateFormat('D').format(DateTime.now())}');
-      // print('week Days 2====> ${(CalendarFormat.week.index)+1}');
+    List<dynamic> getClockData = state.getAllDaysClockData;
+    print('List of data ====> ${state.getAllDaysClockData}');
 
     /// for onTime
     for(int i=0; i < getClockData.length; i++){
@@ -157,14 +151,13 @@ class HomeCubit extends Cubit<HomeState> {
 
         /// add arrivalTime
         addArrivalStatus.add(getClockData[i].arrival);
-        if(getClockData[i].arrival == 1) {
+        if(getClockData[i].arrival == "OnTime") {
           totalPresentState = totalPresentState + 1;
         }
 
         ///add time
-        // addHours.add(getClockData[i].grossHours);
+        addHours.add(getClockData[i].grossHours);
      }
-
     }
 
     print('hello');
@@ -173,6 +166,7 @@ class HomeCubit extends Cubit<HomeState> {
     print('int ====> ${totalPercentOfArrival}');
 
     ///calculate avg hrs
+    // print('datatype in ${addHours[0].runtimeType}');
     // List<DateTime> allDate = addHours.map((dates) => DateTime.parse(dates)).toList();
     // Duration duration = allDate.fold(Duration.zero, (a, b) => a + b.difference(DateTime(0)));
     // int dateLength = allDate.length;
@@ -187,38 +181,31 @@ class HomeCubit extends Cubit<HomeState> {
     ));
   }
 
-
   /// since last login
   void sinceLastLogin() async{
-    // emit(state.copyWith(isReadWholeData: false));
-    List<dynamic> getClockData = await readClockData(isReadWholeData: false);
-    print('since login data =====> ${getClockData[0].getClockIn}');
-    List<dynamic> getClockOutList = List<dynamic>.from(getClockData[0].getClockIn);
-    print('since login data length 22=====> ${getClockOutList}');
-    DateTime lastIndexDate = DateTime.parse(getClockOutList.last);
-    print('since last login last date =====> ${getClockOutList.last}');
-
-    print('since last Login =====> $sinceLastLogin');
+    List<dynamic> getClockData = state.getSingleDaysClockData;
+    List<dynamic> getClockInData = List<dynamic>.from(getClockData[0].getClockIn);
+    DateTime getLastInTime = DateTime.parse(getClockInData.last);
+    print('getClockInData ====> $getClockInData');
+    print('last time  ====> $getLastInTime');
 
     Timer.periodic(const Duration(minutes: 1), (timer) {
-      Duration sinceLastLogin = (DateTime.now()).difference(lastIndexDate);
+      Duration sinceLastLogin = (DateTime.now()).difference(getLastInTime);
       print('since login time ====> ${sinceLastLogin.inHours}h ${sinceLastLogin.inMinutes%60}m');
       emit(state.copyWith(sinceLastLogin: '${sinceLastLogin.inHours}h ${sinceLastLogin.inMinutes%60}m'));
     });
   }
 
-  /// getUserId
-  // void getUserId() async{
-  //   List<ClockInOutModal> getUserData = await ApiService.helper.getRegisterUser();
-  //   print('getUserData runType ====> ${getUserData.runtimeType}');
-  // }
-
-  /// calculate effective and gross hours
-  // void calculateTime({}){
-  //
-  // }
-
-
+  /// get 30 Days and last 3-month
+  void getMonth(){
+    DateTime getCurrentMonth = DateTime.now();
+    List getLastMonth = ['30 Days'];
+    for(int i=1; i<=3 ; i++){
+      final dateTime = DateFormat('MMM').format(DateTime.parse(DateTime(getCurrentMonth.year, getCurrentMonth.month-i).toIso8601String()));
+      getLastMonth.add(dateTime);
+    }
+    emit(state.copyWith(getLastMonth: getLastMonth));
+  }
 
   ///24 hour format on off
   void hourFormatOnOff({isHourFormatOn}) {
@@ -231,22 +218,3 @@ class HomeCubit extends Cubit<HomeState> {
     print(index);
   }
 }
-
-/*  void getCurrentTime(){
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      emit(state.copyWith(currentTime: DateFormat('hh:MM:ss a').format(DateTime.now())));
-    });
-  }
-*/
-
-/*void getCurrentTime({bool? timeStartStop}) {
-    print('timer value ----> $timeStartStop');
-      Timer.periodic(const Duration(seconds: 1), (timer) {
-        emit(state.copyWith(
-            currentTime: DateFormat('hh:mm:ss a').format(DateTime.now()),
-            // timeStartStop: timeStartStop
-        ));
-        print('inside value ===> ${state.timeStartStop}');
-      });
-
-  }*/

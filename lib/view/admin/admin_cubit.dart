@@ -9,7 +9,7 @@ class AdminCubit extends Cubit<AdminState> {
   }
 
   Future<void> changeApprovalStatus({required ApproveModel approveModel}) async {
-    await ApiService.helper.updateLeaveStatus(approveModel).then((value) {
+    await ApiService.helper.updateLeaveStatus(approveModel,context).then((value) {
       getInboxData();
       Log.success("Updated");
       Navigator.pop(context);

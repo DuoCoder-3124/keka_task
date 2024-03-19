@@ -11,22 +11,24 @@ class HomeState extends Equatable {
   final String currentTime;
 
   final bool hourFormatOnOff;
-  final bool changeInToOutToIn;
+  final bool clockInOut;
 
   final List logsNRequest;
   final int logNRequestClickIndex;
 
-  // final List attendanceRequestList;
-
   final String effectiveHours;
   final String grossHours;
+
   final int arrivalStatus;
+
   final int totalPercentOfWeekArrival;
   final Duration totalAvgHours;
-  final String sinceLastLogin;
-  // final bool isReadWholeData;
 
-  final List<dynamic> getClockData;
+  final String sinceLastLogin;
+
+  final List<dynamic> getSingleDaysClockData;
+  final List<dynamic> getAllDaysClockData;
+  final List<dynamic> getLastMonth;
 
   final SfRangeValues sfRangeValues;// = const SfRangeValues(0.4, 0.8);
 
@@ -39,14 +41,16 @@ class HomeState extends Equatable {
       this.hourFormatOnOff = false, // 24 hour format
       this.logsNRequest = const ['Attendance Log', 'Shift Schedule', /*'Attendance Request'*/],
       this.logNRequestClickIndex = 0,
-      this.changeInToOutToIn = false,
-      this.effectiveHours = "0h 0m",
+      this.clockInOut = false,
+      this.effectiveHours ="0h 0m",
       this.grossHours = "0h 0m",
       this.arrivalStatus = 0,
       this.totalPercentOfWeekArrival = 0,
       this.sinceLastLogin = "0h 0m",
       required this.totalAvgHours,
-      this.getClockData = const [],
+      this.getAllDaysClockData = const [],
+      this.getSingleDaysClockData = const [],
+      this.getLastMonth = const [],
       // this.isReadWholeData = false,
       this.sfRangeValues = const SfRangeValues(0.4, 0.8),
         // this.attendanceRequestList = const ['Last 7 days', 'Last 14 days', 'Last 30 days','Custom Range'],
@@ -62,7 +66,7 @@ class HomeState extends Equatable {
         hourFormatOnOff,
         logsNRequest,
         logNRequestClickIndex,
-        changeInToOutToIn,
+        clockInOut,
         effectiveHours,
         grossHours,
         arrivalStatus,
@@ -70,8 +74,9 @@ class HomeState extends Equatable {
         sfRangeValues,
         sinceLastLogin,
         totalAvgHours,
-        // isReadWholeData,
-        getClockData
+        getAllDaysClockData,
+        getSingleDaysClockData,
+        getLastMonth
         // attendanceRequestList,
       ];
 
@@ -85,17 +90,17 @@ class HomeState extends Equatable {
       bool? hourFormatOnOff,
       List? logsNRequest,
       int? logNRequestClickIndex,
-      bool? changeInToOutToIn,
+      bool? clockInOut,
       String? effectiveHours,
       String? grossHours,
       int? arrivalStatus,
       int? totalPercentOfWeekArrival,
       Duration? totalAvgHours,
       String? sinceLastLogin,
-      // bool? isReadWholeData,
-      // List? attendaceRequestList,
       SfRangeValues? sfRangeValues,
-      List? getClockData
+      List? getAllDaysClockData,
+      List? getSingleDaysClockData,
+      List? getLastMonth,
       }) {
     return HomeState(
         color: color ?? this.color,
@@ -106,15 +111,16 @@ class HomeState extends Equatable {
         hourFormatOnOff: hourFormatOnOff ?? this.hourFormatOnOff,
         logsNRequest: logsNRequest ?? this.logsNRequest,
         logNRequestClickIndex: logNRequestClickIndex ?? this.logNRequestClickIndex,
-        changeInToOutToIn: changeInToOutToIn ?? this.changeInToOutToIn,
+        clockInOut: clockInOut ?? this.clockInOut,
         effectiveHours: effectiveHours ?? this.effectiveHours,
         grossHours: grossHours ?? this.grossHours,
         arrivalStatus: arrivalStatus ?? this.arrivalStatus,
         totalPercentOfWeekArrival: totalPercentOfWeekArrival ?? this.totalPercentOfWeekArrival,
         totalAvgHours: totalAvgHours ?? this.totalAvgHours,
         sinceLastLogin: sinceLastLogin ?? this.sinceLastLogin,
-        getClockData: getClockData ?? this.getClockData,
-        // isReadWholeData: isReadWholeData ?? this.isReadWholeData,
+        getAllDaysClockData: getAllDaysClockData ?? this.getAllDaysClockData,
+      getSingleDaysClockData: getSingleDaysClockData ?? this.getSingleDaysClockData,
+        getLastMonth: getLastMonth ?? this.getLastMonth,
         // attendanceRequestList: attendaceRequestList ?? this.attendanceRequestList,
         sfRangeValues: sfRangeValues ?? this.sfRangeValues,
     );
