@@ -1,29 +1,29 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
+import 'package:dart_firebase_admin/messaging.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
 import 'package:shelf_router/shelf_router.dart';
 import 'package:crypto/crypto.dart' as crypto;
-import 'package:http/http.dart' as http;
-import 'package:firebase_dart/firebase_dart.dart';
+import 'package:dart_firebase_admin/dart_firebase_admin.dart' as firebase_admin;
 
 part 'configurations.dart';
 
-part 'endpoints/firebase_notification.dart';
+part 'endpoints/register.dart';
 
-part 'endpoints/register_endpoint.dart';
+part 'endpoints/forgot.dart';
 
-part 'endpoints/forgot_endpoint.dart';
+part 'endpoints/employee.dart';
 
-part 'endpoints/employee_endpoint.dart';
+part 'endpoints/log.dart';
 
-part 'endpoints/log_endpoint.dart';
+part 'endpoints/leave.dart';
 
-part 'endpoints/leave_endpoint.dart';
+part 'endpoints/actions.dart';
 
-part 'endpoints/actions_endpoints.dart';
+part 'endpoints/firebase.dart';
 
 // Configure routes.
 final _router = Router()
@@ -44,21 +44,18 @@ final _router = Router()
   ..post("/requestLeave", _requestLeave)
   ..post("/approveLeave", _approveLeave)
   ..post('/clockAction', _clockAction)
+  // ..post('/sendNotification', _sendNotification)
   ..put('/updateEmployee', _updateEmployee);
 
 ///Instance for database.
 Db? db;
 
-void main(List<String> args) async {
-  // late FirebaseApp firebaseApp;
+///Instance for FirebaseAdmin.
+firebase_admin.FirebaseAdminApp? admin;
 
-  // try {
-  //   firebaseApp = Firebase.app();
-  // } catch (e) {
-  //   firebaseApp = await Firebase.initializeApp(
-  //     options: FirebaseOptions.fromMap(Configurations.firebaseConfig),
-  //   );
-  // }
+void main(List<String> args) async {
+  //Connection to Firebase.
+  _initFirebase();
 
   //Connection to Database.
   db = await Db.create("mongodb+srv://ayushmang:PUPzdiw2Y9tLdMPH@keka.cikkk4s.mongodb.net/Keka");
@@ -94,4 +91,22 @@ String _encryptPassword(String password) {
   final bytes = utf8.encode(password);
   final digest = crypto.sha256.convert(bytes);
   return digest.toString();
+}
+
+///Initialize Firebase.
+void _initFirebase() {
+  try {
+    final file = File("service-account-file.json");
+    print("=================${file.path}");
+    admin = firebase_admin.FirebaseAdminApp.initializeApp(
+      'keka-task',
+      firebase_admin.Credential.fromServiceAccount(
+        File("service-account-file.json"),
+      ),
+    );
+    print("Firebase Admin SDK initialized successfully.");
+  } catch (e, stackTrace) {
+    print("firebaseAdminError ---> $e");
+    print("stackTrace ---> $stackTrace");
+  }
 }
