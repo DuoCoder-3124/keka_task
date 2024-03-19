@@ -113,6 +113,8 @@ Future<Response> _approveLeave(Request request) async {
     "approverId": data["approverId"],
     "reason": data['reason'],
     "isApproved": data["isApproved"],
+    "body": data["body"],
+    "title": data["title"],
   };
 
   List nullFields = [];
@@ -145,10 +147,26 @@ Future<Response> _approveLeave(Request request) async {
           },
         },
       );
+      DbCollection? userCollection = db?.collection("user");
+      String? fcmToken = userCollection?.findOne(where.eq('_id', leaveData['userId']).fields(['fcmToken'])) as String?;
+      if (fcmToken != null) {
+        _sendNotification(
+          fcmToken,
+          title: rawBody['title'],
+          body: rawBody['body'],
+        );
+        return Response.ok(
+          jsonEncode(
+            {
+              "message": "Leave Approved,Notification sent.",
+            },
+          ),
+        );
+      }
       return Response.ok(
         jsonEncode(
           {
-            "message": "Leave Approved",
+            "message": "Leave Approved,Notification not sent.",
           },
         ),
       );
